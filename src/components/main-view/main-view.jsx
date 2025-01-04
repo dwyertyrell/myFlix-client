@@ -3,6 +3,8 @@ import {MovieCard} from "../movie-card/movie-card";
 import {MovieView} from "../movie-view/movie-view";
 
 export const MainView = () => {
+  /* the setMovies is a callback function that allows you to update
+  the movies data*/
     const [movies, setMovies] = useState([ 
       {
       id: 1,
@@ -40,12 +42,14 @@ export const MainView = () => {
         
       }
   }]);
-
+/* the setSelectedMovies function is used to track the currrently selected movie */
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   if(selectedMovie) {
     return <MovieView 
     movie={selectedMovie}
+    /*seeting the setSelectedMovie to null, removes the currently selected Movie,
+     for the user to use the function again for a different movie */
     onBackClick={()=> setSelectedMovie(null)}
     />
   }
