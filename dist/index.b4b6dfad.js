@@ -18584,7 +18584,8 @@ var _movieView = require("../movie-view/movie-view");
 var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
-    const [movies, setMovies] = (0, _react.useState)([
+    /* the setMovies is a callback function that allows you to update
+  the movies data*/ const [movies, setMovies] = (0, _react.useState)([
         {
             id: 1,
             title: 'The Shawshank Redemption',
@@ -18625,20 +18626,21 @@ const MainView = ()=>{
             }
         }
     ]);
-    const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
+    /* the setSelectedMovies function is used to track the currrently selected movie */ const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
     if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
         movie: selectedMovie,
-        onBackClick: ()=>setSelectedMovie(null)
+        /*setting the setSelectedMovie to null, removes the currently selected Movie,
+     for the user to use the function again for a different movie */ onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 47,
+        lineNumber: 49,
         columnNumber: 12
     }, undefined);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "the list is empty"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 54,
+        lineNumber: 58,
         columnNumber: 16
     }, undefined);
     else return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -18650,13 +18652,13 @@ const MainView = ()=>{
                 }
             }, movie.id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 61,
+                lineNumber: 65,
                 columnNumber: 20
             }, undefined);
         })
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 58,
+        lineNumber: 62,
         columnNumber: 9
     }, undefined);
 };
@@ -18852,7 +18854,7 @@ var prevRefreshSig = window.$RefreshSig$;
 $parcel$ReactRefreshHelpers$67b2.prelude(module);
 
 try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+/*adding "movie" and "onMovieClick" in the pros object via destructuring the object */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "MovieCard", ()=>MovieCard);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
@@ -18867,7 +18869,7 @@ const MovieCard = ({ movie, onMovieClick })=>{
         ]
     }, void 0, true, {
         fileName: "src/components/movie-card/movie-card.jsx",
-        lineNumber: 2,
+        lineNumber: 3,
         columnNumber: 12
     }, undefined);
 };
