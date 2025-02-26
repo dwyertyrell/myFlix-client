@@ -18854,7 +18854,7 @@ var prevRefreshSig = window.$RefreshSig$;
 $parcel$ReactRefreshHelpers$67b2.prelude(module);
 
 try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+/*adding "movie" and "onMovieClick" in the pros object via destructuring the object */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "MovieCard", ()=>MovieCard);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
@@ -18869,7 +18869,7 @@ const MovieCard = ({ movie, onMovieClick })=>{
         ]
     }, void 0, true, {
         fileName: "src/components/movie-card/movie-card.jsx",
-        lineNumber: 2,
+        lineNumber: 3,
         columnNumber: 12
     }, undefined);
 };
