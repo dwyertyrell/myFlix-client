@@ -48,7 +48,7 @@ export const MainView = () => {
   if(selectedMovie) {
     return <MovieView 
     movie={selectedMovie}
-    /*seeting the setSelectedMovie to null, removes the currently selected Movie,
+    /*setting the setSelectedMovie to null, removes the currently selected Movie,
      for the user to use the function again for a different movie */
     onBackClick={()=> setSelectedMovie(null)}
     />
