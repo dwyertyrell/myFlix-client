@@ -1,11 +1,14 @@
 import {useState, useEffect} from "react";
-import PropTypes from 'prop-types';
 import {MovieCard} from "../movie-card/movie-card";
 import {MovieView} from "../movie-view/movie-view";
+import {LoginView} from "../login-view/login-view";
 
 export const MainView = () => {
   
   const [movies, setMovies] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [users, setUsers] = useState(null);
+  const [token, setToken] = useState('')
 
   useEffect(() => {
     fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/movies')
@@ -24,7 +27,32 @@ export const MainView = () => {
     });
   }, []);
 
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  useEffect(() => {
+    if(!token) {
+      return; 
+    }
+
+    fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/movies',
+      {
+        headers: {Authorization: `Bearer ${token}`}
+      }).then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+  }, [token]);
+  /*now that we have added another state variable, it needs to return to null 
+    once a user has looged out-during the click event of "log out" button */
+
+
+  if(!users) { 
+    // we are updating onLoggedIn to not only set the 
+    // users state, but also token state.
+   return (<LoginView onLoggedIn= {(user, token) => {
+    setUsers(user);
+    setToken(token);
+   }} />)
+  }
+
 
   if(selectedMovie) {
     return <MovieView 
@@ -41,6 +69,9 @@ export const MainView = () => {
     
       return (
         <div>
+          <button onClick={()=> {
+            setUsers(null)
+            setToken(null)}} >log out</button>
           
           {movies.map((movie) => {
             return <MovieCard
@@ -56,3 +87,5 @@ export const MainView = () => {
       )
     
 } 
+
+/*i need to learn how to unhash passwords for practising postman requests */
