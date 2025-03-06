@@ -7,9 +7,11 @@ export const MainView = () => {
   
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const [users, setUsers] = useState(null);
-  const [token, setToken] = useState('')
-
+  const storedUser = localStorage.getItem('user');
+  const storedToken = localStorage.getItem('token')
+  const [users, setUsers] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null );
+  
 
   useEffect(() => {
     if(!token) {
@@ -69,8 +71,10 @@ export const MainView = () => {
       return (
         <div>
           <button onClick={()=> {
-            setUsers(null)
-            setToken(null)}} >log out</button>
+            setUsers(null);
+            setToken(null);
+            localStorage.clear();
+            }} >log out</button>
           
           {movies.map((movie) => {
             return <MovieCard
