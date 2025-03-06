@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import {MovieCard} from "../movie-card/movie-card";
 import {MovieView} from "../movie-view/movie-view";
 import {LoginView} from "../login-view/login-view";
+import { SignupView } from "../signup-view/signup-view";
 
 export const MainView = () => {
   
@@ -48,10 +49,14 @@ export const MainView = () => {
 
 
   if(!users) { 
-    // we are updating onLoggedIn to not only set the 
-    // users state, but also token state.
-   return (<LoginView onLoggedIn= {handleLogIn}
-   />)
+    
+   return (
+    <>
+   <LoginView onLoggedIn= {handleLogIn}/>
+   or
+    <SignupView/>
+    </>
+  )
   }
 
 
