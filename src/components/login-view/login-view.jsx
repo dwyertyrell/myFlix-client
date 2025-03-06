@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {SignupView} from '../signup-view/signup-view'
 
 export const LoginView = ({onLoggedIn}) => {
 
@@ -37,6 +38,9 @@ export const LoginView = ({onLoggedIn}) => {
 
     }
     
+    // const handleSignup = () => {
+    //     return <SignupView/>
+    // }
     
     return (
         <form onSubmit= {handleSubmit}>
@@ -55,6 +59,7 @@ export const LoginView = ({onLoggedIn}) => {
                 onChange={(e) => setPassword(e.target.value)}></input>
             </label>
             <button>submit</button>
+            {/* <button onClick= {handleSignup}>create an account </button> */}
         </form>
     )
 }
