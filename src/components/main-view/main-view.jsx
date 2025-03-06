@@ -10,22 +10,6 @@ export const MainView = () => {
   const [users, setUsers] = useState(null);
   const [token, setToken] = useState('')
 
-  useEffect(() => {
-    fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/movies')
-    .then((res) => res.json())
-    .then((data) => {
-      const moviesFromApi = data.map(movie => {
-        return {
-          id: movie._id,
-          title: movie.title,
-          director: movie.director.name || movie.director.bio,
-          genre: movie.genre.title,
-          description: movie.description
-        };
-      });
-      setMovies(moviesFromApi)
-    });
-  }, []);
 
   useEffect(() => {
     if(!token) {
@@ -37,20 +21,35 @@ export const MainView = () => {
         headers: {Authorization: `Bearer ${token}`}
       }).then((response) => response.json())
       .then((data) => {
-        console.log(data);
-      })
+        const moviesFromApi = data.map(movie => {
+          return {
+            id: movie._id,
+            title: movie.title,
+            director: movie.director.name || movie.director.bio,
+            genre: movie.genre.title,
+            description: movie.description
+          };
+        });
+          setMovies(moviesFromApi)
+      }).catch((e) => {
+            console.error('something wrong happened while fetching movie data')
+          });
+
   }, [token]);
-  /*now that we have added another state variable, it needs to return to null 
-    once a user has looged out-during the click event of "log out" button */
+
+    const handleLogIn = (user, token) => {
+      setUsers(user);
+      setToken(token);      
+    }
+   /*this function isn't being called. therefore state isn't being 
+      updated  */
 
 
   if(!users) { 
     // we are updating onLoggedIn to not only set the 
     // users state, but also token state.
-   return (<LoginView onLoggedIn= {(user, token) => {
-    setUsers(user);
-    setToken(token);
-   }} />)
+   return (<LoginView onLoggedIn= {handleLogIn}
+   />)
   }
 
 

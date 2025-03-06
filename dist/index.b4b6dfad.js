@@ -18590,7 +18590,12 @@ const MainView = ()=>{
     const [users, setUsers] = (0, _react.useState)(null);
     const [token, setToken] = (0, _react.useState)('');
     (0, _react.useEffect)(()=>{
-        fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/movies').then((res)=>res.json()).then((data)=>{
+        if (!token) return;
+        fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/movies', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>response.json()).then((data)=>{
             const moviesFromApi = data.map((movie)=>{
                 return {
                     id: movie._id,
@@ -18601,31 +18606,24 @@ const MainView = ()=>{
                 };
             });
             setMovies(moviesFromApi);
-        });
-    }, []);
-    (0, _react.useEffect)(()=>{
-        if (!token) return;
-        fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/movies', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>response.json()).then((data)=>{
-            console.log(data);
+        }).catch((e)=>{
+            console.error('something wrong happened while fetching movie data');
         });
     }, [
         token
     ]);
-    /*now that we have added another state variable, it needs to return to null 
-    once a user has looged out-during the click event of "log out" button */ if (!users) // we are updating onLoggedIn to not only set the 
+    const handleLogIn = (user, token)=>{
+        setUsers(user);
+        setToken(token);
+    };
+    /*this function isn't being called. therefore state isn't being 
+      updated  */ if (!users) // we are updating onLoggedIn to not only set the 
     // users state, but also token state.
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _loginView.LoginView), {
-        onLoggedIn: (user, token)=>{
-            setUsers(user);
-            setToken(token);
-        }
+        onLoggedIn: handleLogIn
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 50,
+        lineNumber: 51,
         columnNumber: 12
     }, undefined);
     if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
@@ -18634,14 +18632,14 @@ const MainView = ()=>{
      for the user to use the function again for a different movie */ onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 58,
+        lineNumber: 57,
         columnNumber: 12
     }, undefined);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "the list is empty"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 67,
+        lineNumber: 66,
         columnNumber: 16
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -18654,7 +18652,7 @@ const MainView = ()=>{
                 children: "log out"
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 72,
+                lineNumber: 71,
                 columnNumber: 11
             }, undefined),
             movies.map((movie)=>{
@@ -18665,18 +18663,18 @@ const MainView = ()=>{
                     }
                 }, movie.id, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 77,
+                    lineNumber: 76,
                     columnNumber: 20
                 }, undefined);
             })
         ]
     }, void 0, true, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 71,
+        lineNumber: 70,
         columnNumber: 9
     }, undefined);
 } /*i need to learn how to unhash passwords for practising postman requests */ ;
-_s(MainView, "tqgvVcp6p0Mf+DwLP1qzFK+5h+w=");
+_s(MainView, "VFXqo4db5+85Q/9f+w4DZjSgK6w=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
@@ -20267,33 +20265,30 @@ parcelHelpers.export(exports, "LoginView", ()=>LoginView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _s = $RefreshSig$();
-const LoginView = (onLoggedIn)=>{
+const LoginView = ({ onLoggedIn })=>{
     _s();
     const [username, setUsername] = (0, _react.useState)('');
     const [password, setPassword] = (0, _react.useState)('');
     const handleSubmit = (event)=>{
         event.preventDefault();
         const data = {
-            Username: username,
-            Password: password
+            username: username,
+            password: password
         };
-        /*if response is ok, we could pass the username into main-view.jsx, via 
-        prop. then use the setter function to change users state to that value.
-        piece of state is only founf on main-view.jsx, hence the need for props  */ fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/login', {
+        fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/login', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
         }).then((response)=>response.json()).then((data)=>{
-            console.log("login response: ", data);
+            console.log("login response: ", data.user, data.token);
             if (data.user) {
-                /*here we are passing two parameters over 
-                    to MainView using the prop*/ onLoggedIn(data.user, data.token);
+                onLoggedIn(data.user, data.token);
                 alert('SUCCESS!');
             } else alert("No Such User");
         }).catch((e)=>{
-            alert("something went wrong");
+            alert("something went wrong here");
         });
     };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
@@ -20308,13 +20303,13 @@ const LoginView = (onLoggedIn)=>{
                         onChange: (e)=>setUsername(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 49,
+                        lineNumber: 43,
                         columnNumber: 17
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 47,
+                lineNumber: 41,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -20326,26 +20321,26 @@ const LoginView = (onLoggedIn)=>{
                         onChange: (e)=>setPassword(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 56,
+                        lineNumber: 50,
                         columnNumber: 17
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 54,
+                lineNumber: 48,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                 children: "submit"
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 61,
+                lineNumber: 55,
                 columnNumber: 13
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/login-view/login-view.jsx",
-        lineNumber: 46,
+        lineNumber: 40,
         columnNumber: 9
     }, undefined);
 };
