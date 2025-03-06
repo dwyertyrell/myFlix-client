@@ -18587,8 +18587,10 @@ const MainView = ()=>{
     _s();
     const [movies, setMovies] = (0, _react.useState)([]);
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
-    const [users, setUsers] = (0, _react.useState)(null);
-    const [token, setToken] = (0, _react.useState)('');
+    const storedUser = localStorage.getItem('user');
+    const storedToken = localStorage.getItem('token');
+    const [users, setUsers] = (0, _react.useState)(storedUser ? storedUser : null);
+    const [token, setToken] = (0, _react.useState)(storedToken ? storedToken : null);
     (0, _react.useEffect)(()=>{
         if (!token) return;
         fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/movies', {
@@ -18623,7 +18625,7 @@ const MainView = ()=>{
         onLoggedIn: handleLogIn
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 51,
+        lineNumber: 53,
         columnNumber: 12
     }, undefined);
     if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
@@ -18632,14 +18634,14 @@ const MainView = ()=>{
      for the user to use the function again for a different movie */ onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 57,
+        lineNumber: 59,
         columnNumber: 12
     }, undefined);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "the list is empty"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 66,
+        lineNumber: 68,
         columnNumber: 16
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -18648,11 +18650,12 @@ const MainView = ()=>{
                 onClick: ()=>{
                     setUsers(null);
                     setToken(null);
+                    localStorage.clear();
                 },
                 children: "log out"
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 71,
+                lineNumber: 73,
                 columnNumber: 11
             }, undefined),
             movies.map((movie)=>{
@@ -18663,18 +18666,18 @@ const MainView = ()=>{
                     }
                 }, movie.id, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 76,
+                    lineNumber: 80,
                     columnNumber: 20
                 }, undefined);
             })
         ]
     }, void 0, true, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 70,
+        lineNumber: 72,
         columnNumber: 9
     }, undefined);
 } /*i need to learn how to unhash passwords for practising postman requests */ ;
-_s(MainView, "VFXqo4db5+85Q/9f+w4DZjSgK6w=");
+_s(MainView, "MiwlgP9G9JMg0G5l265qi/vwRFM=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
@@ -20284,6 +20287,8 @@ const LoginView = ({ onLoggedIn })=>{
         }).then((response)=>response.json()).then((data)=>{
             console.log("login response: ", data.user, data.token);
             if (data.user) {
+                localStorage.setItem('user', JSON.stringify(data.user));
+                localStorage.setItem('token', data.token);
                 onLoggedIn(data.user, data.token);
                 alert('SUCCESS!');
             } else alert("No Such User");
@@ -20303,13 +20308,13 @@ const LoginView = ({ onLoggedIn })=>{
                         onChange: (e)=>setUsername(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 43,
+                        lineNumber: 45,
                         columnNumber: 17
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 41,
+                lineNumber: 43,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -20321,26 +20326,26 @@ const LoginView = ({ onLoggedIn })=>{
                         onChange: (e)=>setPassword(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 50,
+                        lineNumber: 52,
                         columnNumber: 17
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 48,
+                lineNumber: 50,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                 children: "submit"
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 55,
+                lineNumber: 57,
                 columnNumber: 13
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/login-view/login-view.jsx",
-        lineNumber: 40,
+        lineNumber: 42,
         columnNumber: 9
     }, undefined);
 };
