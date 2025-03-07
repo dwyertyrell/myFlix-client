@@ -1,4 +1,4 @@
-
+import {useState} from 'react'
 
 export const SignupView = () => {
   const [username, setUsername] = useState('');
@@ -85,7 +85,7 @@ export const SignupView = () => {
         <label>
           password: 
           <input
-            type= 'text'
+            type= 'password'
             value= {password}
             onChange = {(e)=>setPassword(e.target.value)}
             required
