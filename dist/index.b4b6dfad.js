@@ -20334,7 +20334,7 @@ const LoginView = ({ onLoggedIn })=>{
                 children: [
                     "password:",
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
-                        type: "text",
+                        type: "password",
                         value: password,
                         onChange: (e)=>setPassword(e.target.value)
                     }, void 0, false, {
@@ -20383,16 +20383,17 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "SignupView", ()=>SignupView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
 var _s = $RefreshSig$();
 const SignupView = ()=>{
     _s();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [birthday, setBirthday] = useState('');
-    const [age, setAge] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const [username, setUsername] = (0, _react.useState)('');
+    const [password, setPassword] = (0, _react.useState)('');
+    const [email, setEmail] = (0, _react.useState)('');
+    const [birthday, setBirthday] = (0, _react.useState)('');
+    const [age, setAge] = (0, _react.useState)('');
+    const [firstName, setFirstName] = (0, _react.useState)('');
+    const [lastName, setLastName] = (0, _react.useState)('');
     const handleSubmit = (event)=>{
         event.preventDefault();
         const data = {
@@ -20486,7 +20487,7 @@ const SignupView = ()=>{
                     children: [
                         "password:",
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
-                            type: "text",
+                            type: "password",
                             value: password,
                             onChange: (e)=>setPassword(e.target.value),
                             required: true
@@ -20586,6 +20587,6 @@ $RefreshReg$(_c, "SignupView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"lJZlQ":[function() {},{}]},["aQL8O","7qMjn","d8Dch"], "d8Dch", "parcelRequire94c2")
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react":"21dqq"}],"lJZlQ":[function() {},{}]},["aQL8O","7qMjn","d8Dch"], "d8Dch", "parcelRequire94c2")
 
 //# sourceMappingURL=index.b4b6dfad.js.map
