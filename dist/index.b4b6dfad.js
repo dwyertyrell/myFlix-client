@@ -2945,15 +2945,28 @@ var prevRefreshSig = window.$RefreshSig$;
 $parcel$ReactRefreshHelpers$98a3.prelude(module);
 
 try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _client = require("react-dom/client");
 var _mainView = require("./components/main-view/main-view");
+var _container = require("react-bootstrap/Container");
+var _containerDefault = parcelHelpers.interopDefault(_container);
+// import "bootstrap/dist/css/bootstrap.min.css";
 var _indexScss = require("./index.scss");
 const MyFlixApplication = ()=>{
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _mainView.MainView), {}, void 0, false, {
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _containerDefault.default), {
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _mainView.MainView), {}, void 0, false, {
+                fileName: "src/index.jsx",
+                lineNumber: 12,
+                columnNumber: 9
+            }, undefined),
+            ";"
+        ]
+    }, void 0, true, {
         fileName: "src/index.jsx",
-        lineNumber: 6,
-        columnNumber: 12
+        lineNumber: 11,
+        columnNumber: 5
     }, undefined);
 };
 _c = MyFlixApplication;
@@ -2961,9 +2974,16 @@ const container = document.querySelector('#root');
 const root = (0, _client.createRoot)(container);
 root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(MyFlixApplication, {}, void 0, false, {
     fileName: "src/index.jsx",
-    lineNumber: 12,
+    lineNumber: 21,
     columnNumber: 13
-}, undefined));
+}, undefined)); /* why wrap the app in a Container?
+Bootstrap content (UI) is organized within Columns (Col). in order to have these
+Columns, we need to have Rows. In order to have Rows, we need to have a Container.
+instead of using the <Container> in the return statement of the <MaiView>, we can
+wrap the entire component inside a Container, in the root jsx  */  /*to add our own customised react bootstrap into our app, import index.scss and 
+remove import "bootstrap/dist/css/bootstrap.min.css";
+
+ */ 
 var _c;
 $RefreshReg$(_c, "MyFlixApplication");
 
@@ -2972,7 +2992,7 @@ $RefreshReg$(_c, "MyFlixApplication");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react-dom/client":"lOjBx","./components/main-view/main-view":"4gflv","./index.scss":"lJZlQ","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"iTorj":[function(require,module,exports,__globalThis) {
+},{"react/jsx-dev-runtime":"iTorj","react-dom/client":"lOjBx","./components/main-view/main-view":"4gflv","./index.scss":"lJZlQ","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-bootstrap/Container":"hEdsw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iTorj":[function(require,module,exports,__globalThis) {
 'use strict';
 module.exports = require("ee51401569654d91");
 
@@ -18583,6 +18603,14 @@ var _movieCard = require("../movie-card/movie-card");
 var _movieView = require("../movie-view/movie-view");
 var _loginView = require("../login-view/login-view");
 var _signupView = require("../signup-view/signup-view");
+var _container = require("react-bootstrap/Container");
+var _containerDefault = parcelHelpers.interopDefault(_container);
+var _row = require("react-bootstrap/Row");
+var _rowDefault = parcelHelpers.interopDefault(_row);
+var _col = require("react-bootstrap/Col");
+var _colDefault = parcelHelpers.interopDefault(_col);
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
 var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
@@ -18602,6 +18630,7 @@ const MainView = ()=>{
             const moviesFromApi = data.map((movie)=>{
                 return {
                     id: movie._id,
+                    image: movie.image,
                     title: movie.title,
                     director: movie.director.name || movie.director.bio,
                     genre: movie.genre.title,
@@ -18619,73 +18648,335 @@ const MainView = ()=>{
         setUsers(user);
         setToken(token);
     };
-    /*this function isn't being called. therefore state isn't being 
-      updated  */ if (!users) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-        children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _loginView.LoginView), {
-                onLoggedIn: handleLogIn
-            }, void 0, false, {
-                fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 55,
-                columnNumber: 4
-            }, undefined),
-            "or",
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _signupView.SignupView), {}, void 0, false, {
-                fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 57,
-                columnNumber: 5
-            }, undefined)
-        ]
-    }, void 0, true);
-    if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
-        movie: selectedMovie,
-        /*setting the setSelectedMovie to null, removes the currently selected Movie,
-     for the user to use the function again for a different movie */ onBackClick: ()=>setSelectedMovie(null)
-    }, void 0, false, {
-        fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 64,
-        columnNumber: 12
-    }, undefined);
-    if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: "the list is empty"
-    }, void 0, false, {
-        fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 73,
-        columnNumber: 16
-    }, undefined);
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                onClick: ()=>{
-                    setUsers(null);
-                    setToken(null);
-                    localStorage.clear();
-                },
-                children: "log out"
-            }, void 0, false, {
-                fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 78,
-                columnNumber: 11
-            }, undefined),
-            movies.map((movie)=>{
-                return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
-                    movie: movie,
-                    onMovieClick: (newSelectedMovie)=>{
-                        setSelectedMovie(newSelectedMovie);
-                    }
-                }, movie.id, false, {
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
+        className: "justify-content-md-center",
+        children: !users ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+            md: 4,
+            style: {
+                border: ' 2px solid green'
+            },
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _loginView.LoginView), {
+                    onLoggedIn: handleLogIn
+                }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 85,
-                    columnNumber: 20
-                }, undefined);
-            })
-        ]
-    }, void 0, true, {
+                    lineNumber: 60,
+                    columnNumber: 15
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _signupView.SignupView), {}, void 0, false, {
+                    fileName: "src/components/main-view/main-view.jsx",
+                    lineNumber: 61,
+                    columnNumber: 15
+                }, undefined)
+            ]
+        }, void 0, true, {
+            fileName: "src/components/main-view/main-view.jsx",
+            lineNumber: 59,
+            columnNumber: 13
+        }, undefined) : selectedMovie ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
+            movie: selectedMovie,
+            onBackClick: ()=>setSelectedMovie(null)
+        }, void 0, false, {
+            fileName: "src/components/main-view/main-view.jsx",
+            lineNumber: 65,
+            columnNumber: 13
+        }, undefined) : movies.length === 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            children: "the list is empty"
+        }, void 0, false, {
+            fileName: "src/components/main-view/main-view.jsx",
+            lineNumber: 70,
+            columnNumber: 13
+        }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
+                    variant: "secondary",
+                    className: " w-100 ",
+                    onClick: ()=>{
+                        setUsers(null);
+                        setToken(null);
+                        localStorage.clear();
+                    },
+                    children: "log out"
+                }, void 0, false, {
+                    fileName: "src/components/main-view/main-view.jsx",
+                    lineNumber: 73,
+                    columnNumber: 13
+                }, undefined),
+                movies.map((movie)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+                        md: 3,
+                        className: "mb-5",
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
+                            movie: movie,
+                            onMovieClick: (newSelectedMovie)=>{
+                                setSelectedMovie(newSelectedMovie);
+                            }
+                        }, void 0, false, {
+                            fileName: "src/components/main-view/main-view.jsx",
+                            lineNumber: 88,
+                            columnNumber: 17
+                        }, undefined)
+                    }, movie.id, false, {
+                        fileName: "src/components/main-view/main-view.jsx",
+                        lineNumber: 85,
+                        columnNumber: 17
+                    }, undefined))
+            ]
+        }, void 0, true)
+    }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 77,
+        lineNumber: 55,
         columnNumber: 9
     }, undefined);
-} /*i need to learn how to unhash passwords for practising postman requests */ ;
+} /* React Bootstrap Grid System:
+this frid system on React Bootstrap uses flexbox. 
+the three main React Bootstrap components being used here are:
+
+<Container></Container>: used usually to cover the whole width of the screen.
+<Row></Row>: controls the vertical layout inside the <Container> component.
+<col></Col>: controls the horizontal layout with <Row> component. 
+            A <Col></Col> is where the actual UI resides
+            
+
+Bootstrap follows an invisible grid where each row can have up to 12 individual 
+columns lined up across (left to right).
+can put anything in these: text, components, jsx, etx... 
+
+import the <Comtainer> Bootstrap component into index.jsx file-
+we want the entire <MainView> component to be wrapped in a <Container> of the 
+root component in index.jsx.
+
+UI needs to be wrapped within the Col, in order to have these Cols
+you must have Rows. and in order to have rows you need to have a Container.
+
+---the <Container> itself has it's own predefined styling. so adding this into the 
+app without Rows or Cols, will still change the styling of the app.
+
+useful to temporaily add a boder styling to the <Container> to see its movement
+during development.
+
+
+
+
+
+adding Rows:
+MainView currently has a few if statements. 
+these if-statement syntax cannot be added in the return statement of 
+the final rendering. 
+So we can either: wrap every piece of jsx with a row element, or chain each one 
+in a large ternary statement in the final return statement .
+
+in Conclusion we do this with a ternary operator if it's an if-else statement.
+Or a Logical AND operator if it's just an if-statement.
+
+before:
+
+  if(!users) { 
+    
+   return (
+    <>
+   <LoginView onLoggedIn= {handleLogIn}/>
+   or
+    <SignupView/>
+    </>
+  )
+  }
+
+  if(selectedMovie) {
+    return <MovieView 
+    movie={selectedMovie}
+    //setting the setSelectedMovie to null, removes the currently selected Movie,
+     //for the user to use the function again for a different movie 
+     onBackClick={()=> setSelectedMovie(null)}
+     />
+   }
+ 
+     if (movies.length === 0) {
+         return <div>the list is empty</div>
+     } 
+     
+       return (
+         <Container className= 'container'>
+           <button onClick={()=> {
+             setUsers(null);
+             setToken(null);
+             localStorage.clear();
+             }} >log out</button>
+           
+           {movies.map((movie) => {
+             return <MovieCard
+              key={movie.id}
+              movie={movie}
+              onMovieClick={(newSelectedMovie)=> {
+               setSelectedMovie(newSelectedMovie);
+              }}
+              />
+ 
+           })}
+         </Container> 
+       )}
+
+
+after:
+
+     return (
+      <Container>
+        <Row className='justify-content-md-center'>
+          
+          {!users ? (
+            
+            <Col md={4} style={{border:' 2px solid green'}}>
+              <LoginView onLoggedIn={handleLogIn} /> 
+              <SignupView />
+            </Col>
+            
+          ) : selectedMovie ? (
+            <MovieView
+              movie={selectedMovie}
+              onBackClick={() => setSelectedMovie(null)}
+            />
+          ) : movies.length === 0 ? (
+            <div>the list is empty</div>
+          ) : (
+            <>
+            <button
+                onClick={() => {
+                  setUsers(null);
+                  setToken(null);
+                  localStorage.clear();
+                }}
+              >
+                log out
+              </button>
+              {movies.map((movie) => (
+                <Col md={3}  key={movie.id} className='mb-5'>
+                // key attribute need to be added to the grid system's container 
+                // element of the component being rendered 
+                <MovieCard 
+                 
+                  movie={movie}
+                  onMovieClick={(newSelectedMovie) => {
+                    setSelectedMovie(newSelectedMovie);
+                  }}
+                />
+                </Col>
+              ))}
+              
+            </>
+          )}
+        </Row>
+      </Container>
+    );
+  }
+
+everything is being conditionally rendered using ternary statements
+
+now, since the if-statements are removed, and their logic are elsewhere, the 
+MainView component now only has one return statement that has a Row as the root  
+element.
+
+ 
+
+
+
+
+
+
+adding a Col Bootstrap Component:
+
+UI content goes inside <Col> when using grid in Bootstrap.
+since <MainView> is the content, it needs to be enclosed in <Col>.
+
+(need to make sure Col is import the module)
+
+to specify how many twelfths of the <Rol> a <Col> can occupy, use the attribute md:
+ {movies.map((movie) => (
+                <Col md={6}>
+                <MovieCard 
+                  key={movie.id}
+                  movie={movie}
+                  onMovieClick={(newSelectedMovie) => {
+                    setSelectedMovie(newSelectedMovie);
+                  }}
+                />
+                </Col>
+
+
+the 8 md breakpoint is used. if the screen is less than 768px, each column will 
+take full width no matter how many shares (twelfths) it's been assigned.
+
+to centre the columns within a row using Bootstrap utility classes:
+use the className='justify-content-md-center'. to see the centering, style the
+border of the <Col> 
+
+
+id attribute is far more accurate to target styling on a react component. 
+        because the className value are used for React bootstrap's predefined 
+        stylings.
+
+when placing the UI in <Col>, sometimes this container has to be styled to get 
+the styling to the UI (the component being rendered). 
+{movies.map((movie) => (
+  <Col md={3}  key={movie.id} className=''>
+  // key attribute need to be added to the grid system's container 
+  // element of the component being rendered 
+  <MovieCard 
+    
+    movie={movie}
+    onMovieClick={(newSelectedMovie) => {
+      setSelectedMovie(newSelectedMovie);
+    }}
+  />
+  </Col>
+
+the MovieCard components look bunched together. use the className value 'mb-x' to
+apply 'margin-bottom' (mb) and x is any given number representing the size of the
+space.
+
+also apply classNmae='w-100' to the <img/> element in MovieView for styling
+width of 100%
+
+"A good rule of thumb when using an external framework to style your app is to 
+avoid writing custom CSS wherever possible. For instance, rather than writing 
+SCSS to define your layout, try to find an existing component to position your 
+elements."
+
+
+
+
+
+
+
+
+
+
+Customizing React Bootstrap:
+
+customizing colors, sizes and other behaviours for your component is easy since 
+Bootstrap has built in scss variables.
+
+to enable customisation, need to change the way we import Bootstrap.
+
+ before, we are importing via bootstrap/dist/css/bootstrap.min.css
+
+ this is a production ready file which doesn't support customisation. 
+ this file is directly being imported into index.jsx 
+ (this import is in MovieView instead of MainView or index.scss. mistake?). 
+ instead, import the Sass file into index.scss:
+ 
+ @import '~bootstrap/scss/bootstrap.scss';
+
+ let's say you want to change the built-in variables 'primary' and 'body-bg' 
+ colors. add the following to index.scss before the @import statement, 
+ and then remove import "bootstrap/dist/css/bootstrap.min.css" from index.jsx :
+
+ $primary: SeaGreen;
+$body-bg: Honeydew;
+
+@import '~bootstrap/scss/bootstrap.scss';
+
+
+
+*/ ;
 _s(MainView, "MiwlgP9G9JMg0G5l265qi/vwRFM=");
 _c = MainView;
 var _c;
@@ -18696,7 +18987,7 @@ $RefreshReg$(_c, "MainView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react":"21dqq","../movie-card/movie-card":"bwuIu","../movie-view/movie-view":"ggaUx","../login-view/login-view":"9YtA0","../signup-view/signup-view":"4OGiN"}],"gkKU3":[function(require,module,exports,__globalThis) {
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react":"21dqq","../movie-card/movie-card":"bwuIu","../movie-view/movie-view":"ggaUx","../login-view/login-view":"9YtA0","../signup-view/signup-view":"4OGiN","react-bootstrap/Container":"hEdsw","react-bootstrap/Col":"2L2I6","react-bootstrap/Row":"cMC39","react-bootstrap/Button":"aPzUt"}],"gkKU3":[function(require,module,exports,__globalThis) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -19329,19 +19620,57 @@ parcelHelpers.export(exports, "MovieCard", ()=>MovieCard);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _propTypes = require("prop-types");
 var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _reactBootstrap = require("react-bootstrap");
 const MovieCard = ({ movie, onMovieClick })=>{
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        onClick: ()=>{
-            onMovieClick(movie);
-        },
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card), {
+        className: "h-100",
         children: [
-            " ",
-            movie.title
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Img, {
+                variant: "top",
+                src: movie.image
+            }, void 0, false, {
+                fileName: "src/components/movie-card/movie-card.jsx",
+                lineNumber: 8,
+                columnNumber: 13
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Body, {
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Title, {
+                        children: movie.title
+                    }, void 0, false, {
+                        fileName: "src/components/movie-card/movie-card.jsx",
+                        lineNumber: 11,
+                        columnNumber: 17
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Text, {
+                        children: movie.genre
+                    }, void 0, false, {
+                        fileName: "src/components/movie-card/movie-card.jsx",
+                        lineNumber: 12,
+                        columnNumber: 17
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                        onClick: ()=>{
+                            onMovieClick(movie);
+                        },
+                        variant: "secondary",
+                        children: "open"
+                    }, void 0, false, {
+                        fileName: "src/components/movie-card/movie-card.jsx",
+                        lineNumber: 13,
+                        columnNumber: 17
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/movie-card/movie-card.jsx",
+                lineNumber: 10,
+                columnNumber: 13
+            }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/movie-card/movie-card.jsx",
-        lineNumber: 4,
-        columnNumber: 12
+        lineNumber: 7,
+        columnNumber: 9
     }, undefined);
 };
 _c = MovieCard;
@@ -19350,7 +19679,42 @@ MovieCard.PropTypes = {
         title: (0, _propTypesDefault.default).string
     }).isRequired,
     onMovieClick: (0, _propTypesDefault.default).func.isRequired
-};
+}; /*let's make this react element more stylish by replacing the jsx element with 
+Card- related bootstrap component.
+
+before the bootstrap component:
+export const MovieCard = ({movie, onMovieClick}) => {
+    return <div onClick={()=> {
+        onMovieClick(movie);
+    }}
+    > {movie.title}</div>
+} 
+
+after applying bootstrap: 
+
+export const MovieCard = ({movie, onMovieClick}) => {
+    
+    return (
+        <Card>
+            <Card.Img style={{width: 300}} variant='top' src={movie.image} />
+
+            <Card.Body>    
+                <Card.Title>{movie.title}</Card.Title>
+                <Card.Text>{movie.genre}</Card.Text>
+                <Button 
+                onClick={()=> {onMovieClick(movie);}}
+                variant= 'link' >open</Button>
+            </Card.Body>
+        </Card>
+    )
+} 
+    if we want ot make the whole card clickable, we could just add the onClick 
+    attribute onto <Card> instead of the <Button> component.
+
+    remove variant attribute on <Button> to apply own sccs styling. variant 
+    attribute allows you to chose a predefined set of styles- it is a convenient 
+    way of styling without using scss.
+*/ 
 var _c;
 $RefreshReg$(_c, "MovieCard");
 
@@ -19359,7 +19723,7 @@ $RefreshReg$(_c, "MovieCard");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","prop-types":"7wKI2"}],"7wKI2":[function(require,module,exports,__globalThis) {
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","prop-types":"7wKI2","react-bootstrap":"3AD9A"}],"7wKI2":[function(require,module,exports,__globalThis) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -20106,7 +20470,1912 @@ printWarning = function(text) {
 };
 module.exports = checkPropTypes;
 
-},{"24ba1e58d167a82c":"jZTZJ","898bc82f39d83f7c":"fqKuf"}],"ggaUx":[function(require,module,exports,__globalThis) {
+},{"24ba1e58d167a82c":"jZTZJ","898bc82f39d83f7c":"fqKuf"}],"3AD9A":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Accordion", ()=>(0, _accordionDefault.default));
+parcelHelpers.export(exports, "AccordionContext", ()=>(0, _accordionContextDefault.default));
+parcelHelpers.export(exports, "AccordionCollapse", ()=>(0, _accordionCollapseDefault.default));
+parcelHelpers.export(exports, "AccordionButton", ()=>(0, _accordionButtonDefault.default));
+parcelHelpers.export(exports, "useAccordionButton", ()=>(0, _accordionButton.useAccordionButton));
+parcelHelpers.export(exports, "AccordionBody", ()=>(0, _accordionBodyDefault.default));
+parcelHelpers.export(exports, "AccordionHeader", ()=>(0, _accordionHeaderDefault.default));
+parcelHelpers.export(exports, "AccordionItem", ()=>(0, _accordionItemDefault.default));
+parcelHelpers.export(exports, "Alert", ()=>(0, _alertDefault.default));
+parcelHelpers.export(exports, "AlertHeading", ()=>(0, _alertHeadingDefault.default));
+parcelHelpers.export(exports, "AlertLink", ()=>(0, _alertLinkDefault.default));
+parcelHelpers.export(exports, "Anchor", ()=>(0, _anchorDefault.default));
+parcelHelpers.export(exports, "Badge", ()=>(0, _badgeDefault.default));
+parcelHelpers.export(exports, "Breadcrumb", ()=>(0, _breadcrumbDefault.default));
+parcelHelpers.export(exports, "BreadcrumbItem", ()=>(0, _breadcrumbItemDefault.default));
+parcelHelpers.export(exports, "Button", ()=>(0, _buttonDefault.default));
+parcelHelpers.export(exports, "ButtonGroup", ()=>(0, _buttonGroupDefault.default));
+parcelHelpers.export(exports, "ButtonToolbar", ()=>(0, _buttonToolbarDefault.default));
+parcelHelpers.export(exports, "Card", ()=>(0, _cardDefault.default));
+parcelHelpers.export(exports, "CardBody", ()=>(0, _cardBodyDefault.default));
+parcelHelpers.export(exports, "CardFooter", ()=>(0, _cardFooterDefault.default));
+parcelHelpers.export(exports, "CardGroup", ()=>(0, _cardGroupDefault.default));
+parcelHelpers.export(exports, "CardHeader", ()=>(0, _cardHeaderDefault.default));
+parcelHelpers.export(exports, "CardImg", ()=>(0, _cardImgDefault.default));
+parcelHelpers.export(exports, "CardImgOverlay", ()=>(0, _cardImgOverlayDefault.default));
+parcelHelpers.export(exports, "CardLink", ()=>(0, _cardLinkDefault.default));
+parcelHelpers.export(exports, "CardSubtitle", ()=>(0, _cardSubtitleDefault.default));
+parcelHelpers.export(exports, "CardText", ()=>(0, _cardTextDefault.default));
+parcelHelpers.export(exports, "CardTitle", ()=>(0, _cardTitleDefault.default));
+parcelHelpers.export(exports, "Carousel", ()=>(0, _carouselDefault.default));
+parcelHelpers.export(exports, "CarouselCaption", ()=>(0, _carouselCaptionDefault.default));
+parcelHelpers.export(exports, "CarouselItem", ()=>(0, _carouselItemDefault.default));
+parcelHelpers.export(exports, "CloseButton", ()=>(0, _closeButtonDefault.default));
+parcelHelpers.export(exports, "Col", ()=>(0, _colDefault.default));
+parcelHelpers.export(exports, "Collapse", ()=>(0, _collapseDefault.default));
+parcelHelpers.export(exports, "Container", ()=>(0, _containerDefault.default));
+parcelHelpers.export(exports, "Dropdown", ()=>(0, _dropdownDefault.default));
+parcelHelpers.export(exports, "DropdownButton", ()=>(0, _dropdownButtonDefault.default));
+parcelHelpers.export(exports, "DropdownDivider", ()=>(0, _dropdownDividerDefault.default));
+parcelHelpers.export(exports, "DropdownHeader", ()=>(0, _dropdownHeaderDefault.default));
+parcelHelpers.export(exports, "DropdownItem", ()=>(0, _dropdownItemDefault.default));
+parcelHelpers.export(exports, "DropdownItemText", ()=>(0, _dropdownItemTextDefault.default));
+parcelHelpers.export(exports, "DropdownMenu", ()=>(0, _dropdownMenuDefault.default));
+parcelHelpers.export(exports, "DropdownToggle", ()=>(0, _dropdownToggleDefault.default));
+parcelHelpers.export(exports, "Fade", ()=>(0, _fadeDefault.default));
+parcelHelpers.export(exports, "Figure", ()=>(0, _figureDefault.default));
+parcelHelpers.export(exports, "FigureCaption", ()=>(0, _figureCaptionDefault.default));
+parcelHelpers.export(exports, "FigureImage", ()=>(0, _figureImageDefault.default));
+parcelHelpers.export(exports, "Form", ()=>(0, _formDefault.default));
+parcelHelpers.export(exports, "FormControl", ()=>(0, _formControlDefault.default));
+parcelHelpers.export(exports, "FormCheck", ()=>(0, _formCheckDefault.default));
+parcelHelpers.export(exports, "FormFloating", ()=>(0, _formFloatingDefault.default));
+parcelHelpers.export(exports, "FloatingLabel", ()=>(0, _floatingLabelDefault.default));
+parcelHelpers.export(exports, "FormGroup", ()=>(0, _formGroupDefault.default));
+parcelHelpers.export(exports, "FormLabel", ()=>(0, _formLabelDefault.default));
+parcelHelpers.export(exports, "FormText", ()=>(0, _formTextDefault.default));
+parcelHelpers.export(exports, "FormSelect", ()=>(0, _formSelectDefault.default));
+parcelHelpers.export(exports, "Image", ()=>(0, _imageDefault.default));
+parcelHelpers.export(exports, "InputGroup", ()=>(0, _inputGroupDefault.default));
+parcelHelpers.export(exports, "ListGroup", ()=>(0, _listGroupDefault.default));
+parcelHelpers.export(exports, "ListGroupItem", ()=>(0, _listGroupItemDefault.default));
+parcelHelpers.export(exports, "Modal", ()=>(0, _modalDefault.default));
+parcelHelpers.export(exports, "ModalBody", ()=>(0, _modalBodyDefault.default));
+parcelHelpers.export(exports, "ModalDialog", ()=>(0, _modalDialogDefault.default));
+parcelHelpers.export(exports, "ModalFooter", ()=>(0, _modalFooterDefault.default));
+parcelHelpers.export(exports, "ModalHeader", ()=>(0, _modalHeaderDefault.default));
+parcelHelpers.export(exports, "ModalTitle", ()=>(0, _modalTitleDefault.default));
+parcelHelpers.export(exports, "Nav", ()=>(0, _navDefault.default));
+parcelHelpers.export(exports, "Navbar", ()=>(0, _navbarDefault.default));
+parcelHelpers.export(exports, "NavbarBrand", ()=>(0, _navbarBrandDefault.default));
+parcelHelpers.export(exports, "NavbarCollapse", ()=>(0, _navbarCollapseDefault.default));
+parcelHelpers.export(exports, "NavbarOffcanvas", ()=>(0, _navbarOffcanvasDefault.default));
+parcelHelpers.export(exports, "NavbarText", ()=>(0, _navbarTextDefault.default));
+parcelHelpers.export(exports, "NavbarToggle", ()=>(0, _navbarToggleDefault.default));
+parcelHelpers.export(exports, "NavDropdown", ()=>(0, _navDropdownDefault.default));
+parcelHelpers.export(exports, "NavItem", ()=>(0, _navItemDefault.default));
+parcelHelpers.export(exports, "NavLink", ()=>(0, _navLinkDefault.default));
+parcelHelpers.export(exports, "Offcanvas", ()=>(0, _offcanvasDefault.default));
+parcelHelpers.export(exports, "OffcanvasBody", ()=>(0, _offcanvasBodyDefault.default));
+parcelHelpers.export(exports, "OffcanvasHeader", ()=>(0, _offcanvasHeaderDefault.default));
+parcelHelpers.export(exports, "OffcanvasTitle", ()=>(0, _offcanvasTitleDefault.default));
+parcelHelpers.export(exports, "OffcanvasToggling", ()=>(0, _offcanvasTogglingDefault.default));
+parcelHelpers.export(exports, "Overlay", ()=>(0, _overlayDefault.default));
+parcelHelpers.export(exports, "OverlayTrigger", ()=>(0, _overlayTriggerDefault.default));
+parcelHelpers.export(exports, "PageItem", ()=>(0, _pageItemDefault.default));
+parcelHelpers.export(exports, "Pagination", ()=>(0, _paginationDefault.default));
+parcelHelpers.export(exports, "Placeholder", ()=>(0, _placeholderDefault.default));
+parcelHelpers.export(exports, "PlaceholderButton", ()=>(0, _placeholderButtonDefault.default));
+parcelHelpers.export(exports, "Popover", ()=>(0, _popoverDefault.default));
+parcelHelpers.export(exports, "PopoverBody", ()=>(0, _popoverBodyDefault.default));
+parcelHelpers.export(exports, "PopoverHeader", ()=>(0, _popoverHeaderDefault.default));
+parcelHelpers.export(exports, "ProgressBar", ()=>(0, _progressBarDefault.default));
+parcelHelpers.export(exports, "Ratio", ()=>(0, _ratioDefault.default));
+parcelHelpers.export(exports, "Row", ()=>(0, _rowDefault.default));
+parcelHelpers.export(exports, "Spinner", ()=>(0, _spinnerDefault.default));
+parcelHelpers.export(exports, "SplitButton", ()=>(0, _splitButtonDefault.default));
+parcelHelpers.export(exports, "SSRProvider", ()=>(0, _ssrproviderDefault.default));
+parcelHelpers.export(exports, "Stack", ()=>(0, _stackDefault.default));
+parcelHelpers.export(exports, "Tab", ()=>(0, _tabDefault.default));
+parcelHelpers.export(exports, "TabContainer", ()=>(0, _tabContainerDefault.default));
+parcelHelpers.export(exports, "TabContent", ()=>(0, _tabContentDefault.default));
+parcelHelpers.export(exports, "Table", ()=>(0, _tableDefault.default));
+parcelHelpers.export(exports, "TabPane", ()=>(0, _tabPaneDefault.default));
+parcelHelpers.export(exports, "Tabs", ()=>(0, _tabsDefault.default));
+parcelHelpers.export(exports, "ThemeProvider", ()=>(0, _themeProviderDefault.default));
+parcelHelpers.export(exports, "Toast", ()=>(0, _toastDefault.default));
+parcelHelpers.export(exports, "ToastBody", ()=>(0, _toastBodyDefault.default));
+parcelHelpers.export(exports, "ToastContainer", ()=>(0, _toastContainerDefault.default));
+parcelHelpers.export(exports, "ToastHeader", ()=>(0, _toastHeaderDefault.default));
+parcelHelpers.export(exports, "ToggleButton", ()=>(0, _toggleButtonDefault.default));
+parcelHelpers.export(exports, "ToggleButtonGroup", ()=>(0, _toggleButtonGroupDefault.default));
+parcelHelpers.export(exports, "Tooltip", ()=>(0, _tooltipDefault.default));
+var _accordion = require("./Accordion");
+var _accordionDefault = parcelHelpers.interopDefault(_accordion);
+var _accordionContext = require("./AccordionContext");
+var _accordionContextDefault = parcelHelpers.interopDefault(_accordionContext);
+var _accordionCollapse = require("./AccordionCollapse");
+var _accordionCollapseDefault = parcelHelpers.interopDefault(_accordionCollapse);
+var _accordionButton = require("./AccordionButton");
+var _accordionButtonDefault = parcelHelpers.interopDefault(_accordionButton);
+var _accordionBody = require("./AccordionBody");
+var _accordionBodyDefault = parcelHelpers.interopDefault(_accordionBody);
+var _accordionHeader = require("./AccordionHeader");
+var _accordionHeaderDefault = parcelHelpers.interopDefault(_accordionHeader);
+var _accordionItem = require("./AccordionItem");
+var _accordionItemDefault = parcelHelpers.interopDefault(_accordionItem);
+var _alert = require("./Alert");
+var _alertDefault = parcelHelpers.interopDefault(_alert);
+var _alertHeading = require("./AlertHeading");
+var _alertHeadingDefault = parcelHelpers.interopDefault(_alertHeading);
+var _alertLink = require("./AlertLink");
+var _alertLinkDefault = parcelHelpers.interopDefault(_alertLink);
+var _anchor = require("./Anchor");
+var _anchorDefault = parcelHelpers.interopDefault(_anchor);
+var _badge = require("./Badge");
+var _badgeDefault = parcelHelpers.interopDefault(_badge);
+var _breadcrumb = require("./Breadcrumb");
+var _breadcrumbDefault = parcelHelpers.interopDefault(_breadcrumb);
+var _breadcrumbItem = require("./BreadcrumbItem");
+var _breadcrumbItemDefault = parcelHelpers.interopDefault(_breadcrumbItem);
+var _button = require("./Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _buttonGroup = require("./ButtonGroup");
+var _buttonGroupDefault = parcelHelpers.interopDefault(_buttonGroup);
+var _buttonToolbar = require("./ButtonToolbar");
+var _buttonToolbarDefault = parcelHelpers.interopDefault(_buttonToolbar);
+var _card = require("./Card");
+var _cardDefault = parcelHelpers.interopDefault(_card);
+var _cardBody = require("./CardBody");
+var _cardBodyDefault = parcelHelpers.interopDefault(_cardBody);
+var _cardFooter = require("./CardFooter");
+var _cardFooterDefault = parcelHelpers.interopDefault(_cardFooter);
+var _cardGroup = require("./CardGroup");
+var _cardGroupDefault = parcelHelpers.interopDefault(_cardGroup);
+var _cardHeader = require("./CardHeader");
+var _cardHeaderDefault = parcelHelpers.interopDefault(_cardHeader);
+var _cardImg = require("./CardImg");
+var _cardImgDefault = parcelHelpers.interopDefault(_cardImg);
+var _cardImgOverlay = require("./CardImgOverlay");
+var _cardImgOverlayDefault = parcelHelpers.interopDefault(_cardImgOverlay);
+var _cardLink = require("./CardLink");
+var _cardLinkDefault = parcelHelpers.interopDefault(_cardLink);
+var _cardSubtitle = require("./CardSubtitle");
+var _cardSubtitleDefault = parcelHelpers.interopDefault(_cardSubtitle);
+var _cardText = require("./CardText");
+var _cardTextDefault = parcelHelpers.interopDefault(_cardText);
+var _cardTitle = require("./CardTitle");
+var _cardTitleDefault = parcelHelpers.interopDefault(_cardTitle);
+var _carousel = require("./Carousel");
+var _carouselDefault = parcelHelpers.interopDefault(_carousel);
+var _carouselCaption = require("./CarouselCaption");
+var _carouselCaptionDefault = parcelHelpers.interopDefault(_carouselCaption);
+var _carouselItem = require("./CarouselItem");
+var _carouselItemDefault = parcelHelpers.interopDefault(_carouselItem);
+var _closeButton = require("./CloseButton");
+var _closeButtonDefault = parcelHelpers.interopDefault(_closeButton);
+var _col = require("./Col");
+var _colDefault = parcelHelpers.interopDefault(_col);
+var _collapse = require("./Collapse");
+var _collapseDefault = parcelHelpers.interopDefault(_collapse);
+var _container = require("./Container");
+var _containerDefault = parcelHelpers.interopDefault(_container);
+var _dropdown = require("./Dropdown");
+var _dropdownDefault = parcelHelpers.interopDefault(_dropdown);
+var _dropdownButton = require("./DropdownButton");
+var _dropdownButtonDefault = parcelHelpers.interopDefault(_dropdownButton);
+var _dropdownDivider = require("./DropdownDivider");
+var _dropdownDividerDefault = parcelHelpers.interopDefault(_dropdownDivider);
+var _dropdownHeader = require("./DropdownHeader");
+var _dropdownHeaderDefault = parcelHelpers.interopDefault(_dropdownHeader);
+var _dropdownItem = require("./DropdownItem");
+var _dropdownItemDefault = parcelHelpers.interopDefault(_dropdownItem);
+var _dropdownItemText = require("./DropdownItemText");
+var _dropdownItemTextDefault = parcelHelpers.interopDefault(_dropdownItemText);
+var _dropdownMenu = require("./DropdownMenu");
+var _dropdownMenuDefault = parcelHelpers.interopDefault(_dropdownMenu);
+var _dropdownToggle = require("./DropdownToggle");
+var _dropdownToggleDefault = parcelHelpers.interopDefault(_dropdownToggle);
+var _fade = require("./Fade");
+var _fadeDefault = parcelHelpers.interopDefault(_fade);
+var _figure = require("./Figure");
+var _figureDefault = parcelHelpers.interopDefault(_figure);
+var _figureCaption = require("./FigureCaption");
+var _figureCaptionDefault = parcelHelpers.interopDefault(_figureCaption);
+var _figureImage = require("./FigureImage");
+var _figureImageDefault = parcelHelpers.interopDefault(_figureImage);
+var _form = require("./Form");
+var _formDefault = parcelHelpers.interopDefault(_form);
+var _formControl = require("./FormControl");
+var _formControlDefault = parcelHelpers.interopDefault(_formControl);
+var _formCheck = require("./FormCheck");
+var _formCheckDefault = parcelHelpers.interopDefault(_formCheck);
+var _formFloating = require("./FormFloating");
+var _formFloatingDefault = parcelHelpers.interopDefault(_formFloating);
+var _floatingLabel = require("./FloatingLabel");
+var _floatingLabelDefault = parcelHelpers.interopDefault(_floatingLabel);
+var _formGroup = require("./FormGroup");
+var _formGroupDefault = parcelHelpers.interopDefault(_formGroup);
+var _formLabel = require("./FormLabel");
+var _formLabelDefault = parcelHelpers.interopDefault(_formLabel);
+var _formText = require("./FormText");
+var _formTextDefault = parcelHelpers.interopDefault(_formText);
+var _formSelect = require("./FormSelect");
+var _formSelectDefault = parcelHelpers.interopDefault(_formSelect);
+var _image = require("./Image");
+var _imageDefault = parcelHelpers.interopDefault(_image);
+var _inputGroup = require("./InputGroup");
+var _inputGroupDefault = parcelHelpers.interopDefault(_inputGroup);
+var _listGroup = require("./ListGroup");
+var _listGroupDefault = parcelHelpers.interopDefault(_listGroup);
+var _listGroupItem = require("./ListGroupItem");
+var _listGroupItemDefault = parcelHelpers.interopDefault(_listGroupItem);
+var _modal = require("./Modal");
+var _modalDefault = parcelHelpers.interopDefault(_modal);
+var _modalBody = require("./ModalBody");
+var _modalBodyDefault = parcelHelpers.interopDefault(_modalBody);
+var _modalDialog = require("./ModalDialog");
+var _modalDialogDefault = parcelHelpers.interopDefault(_modalDialog);
+var _modalFooter = require("./ModalFooter");
+var _modalFooterDefault = parcelHelpers.interopDefault(_modalFooter);
+var _modalHeader = require("./ModalHeader");
+var _modalHeaderDefault = parcelHelpers.interopDefault(_modalHeader);
+var _modalTitle = require("./ModalTitle");
+var _modalTitleDefault = parcelHelpers.interopDefault(_modalTitle);
+var _nav = require("./Nav");
+var _navDefault = parcelHelpers.interopDefault(_nav);
+var _navbar = require("./Navbar");
+var _navbarDefault = parcelHelpers.interopDefault(_navbar);
+var _navbarBrand = require("./NavbarBrand");
+var _navbarBrandDefault = parcelHelpers.interopDefault(_navbarBrand);
+var _navbarCollapse = require("./NavbarCollapse");
+var _navbarCollapseDefault = parcelHelpers.interopDefault(_navbarCollapse);
+var _navbarOffcanvas = require("./NavbarOffcanvas");
+var _navbarOffcanvasDefault = parcelHelpers.interopDefault(_navbarOffcanvas);
+var _navbarText = require("./NavbarText");
+var _navbarTextDefault = parcelHelpers.interopDefault(_navbarText);
+var _navbarToggle = require("./NavbarToggle");
+var _navbarToggleDefault = parcelHelpers.interopDefault(_navbarToggle);
+var _navDropdown = require("./NavDropdown");
+var _navDropdownDefault = parcelHelpers.interopDefault(_navDropdown);
+var _navItem = require("./NavItem");
+var _navItemDefault = parcelHelpers.interopDefault(_navItem);
+var _navLink = require("./NavLink");
+var _navLinkDefault = parcelHelpers.interopDefault(_navLink);
+var _offcanvas = require("./Offcanvas");
+var _offcanvasDefault = parcelHelpers.interopDefault(_offcanvas);
+var _offcanvasBody = require("./OffcanvasBody");
+var _offcanvasBodyDefault = parcelHelpers.interopDefault(_offcanvasBody);
+var _offcanvasHeader = require("./OffcanvasHeader");
+var _offcanvasHeaderDefault = parcelHelpers.interopDefault(_offcanvasHeader);
+var _offcanvasTitle = require("./OffcanvasTitle");
+var _offcanvasTitleDefault = parcelHelpers.interopDefault(_offcanvasTitle);
+var _offcanvasToggling = require("./OffcanvasToggling");
+var _offcanvasTogglingDefault = parcelHelpers.interopDefault(_offcanvasToggling);
+var _overlay = require("./Overlay");
+var _overlayDefault = parcelHelpers.interopDefault(_overlay);
+var _overlayTrigger = require("./OverlayTrigger");
+var _overlayTriggerDefault = parcelHelpers.interopDefault(_overlayTrigger);
+var _pageItem = require("./PageItem");
+var _pageItemDefault = parcelHelpers.interopDefault(_pageItem);
+var _pagination = require("./Pagination");
+var _paginationDefault = parcelHelpers.interopDefault(_pagination);
+var _placeholder = require("./Placeholder");
+var _placeholderDefault = parcelHelpers.interopDefault(_placeholder);
+var _placeholderButton = require("./PlaceholderButton");
+var _placeholderButtonDefault = parcelHelpers.interopDefault(_placeholderButton);
+var _popover = require("./Popover");
+var _popoverDefault = parcelHelpers.interopDefault(_popover);
+var _popoverBody = require("./PopoverBody");
+var _popoverBodyDefault = parcelHelpers.interopDefault(_popoverBody);
+var _popoverHeader = require("./PopoverHeader");
+var _popoverHeaderDefault = parcelHelpers.interopDefault(_popoverHeader);
+var _progressBar = require("./ProgressBar");
+var _progressBarDefault = parcelHelpers.interopDefault(_progressBar);
+var _ratio = require("./Ratio");
+var _ratioDefault = parcelHelpers.interopDefault(_ratio);
+var _row = require("./Row");
+var _rowDefault = parcelHelpers.interopDefault(_row);
+var _spinner = require("./Spinner");
+var _spinnerDefault = parcelHelpers.interopDefault(_spinner);
+var _splitButton = require("./SplitButton");
+var _splitButtonDefault = parcelHelpers.interopDefault(_splitButton);
+var _ssrprovider = require("./SSRProvider");
+var _ssrproviderDefault = parcelHelpers.interopDefault(_ssrprovider);
+var _stack = require("./Stack");
+var _stackDefault = parcelHelpers.interopDefault(_stack);
+var _tab = require("./Tab");
+var _tabDefault = parcelHelpers.interopDefault(_tab);
+var _tabContainer = require("./TabContainer");
+var _tabContainerDefault = parcelHelpers.interopDefault(_tabContainer);
+var _tabContent = require("./TabContent");
+var _tabContentDefault = parcelHelpers.interopDefault(_tabContent);
+var _table = require("./Table");
+var _tableDefault = parcelHelpers.interopDefault(_table);
+var _tabPane = require("./TabPane");
+var _tabPaneDefault = parcelHelpers.interopDefault(_tabPane);
+var _tabs = require("./Tabs");
+var _tabsDefault = parcelHelpers.interopDefault(_tabs);
+var _themeProvider = require("./ThemeProvider");
+var _themeProviderDefault = parcelHelpers.interopDefault(_themeProvider);
+var _toast = require("./Toast");
+var _toastDefault = parcelHelpers.interopDefault(_toast);
+var _toastBody = require("./ToastBody");
+var _toastBodyDefault = parcelHelpers.interopDefault(_toastBody);
+var _toastContainer = require("./ToastContainer");
+var _toastContainerDefault = parcelHelpers.interopDefault(_toastContainer);
+var _toastHeader = require("./ToastHeader");
+var _toastHeaderDefault = parcelHelpers.interopDefault(_toastHeader);
+var _toggleButton = require("./ToggleButton");
+var _toggleButtonDefault = parcelHelpers.interopDefault(_toggleButton);
+var _toggleButtonGroup = require("./ToggleButtonGroup");
+var _toggleButtonGroupDefault = parcelHelpers.interopDefault(_toggleButtonGroup);
+var _tooltip = require("./Tooltip");
+var _tooltipDefault = parcelHelpers.interopDefault(_tooltip);
+
+},{"./Accordion":false,"./AccordionContext":false,"./AccordionCollapse":false,"./AccordionButton":false,"./AccordionBody":false,"./AccordionHeader":false,"./AccordionItem":false,"./Alert":false,"./AlertHeading":false,"./AlertLink":false,"./Anchor":false,"./Badge":false,"./Breadcrumb":false,"./BreadcrumbItem":false,"./Button":"aPzUt","./ButtonGroup":false,"./ButtonToolbar":false,"./Card":"lAynp","./CardBody":false,"./CardFooter":false,"./CardGroup":false,"./CardHeader":false,"./CardImg":false,"./CardImgOverlay":false,"./CardLink":false,"./CardSubtitle":false,"./CardText":false,"./CardTitle":false,"./Carousel":false,"./CarouselCaption":false,"./CarouselItem":false,"./CloseButton":false,"./Col":false,"./Collapse":false,"./Container":false,"./Dropdown":false,"./DropdownButton":false,"./DropdownDivider":false,"./DropdownHeader":false,"./DropdownItem":false,"./DropdownItemText":false,"./DropdownMenu":false,"./DropdownToggle":false,"./Fade":false,"./Figure":false,"./FigureCaption":false,"./FigureImage":false,"./Form":false,"./FormControl":false,"./FormCheck":false,"./FormFloating":false,"./FloatingLabel":false,"./FormGroup":false,"./FormLabel":false,"./FormText":false,"./FormSelect":false,"./Image":false,"./InputGroup":false,"./ListGroup":false,"./ListGroupItem":false,"./Modal":false,"./ModalBody":false,"./ModalDialog":false,"./ModalFooter":false,"./ModalHeader":false,"./ModalTitle":false,"./Nav":false,"./Navbar":false,"./NavbarBrand":false,"./NavbarCollapse":false,"./NavbarOffcanvas":false,"./NavbarText":false,"./NavbarToggle":false,"./NavDropdown":false,"./NavItem":false,"./NavLink":false,"./Offcanvas":false,"./OffcanvasBody":false,"./OffcanvasHeader":false,"./OffcanvasTitle":false,"./OffcanvasToggling":false,"./Overlay":false,"./OverlayTrigger":false,"./PageItem":false,"./Pagination":false,"./Placeholder":false,"./PlaceholderButton":false,"./Popover":false,"./PopoverBody":false,"./PopoverHeader":false,"./ProgressBar":false,"./Ratio":false,"./Row":false,"./Spinner":false,"./SplitButton":false,"./SSRProvider":false,"./Stack":false,"./Tab":false,"./TabContainer":false,"./TabContent":false,"./Table":false,"./TabPane":false,"./Tabs":false,"./ThemeProvider":false,"./Toast":false,"./ToastBody":false,"./ToastContainer":false,"./ToastHeader":false,"./ToggleButton":false,"./ToggleButtonGroup":false,"./Tooltip":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aPzUt":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _button = require("@restart/ui/Button");
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const Button = /*#__PURE__*/ _react.forwardRef(({ as, bsPrefix, variant = 'primary', size, active = false, disabled = false, className, ...props }, ref)=>{
+    const prefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'btn');
+    const [buttonProps, { tagName }] = (0, _button.useButtonProps)({
+        tagName: as,
+        disabled,
+        ...props
+    });
+    const Component = tagName;
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ...buttonProps,
+        ...props,
+        ref: ref,
+        disabled: disabled,
+        className: (0, _classnamesDefault.default)(className, prefix, active && 'active', variant && `${prefix}-${variant}`, size && `${prefix}-${size}`, props.href && disabled && 'disabled')
+    });
+});
+Button.displayName = 'Button';
+exports.default = Button;
+
+},{"classnames":"jocGM","react":"21dqq","@restart/ui/Button":"8YUbR","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jocGM":[function(require,module,exports,__globalThis) {
+/*!
+	Copyright (c) 2018 Jed Watson.
+	Licensed under the MIT License (MIT), see
+	http://jedwatson.github.io/classnames
+*/ /* global define */ (function() {
+    'use strict';
+    var hasOwn = {}.hasOwnProperty;
+    function classNames() {
+        var classes = '';
+        for(var i = 0; i < arguments.length; i++){
+            var arg = arguments[i];
+            if (arg) classes = appendClass(classes, parseValue(arg));
+        }
+        return classes;
+    }
+    function parseValue(arg) {
+        if (typeof arg === 'string' || typeof arg === 'number') return arg;
+        if (typeof arg !== 'object') return '';
+        if (Array.isArray(arg)) return classNames.apply(null, arg);
+        if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes('[native code]')) return arg.toString();
+        var classes = '';
+        for(var key in arg)if (hasOwn.call(arg, key) && arg[key]) classes = appendClass(classes, key);
+        return classes;
+    }
+    function appendClass(value, newClass) {
+        if (!newClass) return value;
+        if (value) return value + ' ' + newClass;
+        return value + newClass;
+    }
+    if (0, module.exports) {
+        classNames.default = classNames;
+        module.exports = classNames;
+    } else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) // register as 'classnames', consistent with npm package name
+    define('classnames', [], function() {
+        return classNames;
+    });
+    else window.classNames = classNames;
+})();
+
+},{}],"8YUbR":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "isTrivialHref", ()=>isTrivialHref);
+parcelHelpers.export(exports, "useButtonProps", ()=>useButtonProps);
+var _react = require("react");
+var _jsxRuntime = require("react/jsx-runtime");
+const _excluded = [
+    "as",
+    "disabled"
+];
+function _objectWithoutPropertiesLoose(r, e) {
+    if (null == r) return {};
+    var t = {};
+    for(var n in r)if (({}).hasOwnProperty.call(r, n)) {
+        if (e.indexOf(n) >= 0) continue;
+        t[n] = r[n];
+    }
+    return t;
+}
+function isTrivialHref(href) {
+    return !href || href.trim() === '#';
+}
+function useButtonProps({ tagName, disabled, href, target, rel, role, onClick, tabIndex = 0, type }) {
+    if (!tagName) {
+        if (href != null || target != null || rel != null) tagName = 'a';
+        else tagName = 'button';
+    }
+    const meta = {
+        tagName
+    };
+    if (tagName === 'button') return [
+        {
+            type: type || 'button',
+            disabled
+        },
+        meta
+    ];
+    const handleClick = (event)=>{
+        if (disabled || tagName === 'a' && isTrivialHref(href)) event.preventDefault();
+        if (disabled) {
+            event.stopPropagation();
+            return;
+        }
+        onClick == null || onClick(event);
+    };
+    const handleKeyDown = (event)=>{
+        if (event.key === ' ') {
+            event.preventDefault();
+            handleClick(event);
+        }
+    };
+    if (tagName === 'a') {
+        // Ensure there's a href so Enter can trigger anchor button.
+        href || (href = '#');
+        if (disabled) href = undefined;
+    }
+    return [
+        {
+            role: role != null ? role : 'button',
+            // explicitly undefined so that it overrides the props disabled in a spread
+            // e.g. <Tag {...props} {...hookProps} />
+            disabled: undefined,
+            tabIndex: disabled ? undefined : tabIndex,
+            href,
+            target: tagName === 'a' ? target : undefined,
+            'aria-disabled': !disabled ? undefined : disabled,
+            rel: tagName === 'a' ? rel : undefined,
+            onClick: handleClick,
+            onKeyDown: handleKeyDown
+        },
+        meta
+    ];
+}
+const Button = /*#__PURE__*/ _react.forwardRef((_ref, ref)=>{
+    let { as: asProp, disabled } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded);
+    const [buttonProps, { tagName: Component }] = useButtonProps(Object.assign({
+        tagName: asProp,
+        disabled
+    }, props));
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, Object.assign({}, props, buttonProps, {
+        ref: ref
+    }));
+});
+Button.displayName = 'Button';
+exports.default = Button;
+
+},{"react":"21dqq","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6AEwr":[function(require,module,exports,__globalThis) {
+'use strict';
+module.exports = require("c4c10cbba9862d5f");
+
+},{"c4c10cbba9862d5f":"kujY4"}],"kujY4":[function(require,module,exports,__globalThis) {
+/**
+ * @license React
+ * react-jsx-runtime.development.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ "use strict";
+(function() {
+    function getComponentNameFromType(type) {
+        if (null == type) return null;
+        if ("function" === typeof type) return type.$$typeof === REACT_CLIENT_REFERENCE$2 ? null : type.displayName || type.name || null;
+        if ("string" === typeof type) return type;
+        switch(type){
+            case REACT_FRAGMENT_TYPE:
+                return "Fragment";
+            case REACT_PORTAL_TYPE:
+                return "Portal";
+            case REACT_PROFILER_TYPE:
+                return "Profiler";
+            case REACT_STRICT_MODE_TYPE:
+                return "StrictMode";
+            case REACT_SUSPENSE_TYPE:
+                return "Suspense";
+            case REACT_SUSPENSE_LIST_TYPE:
+                return "SuspenseList";
+        }
+        if ("object" === typeof type) switch("number" === typeof type.tag && console.error("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."), type.$$typeof){
+            case REACT_CONTEXT_TYPE:
+                return (type.displayName || "Context") + ".Provider";
+            case REACT_CONSUMER_TYPE:
+                return (type._context.displayName || "Context") + ".Consumer";
+            case REACT_FORWARD_REF_TYPE:
+                var innerType = type.render;
+                type = type.displayName;
+                type || (type = innerType.displayName || innerType.name || "", type = "" !== type ? "ForwardRef(" + type + ")" : "ForwardRef");
+                return type;
+            case REACT_MEMO_TYPE:
+                return innerType = type.displayName || null, null !== innerType ? innerType : getComponentNameFromType(type.type) || "Memo";
+            case REACT_LAZY_TYPE:
+                innerType = type._payload;
+                type = type._init;
+                try {
+                    return getComponentNameFromType(type(innerType));
+                } catch (x) {}
+        }
+        return null;
+    }
+    function testStringCoercion(value) {
+        return "" + value;
+    }
+    function checkKeyStringCoercion(value) {
+        try {
+            testStringCoercion(value);
+            var JSCompiler_inline_result = !1;
+        } catch (e) {
+            JSCompiler_inline_result = !0;
+        }
+        if (JSCompiler_inline_result) {
+            JSCompiler_inline_result = console;
+            var JSCompiler_temp_const = JSCompiler_inline_result.error;
+            var JSCompiler_inline_result$jscomp$0 = "function" === typeof Symbol && Symbol.toStringTag && value[Symbol.toStringTag] || value.constructor.name || "Object";
+            JSCompiler_temp_const.call(JSCompiler_inline_result, "The provided key is an unsupported type %s. This value must be coerced to a string before using it here.", JSCompiler_inline_result$jscomp$0);
+            return testStringCoercion(value);
+        }
+    }
+    function disabledLog() {}
+    function disableLogs() {
+        if (0 === disabledDepth) {
+            prevLog = console.log;
+            prevInfo = console.info;
+            prevWarn = console.warn;
+            prevError = console.error;
+            prevGroup = console.group;
+            prevGroupCollapsed = console.groupCollapsed;
+            prevGroupEnd = console.groupEnd;
+            var props = {
+                configurable: !0,
+                enumerable: !0,
+                value: disabledLog,
+                writable: !0
+            };
+            Object.defineProperties(console, {
+                info: props,
+                log: props,
+                warn: props,
+                error: props,
+                group: props,
+                groupCollapsed: props,
+                groupEnd: props
+            });
+        }
+        disabledDepth++;
+    }
+    function reenableLogs() {
+        disabledDepth--;
+        if (0 === disabledDepth) {
+            var props = {
+                configurable: !0,
+                enumerable: !0,
+                writable: !0
+            };
+            Object.defineProperties(console, {
+                log: assign({}, props, {
+                    value: prevLog
+                }),
+                info: assign({}, props, {
+                    value: prevInfo
+                }),
+                warn: assign({}, props, {
+                    value: prevWarn
+                }),
+                error: assign({}, props, {
+                    value: prevError
+                }),
+                group: assign({}, props, {
+                    value: prevGroup
+                }),
+                groupCollapsed: assign({}, props, {
+                    value: prevGroupCollapsed
+                }),
+                groupEnd: assign({}, props, {
+                    value: prevGroupEnd
+                })
+            });
+        }
+        0 > disabledDepth && console.error("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
+    }
+    function describeBuiltInComponentFrame(name) {
+        if (void 0 === prefix) try {
+            throw Error();
+        } catch (x) {
+            var match = x.stack.trim().match(/\n( *(at )?)/);
+            prefix = match && match[1] || "";
+            suffix = -1 < x.stack.indexOf("\n    at") ? " (<anonymous>)" : -1 < x.stack.indexOf("@") ? "@unknown:0:0" : "";
+        }
+        return "\n" + prefix + name + suffix;
+    }
+    function describeNativeComponentFrame(fn, construct) {
+        if (!fn || reentry) return "";
+        var frame = componentFrameCache.get(fn);
+        if (void 0 !== frame) return frame;
+        reentry = !0;
+        frame = Error.prepareStackTrace;
+        Error.prepareStackTrace = void 0;
+        var previousDispatcher = null;
+        previousDispatcher = ReactSharedInternals.H;
+        ReactSharedInternals.H = null;
+        disableLogs();
+        try {
+            var RunInRootFrame = {
+                DetermineComponentFrameRoot: function() {
+                    try {
+                        if (construct) {
+                            var Fake = function() {
+                                throw Error();
+                            };
+                            Object.defineProperty(Fake.prototype, "props", {
+                                set: function() {
+                                    throw Error();
+                                }
+                            });
+                            if ("object" === typeof Reflect && Reflect.construct) {
+                                try {
+                                    Reflect.construct(Fake, []);
+                                } catch (x) {
+                                    var control = x;
+                                }
+                                Reflect.construct(fn, [], Fake);
+                            } else {
+                                try {
+                                    Fake.call();
+                                } catch (x$0) {
+                                    control = x$0;
+                                }
+                                fn.call(Fake.prototype);
+                            }
+                        } else {
+                            try {
+                                throw Error();
+                            } catch (x$1) {
+                                control = x$1;
+                            }
+                            (Fake = fn()) && "function" === typeof Fake.catch && Fake.catch(function() {});
+                        }
+                    } catch (sample) {
+                        if (sample && control && "string" === typeof sample.stack) return [
+                            sample.stack,
+                            control.stack
+                        ];
+                    }
+                    return [
+                        null,
+                        null
+                    ];
+                }
+            };
+            RunInRootFrame.DetermineComponentFrameRoot.displayName = "DetermineComponentFrameRoot";
+            var namePropDescriptor = Object.getOwnPropertyDescriptor(RunInRootFrame.DetermineComponentFrameRoot, "name");
+            namePropDescriptor && namePropDescriptor.configurable && Object.defineProperty(RunInRootFrame.DetermineComponentFrameRoot, "name", {
+                value: "DetermineComponentFrameRoot"
+            });
+            var _RunInRootFrame$Deter = RunInRootFrame.DetermineComponentFrameRoot(), sampleStack = _RunInRootFrame$Deter[0], controlStack = _RunInRootFrame$Deter[1];
+            if (sampleStack && controlStack) {
+                var sampleLines = sampleStack.split("\n"), controlLines = controlStack.split("\n");
+                for(_RunInRootFrame$Deter = namePropDescriptor = 0; namePropDescriptor < sampleLines.length && !sampleLines[namePropDescriptor].includes("DetermineComponentFrameRoot");)namePropDescriptor++;
+                for(; _RunInRootFrame$Deter < controlLines.length && !controlLines[_RunInRootFrame$Deter].includes("DetermineComponentFrameRoot");)_RunInRootFrame$Deter++;
+                if (namePropDescriptor === sampleLines.length || _RunInRootFrame$Deter === controlLines.length) for(namePropDescriptor = sampleLines.length - 1, _RunInRootFrame$Deter = controlLines.length - 1; 1 <= namePropDescriptor && 0 <= _RunInRootFrame$Deter && sampleLines[namePropDescriptor] !== controlLines[_RunInRootFrame$Deter];)_RunInRootFrame$Deter--;
+                for(; 1 <= namePropDescriptor && 0 <= _RunInRootFrame$Deter; namePropDescriptor--, _RunInRootFrame$Deter--)if (sampleLines[namePropDescriptor] !== controlLines[_RunInRootFrame$Deter]) {
+                    if (1 !== namePropDescriptor || 1 !== _RunInRootFrame$Deter) {
+                        do if (namePropDescriptor--, _RunInRootFrame$Deter--, 0 > _RunInRootFrame$Deter || sampleLines[namePropDescriptor] !== controlLines[_RunInRootFrame$Deter]) {
+                            var _frame = "\n" + sampleLines[namePropDescriptor].replace(" at new ", " at ");
+                            fn.displayName && _frame.includes("<anonymous>") && (_frame = _frame.replace("<anonymous>", fn.displayName));
+                            "function" === typeof fn && componentFrameCache.set(fn, _frame);
+                            return _frame;
+                        }
+                        while (1 <= namePropDescriptor && 0 <= _RunInRootFrame$Deter);
+                    }
+                    break;
+                }
+            }
+        } finally{
+            reentry = !1, ReactSharedInternals.H = previousDispatcher, reenableLogs(), Error.prepareStackTrace = frame;
+        }
+        sampleLines = (sampleLines = fn ? fn.displayName || fn.name : "") ? describeBuiltInComponentFrame(sampleLines) : "";
+        "function" === typeof fn && componentFrameCache.set(fn, sampleLines);
+        return sampleLines;
+    }
+    function describeUnknownElementTypeFrameInDEV(type) {
+        if (null == type) return "";
+        if ("function" === typeof type) {
+            var prototype = type.prototype;
+            return describeNativeComponentFrame(type, !(!prototype || !prototype.isReactComponent));
+        }
+        if ("string" === typeof type) return describeBuiltInComponentFrame(type);
+        switch(type){
+            case REACT_SUSPENSE_TYPE:
+                return describeBuiltInComponentFrame("Suspense");
+            case REACT_SUSPENSE_LIST_TYPE:
+                return describeBuiltInComponentFrame("SuspenseList");
+        }
+        if ("object" === typeof type) switch(type.$$typeof){
+            case REACT_FORWARD_REF_TYPE:
+                return type = describeNativeComponentFrame(type.render, !1), type;
+            case REACT_MEMO_TYPE:
+                return describeUnknownElementTypeFrameInDEV(type.type);
+            case REACT_LAZY_TYPE:
+                prototype = type._payload;
+                type = type._init;
+                try {
+                    return describeUnknownElementTypeFrameInDEV(type(prototype));
+                } catch (x) {}
+        }
+        return "";
+    }
+    function getOwner() {
+        var dispatcher = ReactSharedInternals.A;
+        return null === dispatcher ? null : dispatcher.getOwner();
+    }
+    function hasValidKey(config) {
+        if (hasOwnProperty.call(config, "key")) {
+            var getter = Object.getOwnPropertyDescriptor(config, "key").get;
+            if (getter && getter.isReactWarning) return !1;
+        }
+        return void 0 !== config.key;
+    }
+    function defineKeyPropWarningGetter(props, displayName) {
+        function warnAboutAccessingKey() {
+            specialPropKeyWarningShown || (specialPropKeyWarningShown = !0, console.error("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)", displayName));
+        }
+        warnAboutAccessingKey.isReactWarning = !0;
+        Object.defineProperty(props, "key", {
+            get: warnAboutAccessingKey,
+            configurable: !0
+        });
+    }
+    function elementRefGetterWithDeprecationWarning() {
+        var componentName = getComponentNameFromType(this.type);
+        didWarnAboutElementRef[componentName] || (didWarnAboutElementRef[componentName] = !0, console.error("Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."));
+        componentName = this.props.ref;
+        return void 0 !== componentName ? componentName : null;
+    }
+    function ReactElement(type, key, self, source, owner, props) {
+        self = props.ref;
+        type = {
+            $$typeof: REACT_ELEMENT_TYPE,
+            type: type,
+            key: key,
+            props: props,
+            _owner: owner
+        };
+        null !== (void 0 !== self ? self : null) ? Object.defineProperty(type, "ref", {
+            enumerable: !1,
+            get: elementRefGetterWithDeprecationWarning
+        }) : Object.defineProperty(type, "ref", {
+            enumerable: !1,
+            value: null
+        });
+        type._store = {};
+        Object.defineProperty(type._store, "validated", {
+            configurable: !1,
+            enumerable: !1,
+            writable: !0,
+            value: 0
+        });
+        Object.defineProperty(type, "_debugInfo", {
+            configurable: !1,
+            enumerable: !1,
+            writable: !0,
+            value: null
+        });
+        Object.freeze && (Object.freeze(type.props), Object.freeze(type));
+        return type;
+    }
+    function jsxDEVImpl(type, config, maybeKey, isStaticChildren, source, self) {
+        if ("string" === typeof type || "function" === typeof type || type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || type === REACT_OFFSCREEN_TYPE || "object" === typeof type && null !== type && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_CONSUMER_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_CLIENT_REFERENCE$1 || void 0 !== type.getModuleId)) {
+            var children = config.children;
+            if (void 0 !== children) {
+                if (isStaticChildren) {
+                    if (isArrayImpl(children)) {
+                        for(isStaticChildren = 0; isStaticChildren < children.length; isStaticChildren++)validateChildKeys(children[isStaticChildren], type);
+                        Object.freeze && Object.freeze(children);
+                    } else console.error("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
+                } else validateChildKeys(children, type);
+            }
+        } else {
+            children = "";
+            if (void 0 === type || "object" === typeof type && null !== type && 0 === Object.keys(type).length) children += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.";
+            null === type ? isStaticChildren = "null" : isArrayImpl(type) ? isStaticChildren = "array" : void 0 !== type && type.$$typeof === REACT_ELEMENT_TYPE ? (isStaticChildren = "<" + (getComponentNameFromType(type.type) || "Unknown") + " />", children = " Did you accidentally export a JSX literal instead of a component?") : isStaticChildren = typeof type;
+            console.error("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", isStaticChildren, children);
+        }
+        if (hasOwnProperty.call(config, "key")) {
+            children = getComponentNameFromType(type);
+            var keys = Object.keys(config).filter(function(k) {
+                return "key" !== k;
+            });
+            isStaticChildren = 0 < keys.length ? "{key: someKey, " + keys.join(": ..., ") + ": ...}" : "{key: someKey}";
+            didWarnAboutKeySpread[children + isStaticChildren] || (keys = 0 < keys.length ? "{" + keys.join(": ..., ") + ": ...}" : "{}", console.error('A props object containing a "key" prop is being spread into JSX:\n  let props = %s;\n  <%s {...props} />\nReact keys must be passed directly to JSX without using spread:\n  let props = %s;\n  <%s key={someKey} {...props} />', isStaticChildren, children, keys, children), didWarnAboutKeySpread[children + isStaticChildren] = !0);
+        }
+        children = null;
+        void 0 !== maybeKey && (checkKeyStringCoercion(maybeKey), children = "" + maybeKey);
+        hasValidKey(config) && (checkKeyStringCoercion(config.key), children = "" + config.key);
+        if ("key" in config) {
+            maybeKey = {};
+            for(var propName in config)"key" !== propName && (maybeKey[propName] = config[propName]);
+        } else maybeKey = config;
+        children && defineKeyPropWarningGetter(maybeKey, "function" === typeof type ? type.displayName || type.name || "Unknown" : type);
+        return ReactElement(type, children, self, source, getOwner(), maybeKey);
+    }
+    function validateChildKeys(node, parentType) {
+        if ("object" === typeof node && node && node.$$typeof !== REACT_CLIENT_REFERENCE) {
+            if (isArrayImpl(node)) for(var i = 0; i < node.length; i++){
+                var child = node[i];
+                isValidElement(child) && validateExplicitKey(child, parentType);
+            }
+            else if (isValidElement(node)) node._store && (node._store.validated = 1);
+            else if (null === node || "object" !== typeof node ? i = null : (i = MAYBE_ITERATOR_SYMBOL && node[MAYBE_ITERATOR_SYMBOL] || node["@@iterator"], i = "function" === typeof i ? i : null), "function" === typeof i && i !== node.entries && (i = i.call(node), i !== node)) for(; !(node = i.next()).done;)isValidElement(node.value) && validateExplicitKey(node.value, parentType);
+        }
+    }
+    function isValidElement(object) {
+        return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
+    }
+    function validateExplicitKey(element, parentType) {
+        if (element._store && !element._store.validated && null == element.key && (element._store.validated = 1, parentType = getCurrentComponentErrorInfo(parentType), !ownerHasKeyUseWarning[parentType])) {
+            ownerHasKeyUseWarning[parentType] = !0;
+            var childOwner = "";
+            element && null != element._owner && element._owner !== getOwner() && (childOwner = null, "number" === typeof element._owner.tag ? childOwner = getComponentNameFromType(element._owner.type) : "string" === typeof element._owner.name && (childOwner = element._owner.name), childOwner = " It was passed a child from " + childOwner + ".");
+            var prevGetCurrentStack = ReactSharedInternals.getCurrentStack;
+            ReactSharedInternals.getCurrentStack = function() {
+                var stack = describeUnknownElementTypeFrameInDEV(element.type);
+                prevGetCurrentStack && (stack += prevGetCurrentStack() || "");
+                return stack;
+            };
+            console.error('Each child in a list should have a unique "key" prop.%s%s See https://react.dev/link/warning-keys for more information.', parentType, childOwner);
+            ReactSharedInternals.getCurrentStack = prevGetCurrentStack;
+        }
+    }
+    function getCurrentComponentErrorInfo(parentType) {
+        var info = "", owner = getOwner();
+        owner && (owner = getComponentNameFromType(owner.type)) && (info = "\n\nCheck the render method of `" + owner + "`.");
+        info || (parentType = getComponentNameFromType(parentType)) && (info = "\n\nCheck the top-level render call using <" + parentType + ">.");
+        return info;
+    }
+    var React = require("593632ccebda0d3a"), REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler");
+    Symbol.for("react.provider");
+    var REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy"), REACT_OFFSCREEN_TYPE = Symbol.for("react.offscreen"), MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE$2 = Symbol.for("react.client.reference"), ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, assign = Object.assign, REACT_CLIENT_REFERENCE$1 = Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, disabledDepth = 0, prevLog, prevInfo, prevWarn, prevError, prevGroup, prevGroupCollapsed, prevGroupEnd;
+    disabledLog.__reactDisabledLog = !0;
+    var prefix, suffix, reentry = !1;
+    var componentFrameCache = new ("function" === typeof WeakMap ? WeakMap : Map)();
+    var REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"), specialPropKeyWarningShown;
+    var didWarnAboutElementRef = {};
+    var didWarnAboutKeySpread = {}, ownerHasKeyUseWarning = {};
+    exports.Fragment = REACT_FRAGMENT_TYPE;
+    exports.jsx = function(type, config, maybeKey, source, self) {
+        return jsxDEVImpl(type, config, maybeKey, !1, source, self);
+    };
+    exports.jsxs = function(type, config, maybeKey, source, self) {
+        return jsxDEVImpl(type, config, maybeKey, !0, source, self);
+    };
+})();
+
+},{"593632ccebda0d3a":"21dqq"}],"dVixI":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "DEFAULT_BREAKPOINTS", ()=>DEFAULT_BREAKPOINTS);
+parcelHelpers.export(exports, "DEFAULT_MIN_BREAKPOINT", ()=>DEFAULT_MIN_BREAKPOINT);
+parcelHelpers.export(exports, "useBootstrapPrefix", ()=>useBootstrapPrefix);
+parcelHelpers.export(exports, "useBootstrapBreakpoints", ()=>useBootstrapBreakpoints);
+parcelHelpers.export(exports, "useBootstrapMinBreakpoint", ()=>useBootstrapMinBreakpoint);
+parcelHelpers.export(exports, "useIsRTL", ()=>useIsRTL);
+parcelHelpers.export(exports, "createBootstrapComponent", ()=>createBootstrapComponent);
+parcelHelpers.export(exports, "ThemeConsumer", ()=>Consumer);
+var _react = require("react");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const DEFAULT_BREAKPOINTS = [
+    'xxl',
+    'xl',
+    'lg',
+    'md',
+    'sm',
+    'xs'
+];
+const DEFAULT_MIN_BREAKPOINT = 'xs';
+const ThemeContext = /*#__PURE__*/ _react.createContext({
+    prefixes: {},
+    breakpoints: DEFAULT_BREAKPOINTS,
+    minBreakpoint: DEFAULT_MIN_BREAKPOINT
+});
+const { Consumer, Provider } = ThemeContext;
+function ThemeProvider({ prefixes = {}, breakpoints = DEFAULT_BREAKPOINTS, minBreakpoint = DEFAULT_MIN_BREAKPOINT, dir, children }) {
+    const contextValue = (0, _react.useMemo)(()=>({
+            prefixes: {
+                ...prefixes
+            },
+            breakpoints,
+            minBreakpoint,
+            dir
+        }), [
+        prefixes,
+        breakpoints,
+        minBreakpoint,
+        dir
+    ]);
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Provider, {
+        value: contextValue,
+        children: children
+    });
+}
+function useBootstrapPrefix(prefix, defaultPrefix) {
+    const { prefixes } = (0, _react.useContext)(ThemeContext);
+    return prefix || prefixes[defaultPrefix] || defaultPrefix;
+}
+function useBootstrapBreakpoints() {
+    const { breakpoints } = (0, _react.useContext)(ThemeContext);
+    return breakpoints;
+}
+function useBootstrapMinBreakpoint() {
+    const { minBreakpoint } = (0, _react.useContext)(ThemeContext);
+    return minBreakpoint;
+}
+function useIsRTL() {
+    const { dir } = (0, _react.useContext)(ThemeContext);
+    return dir === 'rtl';
+}
+function createBootstrapComponent(Component, opts) {
+    if (typeof opts === 'string') opts = {
+        prefix: opts
+    };
+    const isClassy = Component.prototype && Component.prototype.isReactComponent;
+    // If it's a functional component make sure we don't break it with a ref
+    const { prefix, forwardRefAs = isClassy ? 'ref' : 'innerRef' } = opts;
+    const Wrapped = /*#__PURE__*/ _react.forwardRef(({ ...props }, ref)=>{
+        props[forwardRefAs] = ref;
+        const bsPrefix = useBootstrapPrefix(props.bsPrefix, prefix);
+        return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+            ...props,
+            bsPrefix: bsPrefix
+        });
+    });
+    Wrapped.displayName = `Bootstrap(${Component.displayName || Component.name})`;
+    return Wrapped;
+}
+exports.default = ThemeProvider;
+
+},{"react":"21dqq","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lAynp":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _cardBody = require("./CardBody");
+var _cardBodyDefault = parcelHelpers.interopDefault(_cardBody);
+var _cardFooter = require("./CardFooter");
+var _cardFooterDefault = parcelHelpers.interopDefault(_cardFooter);
+var _cardHeader = require("./CardHeader");
+var _cardHeaderDefault = parcelHelpers.interopDefault(_cardHeader);
+var _cardImg = require("./CardImg");
+var _cardImgDefault = parcelHelpers.interopDefault(_cardImg);
+var _cardImgOverlay = require("./CardImgOverlay");
+var _cardImgOverlayDefault = parcelHelpers.interopDefault(_cardImgOverlay);
+var _cardLink = require("./CardLink");
+var _cardLinkDefault = parcelHelpers.interopDefault(_cardLink);
+var _cardSubtitle = require("./CardSubtitle");
+var _cardSubtitleDefault = parcelHelpers.interopDefault(_cardSubtitle);
+var _cardText = require("./CardText");
+var _cardTextDefault = parcelHelpers.interopDefault(_cardText);
+var _cardTitle = require("./CardTitle");
+var _cardTitleDefault = parcelHelpers.interopDefault(_cardTitle);
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const Card = /*#__PURE__*/ _react.forwardRef(({ bsPrefix, className, bg, text, border, body = false, children, // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as: Component = 'div', ...props }, ref)=>{
+    const prefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'card');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ref: ref,
+        ...props,
+        className: (0, _classnamesDefault.default)(className, prefix, bg && `bg-${bg}`, text && `text-${text}`, border && `border-${border}`),
+        children: body ? /*#__PURE__*/ (0, _jsxRuntime.jsx)((0, _cardBodyDefault.default), {
+            children: children
+        }) : children
+    });
+});
+Card.displayName = 'Card';
+exports.default = Object.assign(Card, {
+    Img: (0, _cardImgDefault.default),
+    Title: (0, _cardTitleDefault.default),
+    Subtitle: (0, _cardSubtitleDefault.default),
+    Body: (0, _cardBodyDefault.default),
+    Link: (0, _cardLinkDefault.default),
+    Text: (0, _cardTextDefault.default),
+    Header: (0, _cardHeaderDefault.default),
+    Footer: (0, _cardFooterDefault.default),
+    ImgOverlay: (0, _cardImgOverlayDefault.default)
+});
+
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","./CardBody":"iN1Jc","./CardFooter":"jUi26","./CardHeader":"dXnnx","./CardImg":"1reTi","./CardImgOverlay":"Bi8dC","./CardLink":"9uFCo","./CardSubtitle":"i2BiN","./CardText":"aUUmg","./CardTitle":"79rSZ","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iN1Jc":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const CardBody = /*#__PURE__*/ _react.forwardRef(({ className, bsPrefix, as: Component = 'div', ...props }, ref)=>{
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'card-body');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ref: ref,
+        className: (0, _classnamesDefault.default)(className, bsPrefix),
+        ...props
+    });
+});
+CardBody.displayName = 'CardBody';
+exports.default = CardBody;
+
+},{"react":"21dqq","classnames":"jocGM","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jUi26":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const CardFooter = /*#__PURE__*/ _react.forwardRef(({ className, bsPrefix, as: Component = 'div', ...props }, ref)=>{
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'card-footer');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ref: ref,
+        className: (0, _classnamesDefault.default)(className, bsPrefix),
+        ...props
+    });
+});
+CardFooter.displayName = 'CardFooter';
+exports.default = CardFooter;
+
+},{"react":"21dqq","classnames":"jocGM","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dXnnx":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _cardHeaderContext = require("./CardHeaderContext");
+var _cardHeaderContextDefault = parcelHelpers.interopDefault(_cardHeaderContext);
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const CardHeader = /*#__PURE__*/ _react.forwardRef(({ bsPrefix, className, // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as: Component = 'div', ...props }, ref)=>{
+    const prefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'card-header');
+    const contextValue = (0, _react.useMemo)(()=>({
+            cardHeaderBsPrefix: prefix
+        }), [
+        prefix
+    ]);
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)((0, _cardHeaderContextDefault.default).Provider, {
+        value: contextValue,
+        children: /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+            ref: ref,
+            ...props,
+            className: (0, _classnamesDefault.default)(className, prefix)
+        })
+    });
+});
+CardHeader.displayName = 'CardHeader';
+exports.default = CardHeader;
+
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","./CardHeaderContext":"36cNB","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"36cNB":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+"use client";
+const context = /*#__PURE__*/ _react.createContext(null);
+context.displayName = 'CardHeaderContext';
+exports.default = context;
+
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1reTi":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const CardImg = /*#__PURE__*/ _react.forwardRef(// Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+({ bsPrefix, className, variant, as: Component = 'img', ...props }, ref)=>{
+    const prefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'card-img');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ref: ref,
+        className: (0, _classnamesDefault.default)(variant ? `${prefix}-${variant}` : prefix, className),
+        ...props
+    });
+});
+CardImg.displayName = 'CardImg';
+exports.default = CardImg;
+
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"Bi8dC":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const CardImgOverlay = /*#__PURE__*/ _react.forwardRef(({ className, bsPrefix, as: Component = 'div', ...props }, ref)=>{
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'card-img-overlay');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ref: ref,
+        className: (0, _classnamesDefault.default)(className, bsPrefix),
+        ...props
+    });
+});
+CardImgOverlay.displayName = 'CardImgOverlay';
+exports.default = CardImgOverlay;
+
+},{"react":"21dqq","classnames":"jocGM","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9uFCo":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const CardLink = /*#__PURE__*/ _react.forwardRef(({ className, bsPrefix, as: Component = 'a', ...props }, ref)=>{
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'card-link');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ref: ref,
+        className: (0, _classnamesDefault.default)(className, bsPrefix),
+        ...props
+    });
+});
+CardLink.displayName = 'CardLink';
+exports.default = CardLink;
+
+},{"react":"21dqq","classnames":"jocGM","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"i2BiN":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _themeProvider = require("./ThemeProvider");
+var _divWithClassName = require("./divWithClassName");
+var _divWithClassNameDefault = parcelHelpers.interopDefault(_divWithClassName);
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const DivStyledAsH6 = (0, _divWithClassNameDefault.default)('h6');
+const CardSubtitle = /*#__PURE__*/ _react.forwardRef(({ className, bsPrefix, as: Component = DivStyledAsH6, ...props }, ref)=>{
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'card-subtitle');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ref: ref,
+        className: (0, _classnamesDefault.default)(className, bsPrefix),
+        ...props
+    });
+});
+CardSubtitle.displayName = 'CardSubtitle';
+exports.default = CardSubtitle;
+
+},{"react":"21dqq","classnames":"jocGM","./ThemeProvider":"dVixI","./divWithClassName":"eDg7t","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eDg7t":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _jsxRuntime = require("react/jsx-runtime");
+exports.default = (className)=>/*#__PURE__*/ _react.forwardRef((p, ref)=>/*#__PURE__*/ (0, _jsxRuntime.jsx)("div", {
+            ...p,
+            ref: ref,
+            className: (0, _classnamesDefault.default)(p.className, className)
+        }));
+
+},{"react":"21dqq","classnames":"jocGM","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aUUmg":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const CardText = /*#__PURE__*/ _react.forwardRef(({ className, bsPrefix, as: Component = 'p', ...props }, ref)=>{
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'card-text');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ref: ref,
+        className: (0, _classnamesDefault.default)(className, bsPrefix),
+        ...props
+    });
+});
+CardText.displayName = 'CardText';
+exports.default = CardText;
+
+},{"react":"21dqq","classnames":"jocGM","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"79rSZ":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _themeProvider = require("./ThemeProvider");
+var _divWithClassName = require("./divWithClassName");
+var _divWithClassNameDefault = parcelHelpers.interopDefault(_divWithClassName);
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const DivStyledAsH5 = (0, _divWithClassNameDefault.default)('h5');
+const CardTitle = /*#__PURE__*/ _react.forwardRef(({ className, bsPrefix, as: Component = DivStyledAsH5, ...props }, ref)=>{
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'card-title');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ref: ref,
+        className: (0, _classnamesDefault.default)(className, bsPrefix),
+        ...props
+    });
+});
+CardTitle.displayName = 'CardTitle';
+exports.default = CardTitle;
+
+},{"react":"21dqq","classnames":"jocGM","./ThemeProvider":"dVixI","./divWithClassName":"eDg7t","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2L2I6":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "useCol", ()=>useCol);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+function useCol({ as, bsPrefix, className, ...props }) {
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'col');
+    const breakpoints = (0, _themeProvider.useBootstrapBreakpoints)();
+    const minBreakpoint = (0, _themeProvider.useBootstrapMinBreakpoint)();
+    const spans = [];
+    const classes = [];
+    breakpoints.forEach((brkPoint)=>{
+        const propValue = props[brkPoint];
+        delete props[brkPoint];
+        let span;
+        let offset;
+        let order;
+        if (typeof propValue === 'object' && propValue != null) ({ span, offset, order } = propValue);
+        else span = propValue;
+        const infix = brkPoint !== minBreakpoint ? `-${brkPoint}` : '';
+        if (span) spans.push(span === true ? `${bsPrefix}${infix}` : `${bsPrefix}${infix}-${span}`);
+        if (order != null) classes.push(`order${infix}-${order}`);
+        if (offset != null) classes.push(`offset${infix}-${offset}`);
+    });
+    return [
+        {
+            ...props,
+            className: (0, _classnamesDefault.default)(className, ...spans, ...classes)
+        },
+        {
+            as,
+            bsPrefix,
+            spans
+        }
+    ];
+}
+const Col = /*#__PURE__*/ _react.forwardRef(// Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+(props, ref)=>{
+    const [{ className, ...colProps }, { as: Component = 'div', bsPrefix, spans }] = useCol(props);
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ...colProps,
+        ref: ref,
+        className: (0, _classnamesDefault.default)(className, !spans.length && bsPrefix)
+    });
+});
+Col.displayName = 'Col';
+exports.default = Col;
+
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hEdsw":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const Container = /*#__PURE__*/ _react.forwardRef(({ bsPrefix, fluid = false, // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as: Component = 'div', className, ...props }, ref)=>{
+    const prefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'container');
+    const suffix = typeof fluid === 'string' ? `-${fluid}` : '-fluid';
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ref: ref,
+        ...props,
+        className: (0, _classnamesDefault.default)(className, fluid ? `${prefix}${suffix}` : prefix)
+    });
+});
+Container.displayName = 'Container';
+exports.default = Container;
+
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iBZ80":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _react = require("react");
+var _formCheck = require("./FormCheck");
+var _formCheckDefault = parcelHelpers.interopDefault(_formCheck);
+var _formControl = require("./FormControl");
+var _formControlDefault = parcelHelpers.interopDefault(_formControl);
+var _formFloating = require("./FormFloating");
+var _formFloatingDefault = parcelHelpers.interopDefault(_formFloating);
+var _formGroup = require("./FormGroup");
+var _formGroupDefault = parcelHelpers.interopDefault(_formGroup);
+var _formLabel = require("./FormLabel");
+var _formLabelDefault = parcelHelpers.interopDefault(_formLabel);
+var _formRange = require("./FormRange");
+var _formRangeDefault = parcelHelpers.interopDefault(_formRange);
+var _formSelect = require("./FormSelect");
+var _formSelectDefault = parcelHelpers.interopDefault(_formSelect);
+var _formText = require("./FormText");
+var _formTextDefault = parcelHelpers.interopDefault(_formText);
+var _switch = require("./Switch");
+var _switchDefault = parcelHelpers.interopDefault(_switch);
+var _floatingLabel = require("./FloatingLabel");
+var _floatingLabelDefault = parcelHelpers.interopDefault(_floatingLabel);
+var _jsxRuntime = require("react/jsx-runtime");
+const propTypes = {
+    /**
+   * The Form `ref` will be forwarded to the underlying element,
+   * which means, unless it's rendered `as` a composite component,
+   * it will be a DOM node, when resolved.
+   *
+   * @type {ReactRef}
+   * @alias ref
+   */ _ref: (0, _propTypesDefault.default).any,
+    /**
+   * Mark a form as having been validated. Setting it to `true` will
+   * toggle any validation styles on the forms elements.
+   */ validated: (0, _propTypesDefault.default).bool,
+    as: (0, _propTypesDefault.default).elementType
+};
+const Form = /*#__PURE__*/ _react.forwardRef(({ className, validated, // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as: Component = 'form', ...props }, ref)=>/*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ...props,
+        ref: ref,
+        className: (0, _classnamesDefault.default)(className, validated && 'was-validated')
+    }));
+Form.displayName = 'Form';
+Form.propTypes = propTypes;
+exports.default = Object.assign(Form, {
+    Group: (0, _formGroupDefault.default),
+    Control: (0, _formControlDefault.default),
+    Floating: (0, _formFloatingDefault.default),
+    Check: (0, _formCheckDefault.default),
+    Switch: (0, _switchDefault.default),
+    Label: (0, _formLabelDefault.default),
+    Text: (0, _formTextDefault.default),
+    Range: (0, _formRangeDefault.default),
+    Select: (0, _formSelectDefault.default),
+    FloatingLabel: (0, _floatingLabelDefault.default)
+});
+
+},{"classnames":"jocGM","prop-types":"7wKI2","react":"21dqq","./FormCheck":"idkr0","./FormControl":"iynMc","./FormFloating":"aj346","./FormGroup":"1qBHH","./FormLabel":"66epi","./FormRange":"8zsCO","./FormSelect":"hHWyB","./FormText":"ffeC7","./Switch":"9O81i","./FloatingLabel":"coYzo","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"idkr0":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _feedback = require("./Feedback");
+var _feedbackDefault = parcelHelpers.interopDefault(_feedback);
+var _formCheckInput = require("./FormCheckInput");
+var _formCheckInputDefault = parcelHelpers.interopDefault(_formCheckInput);
+var _formCheckLabel = require("./FormCheckLabel");
+var _formCheckLabelDefault = parcelHelpers.interopDefault(_formCheckLabel);
+var _formContext = require("./FormContext");
+var _formContextDefault = parcelHelpers.interopDefault(_formContext);
+var _themeProvider = require("./ThemeProvider");
+var _elementChildren = require("./ElementChildren");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const FormCheck = /*#__PURE__*/ _react.forwardRef(({ id, bsPrefix, bsSwitchPrefix, inline = false, reverse = false, disabled = false, isValid = false, isInvalid = false, feedbackTooltip = false, feedback, feedbackType, className, style, title = '', type = 'checkbox', label, children, // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as = 'input', ...props }, ref)=>{
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'form-check');
+    bsSwitchPrefix = (0, _themeProvider.useBootstrapPrefix)(bsSwitchPrefix, 'form-switch');
+    const { controlId } = (0, _react.useContext)((0, _formContextDefault.default));
+    const innerFormContext = (0, _react.useMemo)(()=>({
+            controlId: id || controlId
+        }), [
+        controlId,
+        id
+    ]);
+    const hasLabel = !children && label != null && label !== false || (0, _elementChildren.hasChildOfType)(children, (0, _formCheckLabelDefault.default));
+    const input = /*#__PURE__*/ (0, _jsxRuntime.jsx)((0, _formCheckInputDefault.default), {
+        ...props,
+        type: type === 'switch' ? 'checkbox' : type,
+        ref: ref,
+        isValid: isValid,
+        isInvalid: isInvalid,
+        disabled: disabled,
+        as: as
+    });
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)((0, _formContextDefault.default).Provider, {
+        value: innerFormContext,
+        children: /*#__PURE__*/ (0, _jsxRuntime.jsx)("div", {
+            style: style,
+            className: (0, _classnamesDefault.default)(className, hasLabel && bsPrefix, inline && `${bsPrefix}-inline`, reverse && `${bsPrefix}-reverse`, type === 'switch' && bsSwitchPrefix),
+            children: children || /*#__PURE__*/ (0, _jsxRuntime.jsxs)((0, _jsxRuntime.Fragment), {
+                children: [
+                    input,
+                    hasLabel && /*#__PURE__*/ (0, _jsxRuntime.jsx)((0, _formCheckLabelDefault.default), {
+                        title: title,
+                        children: label
+                    }),
+                    feedback && /*#__PURE__*/ (0, _jsxRuntime.jsx)((0, _feedbackDefault.default), {
+                        type: feedbackType,
+                        tooltip: feedbackTooltip,
+                        children: feedback
+                    })
+                ]
+            })
+        })
+    });
+});
+FormCheck.displayName = 'FormCheck';
+exports.default = Object.assign(FormCheck, {
+    Input: (0, _formCheckInputDefault.default),
+    Label: (0, _formCheckLabelDefault.default)
+});
+
+},{"classnames":"jocGM","react":"21dqq","./Feedback":"aWeg2","./FormCheckInput":"dPzD9","./FormCheckLabel":"fGhS2","./FormContext":"gjvSt","./ThemeProvider":"dVixI","./ElementChildren":"fdyAp","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aWeg2":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _jsxRuntime = require("react/jsx-runtime");
+const propTypes = {
+    /**
+   * Specify whether the feedback is for valid or invalid fields
+   *
+   * @type {('valid'|'invalid')}
+   */ type: (0, _propTypesDefault.default).string,
+    /** Display feedback as a tooltip. */ tooltip: (0, _propTypesDefault.default).bool,
+    as: (0, _propTypesDefault.default).elementType
+};
+const Feedback = /*#__PURE__*/ _react.forwardRef(// Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+({ as: Component = 'div', className, type = 'valid', tooltip = false, ...props }, ref)=>/*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ...props,
+        ref: ref,
+        className: (0, _classnamesDefault.default)(className, `${type}-${tooltip ? 'tooltip' : 'feedback'}`)
+    }));
+Feedback.displayName = 'Feedback';
+Feedback.propTypes = propTypes;
+exports.default = Feedback;
+
+},{"classnames":"jocGM","react":"21dqq","prop-types":"7wKI2","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dPzD9":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _formContext = require("./FormContext");
+var _formContextDefault = parcelHelpers.interopDefault(_formContext);
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const FormCheckInput = /*#__PURE__*/ _react.forwardRef(({ id, bsPrefix, className, type = 'checkbox', isValid = false, isInvalid = false, // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as: Component = 'input', ...props }, ref)=>{
+    const { controlId } = (0, _react.useContext)((0, _formContextDefault.default));
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'form-check-input');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ...props,
+        ref: ref,
+        type: type,
+        id: id || controlId,
+        className: (0, _classnamesDefault.default)(className, bsPrefix, isValid && 'is-valid', isInvalid && 'is-invalid')
+    });
+});
+FormCheckInput.displayName = 'FormCheckInput';
+exports.default = FormCheckInput;
+
+},{"classnames":"jocGM","react":"21dqq","./FormContext":"gjvSt","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gjvSt":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+"use client";
+// TODO
+const FormContext = /*#__PURE__*/ _react.createContext({});
+exports.default = FormContext;
+
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fGhS2":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _formContext = require("./FormContext");
+var _formContextDefault = parcelHelpers.interopDefault(_formContext);
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const FormCheckLabel = /*#__PURE__*/ _react.forwardRef(({ bsPrefix, className, htmlFor, ...props }, ref)=>{
+    const { controlId } = (0, _react.useContext)((0, _formContextDefault.default));
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'form-check-label');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)("label", {
+        ...props,
+        ref: ref,
+        htmlFor: htmlFor || controlId,
+        className: (0, _classnamesDefault.default)(className, bsPrefix)
+    });
+});
+FormCheckLabel.displayName = 'FormCheckLabel';
+exports.default = FormCheckLabel;
+
+},{"classnames":"jocGM","react":"21dqq","./FormContext":"gjvSt","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fdyAp":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "map", ()=>map);
+parcelHelpers.export(exports, "forEach", ()=>forEach);
+parcelHelpers.export(exports, "hasChildOfType", ()=>hasChildOfType);
+var _react = require("react");
+/**
+ * Iterates through children that are typically specified as `props.children`,
+ * but only maps over children that are "valid elements".
+ *
+ * The mapFunction provided index will be normalised to the components mapped,
+ * so an invalid component would not increase the index.
+ *
+ */ function map(children, func) {
+    let index = 0;
+    return _react.Children.map(children, (child)=>/*#__PURE__*/ _react.isValidElement(child) ? func(child, index++) : child);
+}
+/**
+ * Iterates through children that are "valid elements".
+ *
+ * The provided forEachFunc(child, index) will be called for each
+ * leaf child with the index reflecting the position relative to "valid components".
+ */ function forEach(children, func) {
+    let index = 0;
+    _react.Children.forEach(children, (child)=>{
+        if (/*#__PURE__*/ _react.isValidElement(child)) func(child, index++);
+    });
+}
+/**
+ * Finds whether a component's `children` prop includes a React element of the
+ * specified type.
+ */ function hasChildOfType(children, type) {
+    return _react.Children.toArray(children).some((child)=>/*#__PURE__*/ _react.isValidElement(child) && child.type === type);
+}
+
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iynMc":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _warning = require("warning");
+var _warningDefault = parcelHelpers.interopDefault(_warning);
+var _feedback = require("./Feedback");
+var _feedbackDefault = parcelHelpers.interopDefault(_feedback);
+var _formContext = require("./FormContext");
+var _formContextDefault = parcelHelpers.interopDefault(_formContext);
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const FormControl = /*#__PURE__*/ _react.forwardRef(({ bsPrefix, type, size, htmlSize, id, className, isValid = false, isInvalid = false, plaintext, readOnly, // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as: Component = 'input', ...props }, ref)=>{
+    const { controlId } = (0, _react.useContext)((0, _formContextDefault.default));
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'form-control');
+    (0, _warningDefault.default)(controlId == null || !id, '`controlId` is ignored on `<FormControl>` when `id` is specified.');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ...props,
+        type: type,
+        size: htmlSize,
+        ref: ref,
+        readOnly: readOnly,
+        id: id || controlId,
+        className: (0, _classnamesDefault.default)(className, plaintext ? `${bsPrefix}-plaintext` : bsPrefix, size && `${bsPrefix}-${size}`, type === 'color' && `${bsPrefix}-color`, isValid && 'is-valid', isInvalid && 'is-invalid')
+    });
+});
+FormControl.displayName = 'FormControl';
+exports.default = Object.assign(FormControl, {
+    Feedback: (0, _feedbackDefault.default)
+});
+
+},{"classnames":"jocGM","react":"21dqq","warning":"eUVzU","./Feedback":"aWeg2","./FormContext":"gjvSt","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eUVzU":[function(require,module,exports,__globalThis) {
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ 'use strict';
+/**
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */ var __DEV__ = true;
+var warning = function() {};
+if (__DEV__) {
+    var printWarning = function printWarning(format, args) {
+        var len = arguments.length;
+        args = new Array(len > 1 ? len - 1 : 0);
+        for(var key = 1; key < len; key++)args[key - 1] = arguments[key];
+        var argIndex = 0;
+        var message = 'Warning: ' + format.replace(/%s/g, function() {
+            return args[argIndex++];
+        });
+        if (typeof console !== 'undefined') console.error(message);
+        try {
+            // --- Welcome to debugging React ---
+            // This error was thrown as a convenience so that you can use this stack
+            // to find the callsite that caused this warning to fire.
+            throw new Error(message);
+        } catch (x) {}
+    };
+    warning = function(condition, format, args) {
+        var len = arguments.length;
+        args = new Array(len > 2 ? len - 2 : 0);
+        for(var key = 2; key < len; key++)args[key - 2] = arguments[key];
+        if (format === undefined) throw new Error("`warning(condition, format, ...args)` requires a warning message argument");
+        if (!condition) printWarning.apply(null, [
+            format
+        ].concat(args));
+    };
+}
+module.exports = warning;
+
+},{}],"aj346":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const FormFloating = /*#__PURE__*/ _react.forwardRef(({ className, bsPrefix, as: Component = 'div', ...props }, ref)=>{
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'form-floating');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ref: ref,
+        className: (0, _classnamesDefault.default)(className, bsPrefix),
+        ...props
+    });
+});
+FormFloating.displayName = 'FormFloating';
+exports.default = FormFloating;
+
+},{"react":"21dqq","classnames":"jocGM","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1qBHH":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _formContext = require("./FormContext");
+var _formContextDefault = parcelHelpers.interopDefault(_formContext);
+var _jsxRuntime = require("react/jsx-runtime");
+const FormGroup = /*#__PURE__*/ _react.forwardRef(({ controlId, // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as: Component = 'div', ...props }, ref)=>{
+    const context = (0, _react.useMemo)(()=>({
+            controlId
+        }), [
+        controlId
+    ]);
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)((0, _formContextDefault.default).Provider, {
+        value: context,
+        children: /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+            ...props,
+            ref: ref
+        })
+    });
+});
+FormGroup.displayName = 'FormGroup';
+exports.default = FormGroup;
+
+},{"react":"21dqq","./FormContext":"gjvSt","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"66epi":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _warning = require("warning");
+var _warningDefault = parcelHelpers.interopDefault(_warning);
+var _col = require("./Col");
+var _colDefault = parcelHelpers.interopDefault(_col);
+var _formContext = require("./FormContext");
+var _formContextDefault = parcelHelpers.interopDefault(_formContext);
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const FormLabel = /*#__PURE__*/ _react.forwardRef(({ // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as: Component = 'label', bsPrefix, column = false, visuallyHidden = false, className, htmlFor, ...props }, ref)=>{
+    const { controlId } = (0, _react.useContext)((0, _formContextDefault.default));
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'form-label');
+    let columnClass = 'col-form-label';
+    if (typeof column === 'string') columnClass = `${columnClass} ${columnClass}-${column}`;
+    const classes = (0, _classnamesDefault.default)(className, bsPrefix, visuallyHidden && 'visually-hidden', column && columnClass);
+    (0, _warningDefault.default)(controlId == null || !htmlFor, '`controlId` is ignored on `<FormLabel>` when `htmlFor` is specified.');
+    htmlFor = htmlFor || controlId;
+    if (column) return /*#__PURE__*/ (0, _jsxRuntime.jsx)((0, _colDefault.default), {
+        ref: ref,
+        as: "label",
+        className: classes,
+        htmlFor: htmlFor,
+        ...props
+    });
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/label-has-for, jsx-a11y/label-has-associated-control
+    (0, _jsxRuntime.jsx)(Component, {
+        ref: ref,
+        className: classes,
+        htmlFor: htmlFor,
+        ...props
+    }));
+});
+FormLabel.displayName = 'FormLabel';
+exports.default = FormLabel;
+
+},{"classnames":"jocGM","react":"21dqq","warning":"eUVzU","./Col":"2L2I6","./FormContext":"gjvSt","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8zsCO":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _formContext = require("./FormContext");
+var _formContextDefault = parcelHelpers.interopDefault(_formContext);
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const FormRange = /*#__PURE__*/ _react.forwardRef(({ bsPrefix, className, id, ...props }, ref)=>{
+    const { controlId } = (0, _react.useContext)((0, _formContextDefault.default));
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'form-range');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)("input", {
+        ...props,
+        type: "range",
+        ref: ref,
+        className: (0, _classnamesDefault.default)(className, bsPrefix),
+        id: id || controlId
+    });
+});
+FormRange.displayName = 'FormRange';
+exports.default = FormRange;
+
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","./FormContext":"gjvSt","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hHWyB":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _formContext = require("./FormContext");
+var _formContextDefault = parcelHelpers.interopDefault(_formContext);
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const FormSelect = /*#__PURE__*/ _react.forwardRef(({ bsPrefix, size, htmlSize, className, isValid = false, isInvalid = false, id, ...props }, ref)=>{
+    const { controlId } = (0, _react.useContext)((0, _formContextDefault.default));
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'form-select');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)("select", {
+        ...props,
+        size: htmlSize,
+        ref: ref,
+        className: (0, _classnamesDefault.default)(className, bsPrefix, size && `${bsPrefix}-${size}`, isValid && `is-valid`, isInvalid && `is-invalid`),
+        id: id || controlId
+    });
+});
+FormSelect.displayName = 'FormSelect';
+exports.default = FormSelect;
+
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","./FormContext":"gjvSt","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ffeC7":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const FormText = /*#__PURE__*/ _react.forwardRef(// Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+({ bsPrefix, className, as: Component = 'small', muted, ...props }, ref)=>{
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'form-text');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ...props,
+        ref: ref,
+        className: (0, _classnamesDefault.default)(className, bsPrefix, muted && 'text-muted')
+    });
+});
+FormText.displayName = 'FormText';
+exports.default = FormText;
+
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9O81i":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _formCheck = require("./FormCheck");
+var _formCheckDefault = parcelHelpers.interopDefault(_formCheck);
+var _jsxRuntime = require("react/jsx-runtime");
+const Switch = /*#__PURE__*/ _react.forwardRef((props, ref)=>/*#__PURE__*/ (0, _jsxRuntime.jsx)((0, _formCheckDefault.default), {
+        ...props,
+        ref: ref,
+        type: "switch"
+    }));
+Switch.displayName = 'Switch';
+exports.default = Object.assign(Switch, {
+    Input: (0, _formCheckDefault.default).Input,
+    Label: (0, _formCheckDefault.default).Label
+});
+
+},{"react":"21dqq","./FormCheck":"idkr0","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"coYzo":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _formGroup = require("./FormGroup");
+var _formGroupDefault = parcelHelpers.interopDefault(_formGroup);
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const FloatingLabel = /*#__PURE__*/ _react.forwardRef(({ bsPrefix, className, children, controlId, label, ...props }, ref)=>{
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'form-floating');
+    return /*#__PURE__*/ (0, _jsxRuntime.jsxs)((0, _formGroupDefault.default), {
+        ref: ref,
+        className: (0, _classnamesDefault.default)(className, bsPrefix),
+        controlId: controlId,
+        ...props,
+        children: [
+            children,
+            /*#__PURE__*/ (0, _jsxRuntime.jsx)("label", {
+                htmlFor: controlId,
+                children: label
+            })
+        ]
+    });
+});
+FloatingLabel.displayName = 'FloatingLabel';
+exports.default = FloatingLabel;
+
+},{"classnames":"jocGM","react":"21dqq","./FormGroup":"1qBHH","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cMC39":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+"use client";
+const Row = /*#__PURE__*/ _react.forwardRef(({ bsPrefix, className, // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as: Component = 'div', ...props }, ref)=>{
+    const decoratedBsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, 'row');
+    const breakpoints = (0, _themeProvider.useBootstrapBreakpoints)();
+    const minBreakpoint = (0, _themeProvider.useBootstrapMinBreakpoint)();
+    const sizePrefix = `${decoratedBsPrefix}-cols`;
+    const classes = [];
+    breakpoints.forEach((brkPoint)=>{
+        const propValue = props[brkPoint];
+        delete props[brkPoint];
+        let cols;
+        if (propValue != null && typeof propValue === 'object') ({ cols } = propValue);
+        else cols = propValue;
+        const infix = brkPoint !== minBreakpoint ? `-${brkPoint}` : '';
+        if (cols != null) classes.push(`${sizePrefix}${infix}-${cols}`);
+    });
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ref: ref,
+        ...props,
+        className: (0, _classnamesDefault.default)(className, decoratedBsPrefix, ...classes)
+    });
+});
+Row.displayName = 'Row';
+exports.default = Row;
+
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ggaUx":[function(require,module,exports,__globalThis) {
 var $parcel$ReactRefreshHelpers$e9f6 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -20119,131 +22388,85 @@ parcelHelpers.export(exports, "MovieView", ()=>MovieView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _propTypes = require("prop-types");
 var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _card = require("react-bootstrap/Card");
+var _cardDefault = parcelHelpers.interopDefault(_card);
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
 const MovieView = ({ movie, onBackClick })=>{
-    let image = /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: [
-            " ",
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                src: movie.image
-            }, void 0, false, {
-                fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 4,
-                columnNumber: 23
-            }, undefined),
-            " "
-        ]
-    }, void 0, true, {
+    let image = /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Img, {
+        className: "h-25",
+        src: movie.image
+    }, void 0, false, {
         fileName: "src/components/movie-view/movie-view.jsx",
-        lineNumber: 4,
-        columnNumber: 17
+        lineNumber: 8,
+        columnNumber: 18
     }, undefined);
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default), {
+        className: "w-50 h-50",
         children: [
             movie.image && image,
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Body, {
                 children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: "Title: "
-                    }, void 0, false, {
-                        fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 12,
-                        columnNumber: 17
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Title, {
                         children: [
+                            "title: ",
                             movie.title,
                             " "
                         ]
                     }, void 0, true, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 13,
-                        columnNumber: 17
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 11,
-                columnNumber: 13
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: "Genre: "
-                    }, void 0, false, {
-                        fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 17,
+                        lineNumber: 20,
                         columnNumber: 17
                     }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Text, {
                         children: movie.genre
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 18,
-                        columnNumber: 17
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 16,
-                columnNumber: 13
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: "Description: "
-                    }, void 0, false, {
-                        fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 21,
+                        lineNumber: 23,
                         columnNumber: 17
                     }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: movie.description
-                    }, void 0, false, {
-                        fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 22,
-                        columnNumber: 17
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 20,
-                columnNumber: 13
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: "Director's name/bio: "
-                    }, void 0, false, {
-                        fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 28,
-                        columnNumber: 17
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Text, {
                         children: [
+                            "Description: ",
+                            movie.description
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/movie-view/movie-view.jsx",
+                        lineNumber: 25,
+                        columnNumber: 17
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Text, {
+                        children: [
+                            "Director's name/bio: ",
                             movie.director,
-                            " "
+                            "  "
                         ]
                     }, void 0, true, {
                         fileName: "src/components/movie-view/movie-view.jsx",
                         lineNumber: 29,
                         columnNumber: 17
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
+                        className: "primary",
+                        onClick: onBackClick,
+                        children: "Back"
+                    }, void 0, false, {
+                        fileName: "src/components/movie-view/movie-view.jsx",
+                        lineNumber: 32,
+                        columnNumber: 13
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 26,
-                columnNumber: 13
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                onClick: onBackClick,
-                children: "Back"
-            }, void 0, false, {
-                fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 31,
+                lineNumber: 17,
                 columnNumber: 13
             }, undefined)
         ]
-    }, void 0, true);
+    }, void 0, true, {
+        fileName: "src/components/movie-view/movie-view.jsx",
+        lineNumber: 11,
+        columnNumber: 9
+    }, undefined);
 };
 _c = MovieView;
 MovieView.PropTypes = {
@@ -20264,7 +22487,7 @@ $RefreshReg$(_c, "MovieView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","prop-types":"7wKI2"}],"9YtA0":[function(require,module,exports,__globalThis) {
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","prop-types":"7wKI2","react-bootstrap/Card":"lAynp","react-bootstrap/Button":"aPzUt"}],"9YtA0":[function(require,module,exports,__globalThis) {
 var $parcel$ReactRefreshHelpers$9fee = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -20276,7 +22499,11 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "LoginView", ()=>LoginView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
-var _signupView = require("../signup-view/signup-view");
+// import {SignupView} from '../signup-view/signup-view'
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _form = require("react-bootstrap/Form");
+var _formDefault = parcelHelpers.interopDefault(_form);
 var _s = $RefreshSig$();
 const LoginView = ({ onLoggedIn })=>{
     _s();
@@ -20309,59 +22536,141 @@ const LoginView = ({ onLoggedIn })=>{
     // const handleSignup = () => {
     //     return <SignupView/>
     // }
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default), {
         onSubmit: handleSubmit,
         children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
+                controlId: "formUsername",
                 children: [
-                    "username:",
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Label, {
+                        children: "username:"
+                    }, void 0, false, {
+                        fileName: "src/components/login-view/login-view.jsx",
+                        lineNumber: 50,
+                        columnNumber: 17
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                         type: "text",
                         value: username,
                         onChange: (e)=>setUsername(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 49,
+                        lineNumber: 51,
                         columnNumber: 17
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 47,
+                lineNumber: 49,
                 columnNumber: 13
             }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
+                controlId: "formPassword",
                 children: [
-                    "password:",
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Label, {
+                        children: "password:"
+                    }, void 0, false, {
+                        fileName: "src/components/login-view/login-view.jsx",
+                        lineNumber: 60,
+                        columnNumber: 17
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                         type: "password",
                         value: password,
                         onChange: (e)=>setPassword(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 56,
+                        lineNumber: 61,
                         columnNumber: 17
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 54,
+                lineNumber: 59,
                 columnNumber: 13
             }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
+                variant: "primary",
+                onClick: handleSubmit,
                 children: "submit"
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 61,
+                lineNumber: 69,
                 columnNumber: 13
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/login-view/login-view.jsx",
-        lineNumber: 46,
+        lineNumber: 47,
         columnNumber: 9
     }, undefined);
-};
+} /* refactor the login-view to use React Bootstrap form 
+components instead of the react JSX elements. 
+
+<Form> : replaces the container react <form></form> element
+<Form.Group> : creates each of the form fields
+<Form.Label> : applies your form field labels
+<Form.Control> : includes the requirements for inside of the field- replacing 
+                <input>
+
+The capital letter are mandatory for react (bootstrap) components- Not for React
+jsx elements.
+
+before the React Bootstrap libray:
+
+    return (
+        <form onSubmit= {handleSubmit}>
+            <label>
+                username:
+                <input
+                type='text'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}></input>
+            </label>
+            <label>
+                password:
+                <input
+                type='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}></input>
+            </label>
+            <button {handleSubmit}>submit</button>
+            // <button onClick= {handleSignup}>create an account </button> 
+            </form>
+        )
+    }
+
+
+After:
+  return (
+        <Form onSubmit= {handleSubmit}>
+
+            <Form.Group controlId='formUsername'>
+                <Form.Label>username:</Form.Label>
+                <Form.Control
+                type='text'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                >  
+                </Form.Control>
+            </Form.Group>
+                        
+            <Form.Group controlId='formPassword'>
+                <Form.Label>password:</Form.Label>
+                <Form.Control
+                type='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                >
+                </Form.Control>
+            </Form.Group>
+
+            <Button variant= 'primary' onClick={handleSubmit}>submit</Button>
+        </Form>
+    )
+}
+
+*/ ;
 _s(LoginView, "wuQOK7xaXdVz4RMrZQhWbI751Oc=");
 _c = LoginView;
 var _c;
@@ -20372,7 +22681,7 @@ $RefreshReg$(_c, "LoginView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../signup-view/signup-view":"4OGiN"}],"4OGiN":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-bootstrap/Button":"aPzUt","react-bootstrap/Form":"iBZ80"}],"4OGiN":[function(require,module,exports,__globalThis) {
 var $parcel$ReactRefreshHelpers$73d1 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -20384,6 +22693,10 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "SignupView", ()=>SignupView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
+var _form = require("react-bootstrap/Form");
+var _formDefault = parcelHelpers.interopDefault(_form);
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
 var _s = $RefreshSig$();
 const SignupView = ()=>{
     _s();
@@ -20422,160 +22735,195 @@ const SignupView = ()=>{
         });
     };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default), {
             onSubmit: handleSubmit,
             children: [
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
                     children: [
-                        "username:",
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Label, {
+                            children: "username:"
+                        }, void 0, false, {
+                            fileName: "src/components/signup-view/signup-view.jsx",
+                            lineNumber: 57,
+                            columnNumber: 11
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                             type: "text",
                             value: username,
-                            onChange: (e)=>setUsername(e.target.value),
-                            required: true,
-                            minlength: "3"
+                            onChange: (e)=>setUsername(e.target.value)
                         }, void 0, false, {
                             fileName: "src/components/signup-view/signup-view.jsx",
-                            lineNumber: 56,
-                            columnNumber: 11
+                            lineNumber: 61,
+                            columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/signup-view/signup-view.jsx",
-                    lineNumber: 54,
+                    lineNumber: 56,
                     columnNumber: 9
                 }, undefined),
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
                     children: [
-                        "first Name:",
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Label, {
+                            children: "first Name:"
+                        }, void 0, false, {
+                            fileName: "src/components/signup-view/signup-view.jsx",
+                            lineNumber: 72,
+                            columnNumber: 13
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                             type: "text",
                             value: firstName,
-                            onChange: (e)=>setFirstName(e.target.value),
-                            required: true
+                            onChange: (e)=>setFirstName(e.target.value)
                         }, void 0, false, {
                             fileName: "src/components/signup-view/signup-view.jsx",
-                            lineNumber: 67,
-                            columnNumber: 11
+                            lineNumber: 75,
+                            columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/signup-view/signup-view.jsx",
-                    lineNumber: 65,
+                    lineNumber: 71,
                     columnNumber: 9
                 }, undefined),
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
                     children: [
-                        "last name:",
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Label, {
+                            children: "last name:"
+                        }, void 0, false, {
+                            fileName: "src/components/signup-view/signup-view.jsx",
+                            lineNumber: 86,
+                            columnNumber: 13
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                             type: "text",
                             value: lastName,
-                            onChange: (e)=>setLastName(e.target.value),
-                            required: true
+                            onChange: (e)=>setLastName(e.target.value)
                         }, void 0, false, {
                             fileName: "src/components/signup-view/signup-view.jsx",
-                            lineNumber: 77,
-                            columnNumber: 11
+                            lineNumber: 89,
+                            columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/signup-view/signup-view.jsx",
-                    lineNumber: 75,
+                    lineNumber: 84,
                     columnNumber: 9
                 }, undefined),
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
                     children: [
-                        "password:",
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Label, {
+                            children: "password:"
+                        }, void 0, false, {
+                            fileName: "src/components/signup-view/signup-view.jsx",
+                            lineNumber: 100,
+                            columnNumber: 11
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                             type: "password",
                             value: password,
-                            onChange: (e)=>setPassword(e.target.value),
-                            required: true
+                            onChange: (e)=>setPassword(e.target.value)
                         }, void 0, false, {
                             fileName: "src/components/signup-view/signup-view.jsx",
-                            lineNumber: 87,
+                            lineNumber: 103,
                             columnNumber: 11
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/signup-view/signup-view.jsx",
-                    lineNumber: 85,
+                    lineNumber: 99,
                     columnNumber: 9
                 }, undefined),
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
                     children: [
-                        "email:",
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Label, {
+                            children: "email:"
+                        }, void 0, false, {
+                            fileName: "src/components/signup-view/signup-view.jsx",
+                            lineNumber: 114,
+                            columnNumber: 13
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                             type: "email",
                             value: email,
-                            onChange: (e)=>setEmail(e.target.value),
-                            required: true
+                            onChange: (e)=>setEmail(e.target.value)
                         }, void 0, false, {
                             fileName: "src/components/signup-view/signup-view.jsx",
-                            lineNumber: 97,
-                            columnNumber: 11
+                            lineNumber: 117,
+                            columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/signup-view/signup-view.jsx",
-                    lineNumber: 95,
+                    lineNumber: 112,
                     columnNumber: 9
                 }, undefined),
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
                     children: [
-                        "age:",
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Label, {
+                            children: "age:"
+                        }, void 0, false, {
+                            fileName: "src/components/signup-view/signup-view.jsx",
+                            lineNumber: 127,
+                            columnNumber: 13
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                             type: "number",
                             value: age,
-                            onChange: (e)=>setAge(e.target.value),
-                            required: true
+                            onChange: (e)=>setAge(e.target.value)
                         }, void 0, false, {
                             fileName: "src/components/signup-view/signup-view.jsx",
-                            lineNumber: 107,
-                            columnNumber: 11
+                            lineNumber: 130,
+                            columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/signup-view/signup-view.jsx",
-                    lineNumber: 105,
+                    lineNumber: 126,
                     columnNumber: 9
                 }, undefined),
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
                     children: [
-                        "birthday:",
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Label, {
+                            children: "birthday:"
+                        }, void 0, false, {
+                            fileName: "src/components/signup-view/signup-view.jsx",
+                            lineNumber: 140,
+                            columnNumber: 13
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                             type: "date",
                             value: birthday,
-                            onChange: (e)=>setBirthday(e.target.value),
-                            required: true
+                            onChange: (e)=>setBirthday(e.target.value)
                         }, void 0, false, {
                             fileName: "src/components/signup-view/signup-view.jsx",
-                            lineNumber: 116,
-                            columnNumber: 11
+                            lineNumber: 143,
+                            columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/signup-view/signup-view.jsx",
-                    lineNumber: 114,
+                    lineNumber: 139,
                     columnNumber: 9
                 }, undefined),
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
                     type: "submit",
+                    variant: "primary",
                     children: "sign up!"
                 }, void 0, false, {
                     fileName: "src/components/signup-view/signup-view.jsx",
-                    lineNumber: 123,
+                    lineNumber: 152,
                     columnNumber: 9
                 }, undefined)
             ]
         }, void 0, true, {
             fileName: "src/components/signup-view/signup-view.jsx",
-            lineNumber: 52,
-            columnNumber: 9
+            lineNumber: 54,
+            columnNumber: 7
         }, undefined)
     }, void 0, false);
 } /*the handleSubmit needs to make an API call to the signup URL passing the 
-form data. there isn't an endpoint for '/signup' in the API, therefore this 
+f orm data. there isn't an endpoint for '/signup' in the API, therefore this 
 functionality will not work now.  */ ;
 _s(SignupView, "B62P/INYa2kPVmJLmXKaXxLhWNM=");
 _c = SignupView;
@@ -20587,6 +22935,6 @@ $RefreshReg$(_c, "SignupView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react":"21dqq"}],"lJZlQ":[function() {},{}]},["aQL8O","7qMjn","d8Dch"], "d8Dch", "parcelRequire94c2")
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react":"21dqq","react-bootstrap/Form":"iBZ80","react-bootstrap/Button":"aPzUt"}],"lJZlQ":[function() {},{}]},["aQL8O","7qMjn","d8Dch"], "d8Dch", "parcelRequire94c2")
 
 //# sourceMappingURL=index.b4b6dfad.js.map

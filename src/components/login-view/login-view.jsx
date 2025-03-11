@@ -1,6 +1,7 @@
 import {useState} from 'react';
-import {SignupView} from '../signup-view/signup-view'
-
+// import {SignupView} from '../signup-view/signup-view'
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 export const LoginView = ({onLoggedIn}) => {
 
     const [username, setUsername]= useState('');
@@ -43,6 +44,49 @@ export const LoginView = ({onLoggedIn}) => {
     // }
     
     return (
+        <Form onSubmit= {handleSubmit}>
+
+            <Form.Group controlId='formUsername'>
+                <Form.Label>username:</Form.Label>
+                <Form.Control
+                type='text'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                >  
+                </Form.Control>
+            </Form.Group>
+                        
+            <Form.Group controlId='formPassword'>
+                <Form.Label>password:</Form.Label>
+                <Form.Control
+                type='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                >
+                </Form.Control>
+            </Form.Group>
+
+            <Button variant= 'primary' onClick={handleSubmit}>submit</Button>
+        </Form>
+    )
+}
+
+
+/* refactor the login-view to use React Bootstrap form 
+components instead of the react JSX elements. 
+
+<Form> : replaces the container react <form></form> element
+<Form.Group> : creates each of the form fields
+<Form.Label> : applies your form field labels
+<Form.Control> : includes the requirements for inside of the field- replacing 
+                <input>
+
+The capital letter are mandatory for react (bootstrap) components- Not for React
+jsx elements.
+
+before the React Bootstrap libray:
+
+    return (
         <form onSubmit= {handleSubmit}>
             <label>
                 username:
@@ -58,8 +102,40 @@ export const LoginView = ({onLoggedIn}) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}></input>
             </label>
-            <button>submit</button>
-            {/* <button onClick= {handleSignup}>create an account </button> */}
-        </form>
+            <button {handleSubmit}>submit</button>
+            // <button onClick= {handleSignup}>create an account </button> 
+            </form>
+        )
+    }
+
+
+After:
+  return (
+        <Form onSubmit= {handleSubmit}>
+
+            <Form.Group controlId='formUsername'>
+                <Form.Label>username:</Form.Label>
+                <Form.Control
+                type='text'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                >  
+                </Form.Control>
+            </Form.Group>
+                        
+            <Form.Group controlId='formPassword'>
+                <Form.Label>password:</Form.Label>
+                <Form.Control
+                type='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                >
+                </Form.Control>
+            </Form.Group>
+
+            <Button variant= 'primary' onClick={handleSubmit}>submit</Button>
+        </Form>
     )
 }
+
+*/
