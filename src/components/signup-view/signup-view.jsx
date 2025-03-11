@@ -1,4 +1,6 @@
 import {useState} from 'react'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button';
 
 export const SignupView = () => {
   const [username, setUsername] = useState('');
@@ -47,86 +49,113 @@ export const SignupView = () => {
 
 
     return (
-        <>
+      <>
+    
+      <Form onSubmit={handleSubmit}>
 
-        <form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Label>
+            username:
+          </Form.Label> 
 
-        <label>
-          username: 
-          <input
-            type= 'text'
-            value= {username}
-            onChange = {(e)=>setUsername(e.target.value)}
-            required
-            minlength='3'
-          ></input>
-        </label>
+            <Form.Control
+                type= 'text'
+                value= {username}
+                onChange = {(e)=>setUsername(e.target.value)}
+                // required
+                // minlength='3'
+                >
+            </Form.Control>
+        </Form.Group>
 
-        <label>
-          first Name: 
-          <input
-          type= 'text'
-          value= {firstName}
-          onChange = {(e)=>setFirstName(e.target.value)}
-          required
-          ></input>
-        </label>
+        <Form.Group>
+            <Form.Label>
+              first Name:
+            </Form.Label> 
+            <Form.Control
+              type= 'text'
+              value= {firstName}
+              onChange = {(e)=>setFirstName(e.target.value)}
+              // required
+              >
+            </Form.Control> 
+          </Form.Group>
+      
+        <Form.Group>
 
-        <label>
-          last name: 
-          <input
-          type= 'text'
-          value= {lastName}
-          onChange = {(e)=>setLastName(e.target.value)}
-          required
-          ></input>
-        </label>
+            <Form.Label>
+                last name: 
+            </Form.Label>
+            <Form.Control
+                type= 'text'
+                value= {lastName}
+                onChange = {(e)=>setLastName(e.target.value)}
+                // required
+                >
+            </Form.Control>
+        </Form.Group>
 
-        <label>
-          password: 
-          <input
-            type= 'password'
-            value= {password}
-            onChange = {(e)=>setPassword(e.target.value)}
-            required
-          ></input>
-        </label>
 
-        <label>
-          email: 
-          <input
-          type= 'email'
-          value= {email}
-          onChange = {(e)=>setEmail(e.target.value)}
-          required
-          ></input>
-        </label>
+        <Form.Group>
+          <Form.Label>
+              password:
+          </Form.Label> 
+          <Form.Control
+              type= 'password'
+              value= {password}
+              onChange = {(e)=>setPassword(e.target.value)}
+              // required
+              >
+          </Form.Control>
+        </Form.Group>
 
-        <label>
-          age: 
-          <input
-          type= 'number'
-          value= {age}
-          onChange = {(e)=>setAge(e.target.value)}
-          required></input>
-        </label>
+        <Form.Group>
 
-        <label>
-          birthday: 
-          <input
-          type= 'date'
-          value= {birthday}
-          onChange = {(e)=>setBirthday(e.target.value)}
-          required></input>
-        </label>
+            <Form.Label>
+                email:
+            </Form.Label> 
+            <Form.Control
+                type= 'email'
+                value= {email}
+                onChange = {(e)=>setEmail(e.target.value)}
+                // required
+                >
+            </Form.Control>
+        </Form.Group>
 
-        <button type="submit">sign up!</button>
+        <Form.Group>
+            <Form.Label>
+                age: 
+            </Form.Label>
+            <Form.Control
+                type= 'number'
+                value= {age}
+                onChange = {(e)=>setAge(e.target.value)}
+                // required
+                >
+              </Form.Control>        
+        </Form.Group>
 
-      </form>
-        </>
+        <Form.Group>
+            <Form.Label>
+                birthday: 
+            </Form.Label>
+            <Form.Control
+              type= 'date'
+              value= {birthday}
+              onChange = {(e)=>setBirthday(e.target.value)}
+              // required
+              >
+              </Form.Control>    
+        </Form.Group>
+
+        <Button type="submit" variant='primary'>sign up!</Button>
+
+    </Form>
+      </>
     )
 }
 
 /*the handleSubmit needs to make an API call to the signup URL passing the 
-form data. there isn't an endpoint for '/signup' in the API, therefore this 
+f orm data. there isn't an endpoint for '/signup' in the API, therefore this 
 functionality will not work now.  */
