@@ -9,11 +9,16 @@
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^5.3.3",
-    "parcel": "^2.13.3",
+    "parcel": "^2.14.1",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
-    "react-refresh": "^0.16.0"
+    "react-refresh": "^0.16.0",
+    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.14.0"
   }
 }

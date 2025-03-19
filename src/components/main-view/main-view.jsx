@@ -3,10 +3,10 @@ import {MovieCard} from "../movie-card/movie-card";
 import {MovieView} from "../movie-view/movie-view";
 import {LoginView} from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
-import Container from 'react-bootstrap/Container';
 import Row from "react-bootstrap/Row"; 
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 
 
 export const MainView = () => {
@@ -14,7 +14,7 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const storedUser = localStorage.getItem('user');
-  const storedToken = localStorage.getItem('token')
+  const storedToken = localStorage.getItem('token');
   const [users, setUsers] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null );
   
@@ -52,54 +52,115 @@ export const MainView = () => {
     }
   
     return (
-        <Row className='justify-content-md-center'>
-          
-          {!users ? (
-            
-            <Col md={4} style={{border:' 2px solid green'}}>
-              <LoginView onLoggedIn={handleLogIn} /> 
-              <SignupView />
-            </Col>
-            
-          ) : selectedMovie ? (
-            <MovieView
-              movie={selectedMovie}
-              onBackClick={() => setSelectedMovie(null)}
-            />
-          ) : movies.length === 0 ? (
-            <div>the list is empty</div>
-          ) : (
-            <>
-            <Button
-                variant='secondary'
-                className=' w-100 '
-                onClick={() => {
-                  setUsers(null);
-                  setToken(null);
-                  localStorage.clear();
-                }}
-              >
-                log out
-              </Button>
-              {movies.map((movie) => (
-                <Col md={3}  key={movie.id} className='mb-5'>
-                {/*key attribute need to be added to the grid system's container 
-                element of the component being rendered */}
-                <MovieCard 
-                 
-                  movie={movie}
-                  onMovieClick={(newSelectedMovie) => {
-                    setSelectedMovie(newSelectedMovie);
-                  }}
-                />
-                </Col>
-              ))}
+        <BrowserRouter>
+            <Row className='justify-content-md-center'>
+              <Routes>
+
+                <Route 
+                path='/signup'
+                element= {
+                  <>
+                    {users ? (
+                      <Navigate to='/' />
+                    ) : 
+                    <Col md={4} style={{border:' 2px solid green'}}>
+                         <SignupView />
+                    </Col>
+                  
+                  }
+                  </>
+
+                } />
+
+                <Route
+                  path='/login'
+
+                  element={
+                      <>
+                      { users ? (
+                        <Navigate to='/'/>
+                      ) : (
+                        <Col md={4} style={{border:' 2px solid green'}}>
+                            <LoginView onLoggedIn={handleLogIn} /> 
+                        </Col>
+                    )}
+                        
+                    </>
+                  }
+                ></Route>
               
-            </>
-          )}
-        </Row>
+                
+                
+              <Route
+              path='/movies/:movieId'
+              element = { 
+                <>
+                !users ? (
+                  <Navigate to='/login'/>
+                ) : movies.length === 0 ? (
+                  <Col>the list is empty</Col>
+
+                ) :   (
+                <MovieView
+                  movie={movies}
+                />
+                )
+                </>
+              }
+              />
+
+
+              <Route
+              path='/'
+              element= {
+                <>
+                  { !users ? (
+                    <Navigate to='/login' replace />
+                  
+                    ): movies.length === 0 ? (
+                      <div>the list is empty</div>
+                    ) : (
+                      <>
+                        <Button
+                            variant='secondary'
+                            className=' w-100 '
+                            onClick={() => {
+                              setUsers(null);
+                              setToken(null);
+                              localStorage.clear();
+                            }}
+                          >
+                            log out
+                          </Button>
+                          {movies.map((movie) => (
+                            <Col md={3}  key={movie.id} className='mb-5'>
+                            {/*key attribute need to be added to the grid system's container 
+                            element of the component being rendered */}
+                            <MovieCard 
+                            
+                              movie={movie}
+                              // onMovieClick={(newSelectedMovie) => {
+                              //   setSelectedMovie(newSelectedMovie);
+                              // }}
+                            />
+                            </Col>
+                          ))}
+                        
+                      </> 
+                      )
+                  }
+                     
+                </>
+
+              }></Route>
+ 
+              
+              </Routes>
+            </Row>
+        </BrowserRouter>
     );
   }
+
 
 /* React Bootstrap Grid System:
 this frid system on React Bootstrap uses flexbox. 
@@ -351,3 +412,6 @@ $body-bg: Honeydew;
 
 
 */
+
+
+/* react router: */
