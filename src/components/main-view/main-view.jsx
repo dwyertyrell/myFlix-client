@@ -95,17 +95,16 @@ export const MainView = () => {
               path='/movies/:movieId'
               element = { 
                 <>
-                !users ? (
+                {!users ? (
                   <Navigate to='/login'/>
                 ) : movies.length === 0 ? (
                   <Col>the list is empty</Col>
 
-                ) :   (
-                <MovieView
-                
-                  movies={movies}
-                />
-                )
+                ) : (
+                  <MovieView
+                    movies={movies}
+                  />
+                  )}
                 </>
               }
               />
