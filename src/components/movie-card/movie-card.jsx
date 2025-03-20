@@ -1,18 +1,23 @@
+// import React from 'react';
 import PropTypes from 'prop-types';
 import {Button, Card} from 'react-bootstrap';
+import {Link} from 'react-router-dom'
 
-export const MovieCard = ({movie, onMovieClick}) => {
+export const MovieCard = ({movie}) => {
     
     return (
+
         <Card className='h-100' >
+
+
             <Card.Img  variant='top' src={movie.image} />
 
             <Card.Body>    
                 <Card.Title>{movie.title}</Card.Title>
                 <Card.Text>{movie.genre}</Card.Text>
-                <Button 
-                onClick={()=> {onMovieClick(movie);}}
-                variant= 'secondary' >open</Button>
+                <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
+                    <Button variant="link">Open</Button>
+                </Link>
             </Card.Body>
         </Card>
     )
@@ -61,3 +66,41 @@ export const MovieCard = ({movie, onMovieClick}) => {
     attribute allows you to chose a predefined set of styles- it is a convenient 
     way of styling without using scss.
 */
+
+/* add <Link> to child component- this will link a rendered component to 
+a path of one of the <Route> components.
+
+before adding <Link> tag and removing the {onMovieClick} prop:
+
+export const MovieCard = ({movie, onMovieClick}) => {
+    
+    return (
+        <Card className='h-100' >
+            <Card.Img  variant='top' src={movie.image} />
+
+            <Card.Body>    
+                <Card.Title>{movie.title}</Card.Title>
+                <Card.Text>{movie.genre}</Card.Text>
+                <Button 
+                onClick={()=> {onMovieClick(movie);}}
+                variant= 'secondary' >open</Button>
+            </Card.Body>
+        </Card>
+    )
+} 
+
+
+afterremoving prop and adding <Link>:
+
+<Link to={`/movies/$encodeURIComponent(movie.id)`}>
+                    <Button variant= 'link' >open</Button>
+                </Link>
+
+encodeURIComponent(movie.id) is called with movie.id. this is to help link to the
+url params in MainView. 
+this isn't always needed- ${movie.id} would suffice. however, the key property used
+for the movie.id contains non-alphanumeric characters- these don't go well with 
+url params.
+encodeURIComponent() is used to replace the non-alphanumeric characters with 
+URL-friendly characters.
+ */

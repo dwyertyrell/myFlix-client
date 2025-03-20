@@ -1,17 +1,21 @@
 import PropTypes from 'prop-types'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
-// import "bootstrap/dist/css/bootstrap.min.css";
+import {useParams} from 'react-router';
+import {Link} from 'react-router-dom';
 
-export const MovieView = ({movie, onBackClick}) => {
+export const MovieView = ({movies}) => {
+
+    const {movieId} = useParams()
+    const movie = movies.find((m) => m.id === movieId);
+    
 
     let image =  <Card.Img className='h-25' src={movie.image} /> 
 
     return (
         <Card className='w-50 h-50'>
-            
-        {/* if movie.image is truthy, then render this markup. if falsey, then
-        do nothing. */}
+                        {console.log('movieView rendered')}
+
            {movie.image && image}
 
             <Card.Body>
@@ -28,15 +32,17 @@ export const MovieView = ({movie, onBackClick}) => {
                 the state of MainView */}
                 <Card.Text>Director's name/bio: {movie.director}  </Card.Text>
                 
-            
-            <Button className='primary' onClick={onBackClick}>Back</Button>
+            <Link to={`/`}>
+                <Button className='primary'>Back</Button>
+                
+            </Link>
             </Card.Body>
         </Card>
     )
 }
 
 MovieView.PropTypes = {
-    movie: PropTypes.shape({
+    movies: PropTypes.shape({
         title: PropTypes.string.isRequired,
         genre: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,

@@ -102,13 +102,13 @@ export const MainView = () => {
 
                 ) :   (
                 <MovieView
-                  movie={movies}
+                
+                  movies={movies}
                 />
                 )
                 </>
               }
               />
-
 
               <Route
               path='/'
@@ -143,6 +143,7 @@ export const MainView = () => {
                               //   setSelectedMovie(newSelectedMovie);
                               // }}
                             />
+                            {/* {console.log('mapping done')} */}
                             </Col>
                           ))}
                         
@@ -414,4 +415,6 @@ $body-bg: Honeydew;
 */
 
 
-/* react router: */
+/* react router: 
+change the movie prop to "movies" in MovieView since we are returning the entire movie array 
+into the other components and not a single movie anymore.*/
