@@ -7,12 +7,13 @@ import Row from "react-bootstrap/Row";
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+import {NavigationBar} from '../navigation-bar/navigation-bar'; 
 
 
 export const MainView = () => {
   
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  // const [selectedMovie, setSelectedMovie] = useState(null);
   const storedUser = localStorage.getItem('user');
   const storedToken = localStorage.getItem('token');
   const [users, setUsers] = useState(storedUser ? storedUser : null);
@@ -50,9 +51,14 @@ export const MainView = () => {
       setUsers(user);
       setToken(token);      
     }
-  
+    const handleLogOut = () => {
+      setUsers(null);
+      setToken(null);
+      localStorage.clear();
+    }
     return (
         <BrowserRouter>
+        <NavigationBar users={users} onLoggedOut={handleLogOut}> </NavigationBar>
             <Row className='justify-content-md-center'>
               <Routes>
 
@@ -66,7 +72,6 @@ export const MainView = () => {
                     <Col md={4} style={{border:' 2px solid green'}}>
                          <SignupView />
                     </Col>
-                  
                   }
                   </>
 
@@ -123,11 +128,7 @@ export const MainView = () => {
                         <Button
                             variant='secondary'
                             className=' w-100 '
-                            onClick={() => {
-                              setUsers(null);
-                              setToken(null);
-                              localStorage.clear();
-                            }}
+                            onClick={handleLogOut}
                           >
                             log out
                           </Button>
