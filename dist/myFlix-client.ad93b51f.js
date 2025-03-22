@@ -28407,9 +28407,11 @@ const ProfileView = ({ token, user })=>{
             Authorization: `Bearer ${token}`
         }
     }).then((response)=>response.json()).then((data)=>{
-        const theUser = data.find((u)=>u.username === username);
-        if (theUser) setLoggedInUser(theUser);
-        else setLoggedInUser(null);
+        const theUser = data.find((u)=>u.username === user.username);
+        if (theUser) {
+            username = theUser.username;
+            setLoggedInUser(theUser);
+        } else setLoggedInUser(null);
     }).catch((err)=>{
         console.error(err, 'fetching failed');
     }), [
@@ -28422,7 +28424,7 @@ const ProfileView = ({ token, user })=>{
                     children: "profile Infomation"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 36,
+                    lineNumber: 37,
                     columnNumber: 21
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -28432,7 +28434,7 @@ const ProfileView = ({ token, user })=>{
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 38,
+                    lineNumber: 39,
                     columnNumber: 25
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -28442,7 +28444,7 @@ const ProfileView = ({ token, user })=>{
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 39,
+                    lineNumber: 40,
                     columnNumber: 25
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -28452,7 +28454,7 @@ const ProfileView = ({ token, user })=>{
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 40,
+                    lineNumber: 41,
                     columnNumber: 25
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -28462,7 +28464,7 @@ const ProfileView = ({ token, user })=>{
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 41,
+                    lineNumber: 42,
                     columnNumber: 25
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -28472,7 +28474,7 @@ const ProfileView = ({ token, user })=>{
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 42,
+                    lineNumber: 43,
                     columnNumber: 25
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -28482,7 +28484,7 @@ const ProfileView = ({ token, user })=>{
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 43,
+                    lineNumber: 44,
                     columnNumber: 25
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -28492,7 +28494,7 @@ const ProfileView = ({ token, user })=>{
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 44,
+                    lineNumber: 45,
                     columnNumber: 25
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ul", {
@@ -28502,7 +28504,7 @@ const ProfileView = ({ token, user })=>{
                                 children: " Favourite Movies: "
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 49,
+                                lineNumber: 50,
                                 columnNumber: 37
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -28511,32 +28513,32 @@ const ProfileView = ({ token, user })=>{
                                         children: movies.title
                                     }, movies._id, false, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 51,
+                                        lineNumber: 52,
                                         columnNumber: 41
                                     }, undefined);
                                 })
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 50,
+                                lineNumber: 51,
                                 columnNumber: 37
                             }, undefined)
                         ]
                     }, void 0, true)
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 45,
+                    lineNumber: 46,
                     columnNumber: 25
                 }, undefined)
             ]
         }, void 0, true, {
             fileName: "src/components/profile-view/profile-view.jsx",
-            lineNumber: 35,
+            lineNumber: 36,
             columnNumber: 17
         }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
             children: "user not found"
         }, void 0, false, {
             fileName: "src/components/profile-view/profile-view.jsx",
-            lineNumber: 60,
+            lineNumber: 61,
             columnNumber: 21
         }, undefined)
     }, void 0, false);
@@ -28564,7 +28566,32 @@ this is the flow of my code so far to my understanding. however, my problem is
 however, the problem is the path containing the `:username` URL param is unable to have 
 the user.username data passed in.  this is evident from the error in browser and 
 the url being : http://localhost:1234/users/undefined 
-*/ ;
+*/  /*the user object is added upon fetching data during the POST request in 
+'login-view.jsx. 
+once recieved, it is added to localStorage() and would be added to the piece of state 
+{users}
+the {users} state is passed into the <ProfileView/> as a prop, in 'mainView.jsx' file.
+
+i just changed my code- in the filtering, i used the strict equality directly with
+ user.username . this is now directly accessing the piece of state, therefore the 
+ {user} object is being used.
+ then, if the filtering method finds the user, make the username property in useParms
+ be equal to the username found in the filtering method. 
+ please check code below. 
+
+ 
+        .then((data) => {
+              const theUser = data.find((u) => u.username === user.username);
+              if(theUser) {
+                username = theUser.username;
+                setLoggedInUser(theUser);
+              }else {
+                setLoggedInUser(null);
+              }
+
+however, console.log is still show `TypeError: create is not a function`
+
+ */ ;
 _s(ProfileView, "YiYKxAL4lmlBprTh9RuJ0jQocX4=", false, function() {
     return [
         (0, _reactRouter.useParams)
