@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import {NavigationBar} from '../navigation-bar/navigation-bar'; 
-
+import { ProfileView } from "../profile-view/profile-view";
 
 export const MainView = () => {
   
@@ -93,7 +93,15 @@ export const MainView = () => {
                     </>
                   }
                 ></Route>
-              
+
+              <Route
+                path='/users/:username'
+                element= {<>
+            
+                <ProfileView user= {users} token={token}/>
+                </>}
+              >
+                </Route>
                 
                 
               <Route
@@ -132,6 +140,7 @@ export const MainView = () => {
                           >
                             log out
                           </Button>
+
                           {movies.map((movie) => (
                             <Col md={3}  key={movie.id} className='mb-5'>
                             {/*key attribute need to be added to the grid system's container 
