@@ -16,8 +16,9 @@ export const ProfileView = ({token, user}) => {
           }
         }).then((response) => response.json())
         .then((data) => {
-              const theUser = data.find((u) => u.username === username);
+              const theUser = data.find((u) => u.username === user.username);
               if(theUser) {
+                username = theUser.username;
                 setLoggedInUser(theUser);
               }else {
                 setLoggedInUser(null);
@@ -92,3 +93,30 @@ however, the problem is the path containing the `:username` URL param is unable 
 the user.username data passed in.  this is evident from the error in browser and 
 the url being : http://localhost:1234/users/undefined 
 */
+
+/*the user object is added upon fetching data during the POST request in 
+'login-view.jsx. 
+once recieved, it is added to localStorage() and would be added to the piece of state 
+{users}
+the {users} state is passed into the <ProfileView/> as a prop, in 'mainView.jsx' file.
+
+i just changed my code- in the filtering, i used the strict equality directly with
+ user.username . this is now directly accessing the piece of state, therefore the 
+ {user} object is being used.
+ then, if the filtering method finds the user, make the username property in useParms
+ be equal to the username found in the filtering method. 
+ please check code below. 
+
+ 
+        .then((data) => {
+              const theUser = data.find((u) => u.username === user.username);
+              if(theUser) {
+                username = theUser.username;
+                setLoggedInUser(theUser);
+              }else {
+                setLoggedInUser(null);
+              }
+
+however, console.log is still show `TypeError: create is not a function`
+
+ */
