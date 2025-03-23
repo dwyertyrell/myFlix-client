@@ -1,70 +1,134 @@
 import {useEffect, useState} from 'react';
 import {Container} from 'react-bootstrap';
 import { useParams } from 'react-router';
+
 /*passing the user state over here, to access user.username during the 
 filtering   */
-export const ProfileView = ({token, user}) => {
-    const [loggedInUser, setLoggedInUser] = useState(null)
-    const {username} = useParams()
-    
-    useEffect(
-    fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/:username',
-
-        {
-            headers: {
-            Authorization: `Bearer ${token}`,
-          }
-        }).then((response) => response.json())
-        .then((data) => {
-              const theUser = data.find((u) => u.username === user.username);
-              if(theUser) {
-                username = theUser.username;
-                setLoggedInUser(theUser);
-              }else {
-                setLoggedInUser(null);
-              }
-
-            }) .catch((err) => {
-            console.error(err, 'fetching failed')
-        })
-    ,[token])
+export const ProfileView = ({token}) => {
 
 
-        return (
-            <>
-                {loggedInUser ? (
-                <Container>
-                    <h2>profile Infomation</h2>
 
-                        <p> First Name: {loggedInUser.firstName}</p>
-                        <p> Last Name: {loggedInUser.lastName}</p>
-                        <p> Age: {loggedInUser.age}</p>
-                        <p> username: {loggedInUser.username}</p>
-                        <p> password: {loggedInUser.password}</p>
-                        <p> birthday: {loggedInUser.birthday}</p>
-                        <p> Email: {loggedInUser.email}</p>
-                        <ul>
-                            { loggedInUser.favouriteMovies && loggedInUser.favouriteMovies.length > 0
-                            && (
-                                <>
-                                    <h3> Favourite Movies: </h3>
-                                    <p>{loggedInUser.favouriteMovies.map((movies) => {
-                                        <li key={movies._id}>{movies.title}</li>
-                                        })
-                                        }
-                                    </p>
-                                </>
-                            )}
-                        </ul>       
-                </Container>
-                ) : (
-                    <p>user not found</p>
-                    )
+    const {user} = useParams()
+    const parsedUser= JSON.parse(user)
+    const username = parsedUser.username
+/*testing the useEffect- the return() of component will work but fetch not working  
+the url parameter is passing into url  */
+    useEffect(()=> {
+      fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${username}`,
+              {
+                  headers: {
+                      Authorization: `Bearer ${token}`,
                 }
-            </>
-        )
+              }
+            ).then((response)=> response.json()).then((data)=> {
+              console.log('data retrevied')
+            }).catch((err)=> {
+              console.error(err, 'fetch failed!')
+            })
+    }, [token])
+
+  return (
+    <>
+    {user ? (
+          
+     <div >hello profile view! {parsedUser.username}  </div>
+    ) : (
+      <p>there is no username!</p>
+    )
+  
+  }
+  </>
+
+  )
+
+
+
+
+
+    // const [loggedInUser, setLoggedInUser] = useState(null)
+
+    // /*by using the parameter inside the url, just for its information- hence why we use the 
+    // hook useParams(). since the information is stringed, i need to parse the data before using. */
+
+    // const {username} = useParams()
+    // // let parsedUsername = JSON.parse(username)
+  
+    // useEffect(() => {
+    // fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${username}`,
+
+    //     {
+    //         headers: {
+    //             Authorization: `Bearer ${token}`,
+    //       }
+    //     }).then((response) => response.json()).then((data) => {
+    //             setLoggedInUser(data)
+
+    //           // const theUser = data.find((u) => u.username === parsedUser.username);
+    //           // if(theUser) {
+    //           //   setLoggedInUser(theUser);
+    //           // }
+    //           // else {
+    //           //   setLoggedInUser(null);
+    //           // };
+
+    //         }) .catch((err) => {
+    //         console.error(err, 'fetching failed')
+
+    //     })
+    //   }, [token, loggedInUser])
+
+
+    //     return (
+    //         <>
+    //             {loggedInUser ? (
+    //             <Container>
+    //                 <h2>profile Infomation</h2>
+
+    //                     <p> First Name: {loggedInUser.firstName}</p>
+    //                     <p> Last Name: {loggedInUser.lastName}</p>
+    //                     <p> Age: {loggedInUser.age}</p>
+    //                     <p> username: {loggedInUser.username}</p>
+    //                     <p> password: {loggedInUser.password}</p>
+    //                     <p> birthday: {loggedInUser.birthday}</p>
+    //                     <p> Email: {loggedInUser.email}</p>
+    //                     <ul>
+    //                         { loggedInUser.favouriteMovies && loggedInUser.favouriteMovies.length > 0
+    //                         && (
+    //                             <>
+    //                                 <h3> Favourite Movies: </h3>
+    //                                 <p>{loggedInUser.favouriteMovies.map((movies) => {
+    //                                     <li key={movies._id}>{movies.title}</li>
+    //                                     })
+    //                                     }
+    //                                 </p>
+    //                             </>
+    //                         )}
+    //                     </ul>       
+    //             </Container>
+    //             ) : (
+    //                 <p>user not found</p>
+    //                 )
+    //             }
+    //         </>
+    //     )
     } 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 /* managed to add the variable to the state. after fetching the array data, 
 i used the find() method to find the user within that array with the same 
 username as the user prop. If so, then update the loggedInUser via 

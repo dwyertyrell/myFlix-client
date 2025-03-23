@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
-import {NavigationBar} from '../navigation-bar/navigation-bar'; 
+import {NavigationBar} from '../navigation-bar/navigation-bar';
 import { ProfileView } from "../profile-view/profile-view";
 
 export const MainView = () => {
@@ -58,7 +58,8 @@ export const MainView = () => {
     }
     return (
         <BrowserRouter>
-        <NavigationBar users={users} onLoggedOut={handleLogOut}> </NavigationBar>
+        <NavigationBar user={users} onLoggedOut={handleLogOut}> </NavigationBar>
+
             <Row className='justify-content-md-center'>
               <Routes>
 
@@ -95,10 +96,10 @@ export const MainView = () => {
                 ></Route>
 
               <Route
-                path='/users/:username'
-                element= {<>
-            
-                <ProfileView user= {users} token={token}/>
+                path='/users/:user'
+                element= {
+                <>
+                <ProfileView token={token}/>
                 </>}
               >
                 </Route>

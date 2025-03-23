@@ -1,7 +1,15 @@
 import {Navbar, Container, Nav} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 
-export const NavigationBar = ({users, onLoggedOut}) => {
+export const NavigationBar = ({user, onLoggedOut}) => {
+    /*changed the prop into a json object so the username property can be accessed, then converted
+    by into a string so we can use it as a url parameter */
+    // const parsedUser = JSON.parse(user);
+    // const parsedUsername = parsedUser.username;
+    // const username = JSON.stringify(parsedUsername);
+
+
+
 
     return (
             <Navbar bg= 'light' expand='large'>
@@ -15,7 +23,7 @@ export const NavigationBar = ({users, onLoggedOut}) => {
                         <Navbar.Collapse id= 'basic-navbar-nav'> 
                             <Nav className='me-auto'>
 
-                                {!users ? (
+                                {!user ? (
                                     <>
                                     <Nav.Link as={Link} to='/login'>login</Nav.Link>
                                     <Nav.Link as={Link} to='/signup'>signup</Nav.Link>
@@ -26,9 +34,9 @@ export const NavigationBar = ({users, onLoggedOut}) => {
                                     <Nav.Link as={Link} to='/login' onClick={onLoggedOut}>
                                     logout 
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to={`/users/${encodeURIComponent(users.username)}`}>Profile</Nav.Link>
+                                    <Nav.Link as={Link} to={`/users/${encodeURIComponent(user)}`}>Profile</Nav.Link>
 
-                                    
+
                                     </>
                                 )  
                                 
