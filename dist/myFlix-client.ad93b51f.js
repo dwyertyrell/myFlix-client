@@ -40956,21 +40956,22 @@ const ProfileView = ({ token })=>{
     _s();
     const { user } = (0, _reactRouter.useParams)();
     const parsedUser = JSON.parse(user);
-    const username = parsedUser.username;
-    /*testing the useEffect- the return() of component will work but fetch not working  
-the url parameter is passing into url  */ (0, _react.useEffect)(()=>{
-        fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${username}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>response.json()).then((data)=>{
-            console.log('data retrevied');
-        }).catch((err)=>{
-            console.error(err, 'fetch failed!');
-        });
-    }, [
-        token
-    ]);
+    //     const username = parsedUser.username
+    // /*testing the useEffect- the return() of component will work but fetch not working  
+    // the url parameter is passing into url  */
+    //     useEffect(()=> {
+    //       fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${username}`,
+    //               {
+    //                   headers: {
+    //                       Authorization: `Bearer ${token}`,
+    //                 }
+    //               }
+    //             ).then((response)=> response.json()).then((data)=> {
+    //               console.log('data retrevied')
+    //             }).catch((err)=> {
+    //               console.error(err, 'fetch failed!')
+    //             })
+    //     }, [token])
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
             children: [
@@ -41096,7 +41097,7 @@ i just changed my code- in the filtering, i used the strict equality directly wi
 however, console.log is still show `TypeError: create is not a function`
 
  */ ;
-_s(ProfileView, "UNox0IVcNwoxpcvGJjbojFJ1M+c=", false, function() {
+_s(ProfileView, "hMR4e4ojGyic6Jq2tK4g3fjgMlM=", false, function() {
     return [
         (0, _reactRouter.useParams)
     ];

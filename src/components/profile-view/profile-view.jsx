@@ -10,22 +10,22 @@ export const ProfileView = ({token}) => {
 
     const {user} = useParams()
     const parsedUser= JSON.parse(user)
-    const username = parsedUser.username
-/*testing the useEffect- the return() of component will work but fetch not working  
-the url parameter is passing into url  */
-    useEffect(()=> {
-      fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${username}`,
-              {
-                  headers: {
-                      Authorization: `Bearer ${token}`,
-                }
-              }
-            ).then((response)=> response.json()).then((data)=> {
-              console.log('data retrevied')
-            }).catch((err)=> {
-              console.error(err, 'fetch failed!')
-            })
-    }, [token])
+//     const username = parsedUser.username
+// /*testing the useEffect- the return() of component will work but fetch not working  
+// the url parameter is passing into url  */
+//     useEffect(()=> {
+//       fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${username}`,
+//               {
+//                   headers: {
+//                       Authorization: `Bearer ${token}`,
+//                 }
+//               }
+//             ).then((response)=> response.json()).then((data)=> {
+//               console.log('data retrevied')
+//             }).catch((err)=> {
+//               console.error(err, 'fetch failed!')
+//             })
+//     }, [token])
 
   return (
     <>
