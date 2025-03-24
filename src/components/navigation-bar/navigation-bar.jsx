@@ -4,8 +4,8 @@ import {Link} from 'react-router-dom';
 export const NavigationBar = ({user, onLoggedOut}) => {
     /*changed the prop into a json object so the username property can be accessed, then converted
     by into a string so we can use it as a url parameter */
-    // const parsedUser = JSON.parse(user);
-    // const parsedUsername = parsedUser.username;
+    const parsedUser = JSON.parse(user);
+    const usernameOfUser = parsedUser.username;
     // const username = JSON.stringify(parsedUsername);
 
 
@@ -34,7 +34,8 @@ export const NavigationBar = ({user, onLoggedOut}) => {
                                     <Nav.Link as={Link} to='/login' onClick={onLoggedOut}>
                                     logout 
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to={`/users/${encodeURIComponent(user)}`}>Profile</Nav.Link>
+                                    <Nav.Link as={Link} to={`/users/${encodeURIComponent(usernameOfUser)}`}>Profile</Nav.Link>
+                                    {/* <Nav.Link as={Link} to={'/users/profile'}>Profile</Nav.Link> */}
 
 
                                     </>

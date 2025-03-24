@@ -1,15 +1,98 @@
 import {useEffect, useState} from 'react';
 import {Container} from 'react-bootstrap';
 import { useParams } from 'react-router';
+import axios from 'axios';
 
-/*passing the user state over here, to access user.username during the 
-filtering   */
-export const ProfileView = ({token}) => {
+/*if i try to use url params in the MainView and NavigationView, accessing the object in this file
+will not work*/
+export const ProfileView = ({user, token}) => {
+
+const [userLoggedIn, setUserLoggedIn] = useState(null)
+const parsedUser= JSON.parse(user)
+
+
+useEffect(()=> {
+    axios.get('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users',{
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    })
+    .then((response)=>  {
+        const users = response.data;
+        console.log('user array has been retrieved', users)
+        const userFound = users.find((u) => u.username === parsedUser.username)
+        if(userFound) {
+            console.log('user object has been found')
+            setUserLoggedIn(userFound)
+                
+        }else{
+            console.log('user not found')
+        }
+
+        if(userLoggedIn) {
+            console.log('userLoggedIn is not null!', userLoggedIn);
+        }
+          
+    }).catch((err)=> {
+        console.error('fetching data failed!!', err)
+    })
+
+}, )
+
+/*this entire rendering is being held by the pasing of the {user} prop- which is a piece of state 
+that is always being re-rendered. this can cause unexpected behaviour in the browser. instead, let's
+recieve the entire info of the user directly using an api.  */
+
+/*the ProfileView component does not work when rendering <Container>. is this related to the empty
+dependecy array?  */
+  return (
+          <>
+            <p>username: {userLoggedIn.firstName}</p>
+            <p> First Name: {userLoggedIn.firstName}</p>
+            <p> Last Name: {userLoggedIn.lastName}</p>
+            <p> Age: {userLoggedIn.age}</p>
+            <p> username: {userLoggedIn.username}</p>
+            <p> password: {userLoggedIn.password}</p>
+            <p> birthday: {userLoggedIn.birthday}</p>
+            <p> Email: {userLoggedIn.email}</p>
+              {/* {userLoggedIn ? (
+                  <Container>
+                    
+                      <h2>profile Infomation</h2>
+  
+                      <p> First Name: {userLoggedIn.firstName}</p>
+                      <p> Last Name: {userLoggedIn.lastName}</p>
+                      <p> Age: {userLoggedIn.age}</p>
+                      <p> username: {userLoggedIn.username}</p>
+                      <p> password: {userLoggedIn.password}</p>
+                      <p> birthday: {userLoggedIn.birthday}</p>
+                      <p> Email: {userLoggedIn.email}</p>
+                      <ul>
+                          {userLoggedIn.favouriteMovies && userLoggedIn.favouriteMovies.length > 0
+                              && (
+                                  <>
+                                      <h3> Favourite Movies: </h3>
+                                      <p>{userLoggedIn.favouriteMovies.map((movies) => {
+                                        
+                                          <li key={movies._id}>{movies.title}</li>
+                                      })
+                                      }
+                                      </p>
+                                  </>
+                              )}
+                      </ul>
+                  </Container>
+              ) : (
+                  <p>user not found</p>
+              )
+              } */}
+          </>
+      )
 
 
 
-    const {user} = useParams()
-    const parsedUser= JSON.parse(user)
+    // const {user} = useParams()
+    // const parsedUser= JSON.parse(user)
 //     const username = parsedUser.username
 // /*testing the useEffect- the return() of component will work but fetch not working  
 // the url parameter is passing into url  */
@@ -27,19 +110,19 @@ export const ProfileView = ({token}) => {
 //             })
 //     }, [token])
 
-  return (
-    <>
-    {user ? (
+  // return (
+  //   <>
+  //   {user ? (
           
-     <div >hello profile view! {parsedUser.username}  </div>
-    ) : (
-      <p>there is no username!</p>
-    )
+  //    <div >hello profile view! {parsedUser.username}  </div>
+  //   ) : (
+  //     <p>there is no username!</p>
+  //   )
   
-  }
-  </>
+  // }
+  // </>
 
-  )
+  // )
 
 
 

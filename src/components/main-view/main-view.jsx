@@ -96,10 +96,10 @@ export const MainView = () => {
                 ></Route>
 
               <Route
-                path='/users/:user'
+                path='/users/:usernameOfUser'
                 element= {
                 <>
-                <ProfileView token={token}/>
+                <ProfileView user={users} token={token}/>
                 </>}
               >
                 </Route>
