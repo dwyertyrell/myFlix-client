@@ -40958,6 +40958,8 @@ var _s = $RefreshSig$();
 const ProfileView = ({ user, token })=>{
     _s();
     const [userLoggedIn, setUserLoggedIn] = (0, _react.useState)(null);
+    // const {usernameOfUser} = useParams;
+    // const username = JSON.parse(usernameOfUser);
     const parsedUser = JSON.parse(user);
     (0, _react.useEffect)(()=>{
         (0, _axiosDefault.default).get('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users', {
@@ -40976,94 +40978,100 @@ const ProfileView = ({ user, token })=>{
         }).catch((err)=>{
             console.error('fetching data failed!!', err);
         });
-    });
+    }, []);
     /*this entire rendering is being held by the pasing of the {user} prop- which is a piece of state 
 that is always being re-rendered. this can cause unexpected behaviour in the browser. instead, let's
-recieve the entire info of the user directly using an api.  */ /*the ProfileView component does not work when rendering <Container>. is this related to the empty
-dependecy array?  */ return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-        children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                children: [
-                    "username: ",
-                    userLoggedIn.firstName
-                ]
-            }, void 0, true, {
-                fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 50,
-                columnNumber: 13
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                children: [
-                    " First Name: ",
-                    userLoggedIn.firstName
-                ]
-            }, void 0, true, {
-                fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 51,
-                columnNumber: 13
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                children: [
-                    " Last Name: ",
-                    userLoggedIn.lastName
-                ]
-            }, void 0, true, {
-                fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 52,
-                columnNumber: 13
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                children: [
-                    " Age: ",
-                    userLoggedIn.age
-                ]
-            }, void 0, true, {
-                fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 53,
-                columnNumber: 13
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                children: [
-                    " username: ",
-                    userLoggedIn.username
-                ]
-            }, void 0, true, {
-                fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 54,
-                columnNumber: 13
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                children: [
-                    " password: ",
-                    userLoggedIn.password
-                ]
-            }, void 0, true, {
-                fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 55,
-                columnNumber: 13
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                children: [
-                    " birthday: ",
-                    userLoggedIn.birthday
-                ]
-            }, void 0, true, {
-                fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 56,
-                columnNumber: 13
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                children: [
-                    " Email: ",
-                    userLoggedIn.email
-                ]
-            }, void 0, true, {
-                fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 57,
-                columnNumber: 13
-            }, undefined)
-        ]
-    }, void 0, true);
+recieve the entire info of the user directly using an api.
+useParams() to  access the url parameter of the route's path. use that value in the useEffect to cross
+reference the array of objects.  */ /*the ProfileView component tried to render itself before the data could be fetched by the api. 
+therefore although the userLoggedIn was null, we still tried to access its value. this caused a break
+down on the entire application. 
+always render conditionally.  */ return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+        children: userLoggedIn && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                    children: [
+                        "username: ",
+                        userLoggedIn.firstName
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/profile-view/profile-view.jsx",
+                    lineNumber: 60,
+                    columnNumber: 13
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                    children: [
+                        " First Name: ",
+                        userLoggedIn.firstName
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/profile-view/profile-view.jsx",
+                    lineNumber: 61,
+                    columnNumber: 13
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                    children: [
+                        " Last Name: ",
+                        userLoggedIn.lastName
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/profile-view/profile-view.jsx",
+                    lineNumber: 62,
+                    columnNumber: 13
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                    children: [
+                        " Age: ",
+                        userLoggedIn.age
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/profile-view/profile-view.jsx",
+                    lineNumber: 63,
+                    columnNumber: 13
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                    children: [
+                        " username: ",
+                        userLoggedIn.username
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/profile-view/profile-view.jsx",
+                    lineNumber: 64,
+                    columnNumber: 13
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                    children: [
+                        " password: ",
+                        userLoggedIn.password
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/profile-view/profile-view.jsx",
+                    lineNumber: 65,
+                    columnNumber: 13
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                    children: [
+                        " birthday: ",
+                        userLoggedIn.birthday
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/profile-view/profile-view.jsx",
+                    lineNumber: 66,
+                    columnNumber: 13
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                    children: [
+                        " Email: ",
+                        userLoggedIn.email
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/profile-view/profile-view.jsx",
+                    lineNumber: 67,
+                    columnNumber: 13
+                }, undefined)
+            ]
+        }, void 0, true)
+    }, void 0, false);
 // const {user} = useParams()
 // const parsedUser= JSON.parse(user)
 //     const username = parsedUser.username

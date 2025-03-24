@@ -8,6 +8,9 @@ will not work*/
 export const ProfileView = ({user, token}) => {
 
 const [userLoggedIn, setUserLoggedIn] = useState(null)
+// const {usernameOfUser} = useParams;
+// const username = JSON.parse(usernameOfUser);
+
 const parsedUser= JSON.parse(user)
 
 
@@ -37,16 +40,23 @@ useEffect(()=> {
         console.error('fetching data failed!!', err)
     })
 
-}, )
+}, [])
+
 
 /*this entire rendering is being held by the pasing of the {user} prop- which is a piece of state 
 that is always being re-rendered. this can cause unexpected behaviour in the browser. instead, let's
-recieve the entire info of the user directly using an api.  */
+recieve the entire info of the user directly using an api.
+useParams() to  access the url parameter of the route's path. use that value in the useEffect to cross
+reference the array of objects.  */
 
-/*the ProfileView component does not work when rendering <Container>. is this related to the empty
-dependecy array?  */
+/*the ProfileView component tried to render itself before the data could be fetched by the api. 
+therefore although the userLoggedIn was null, we still tried to access its value. this caused a break
+down on the entire application. 
+always render conditionally.  */
   return (
           <>
+          { userLoggedIn && (
+            <>
             <p>username: {userLoggedIn.firstName}</p>
             <p> First Name: {userLoggedIn.firstName}</p>
             <p> Last Name: {userLoggedIn.lastName}</p>
@@ -55,6 +65,8 @@ dependecy array?  */
             <p> password: {userLoggedIn.password}</p>
             <p> birthday: {userLoggedIn.birthday}</p>
             <p> Email: {userLoggedIn.email}</p>
+            </>
+          )}
               {/* {userLoggedIn ? (
                   <Container>
                     
