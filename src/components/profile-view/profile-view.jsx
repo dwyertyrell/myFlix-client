@@ -1,11 +1,9 @@
 import {useEffect, useState} from 'react';
 import {Container} from 'react-bootstrap';
 import { useParams } from 'react-router';
-import axios from 'axios';
-
 /*if i try to use url params in the MainView and NavigationView, accessing the object in this file
 will not work*/
-export const ProfileView = ({user, token}) => {
+export const ProfileView = ({user, token, moviesFromApi}) => {
 
 const [userLoggedIn, setUserLoggedIn] = useState(null)
 // const {usernameOfUser} = useParams;
@@ -13,61 +11,85 @@ const [userLoggedIn, setUserLoggedIn] = useState(null)
 
 const parsedUser= JSON.parse(user)
 
-
 useEffect(()=> {
-    axios.get('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users',{
+fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users',
+    {
         headers: {
             Authorization: `Bearer ${token}`,
-        }
-    })
-    .then((response)=>  {
-        const users = response.data;
-        console.log('user array has been retrieved', users)
-        const userFound = users.find((u) => u.username === parsedUser.username)
-        if(userFound) {
-            console.log('user object has been found')
-            setUserLoggedIn(userFound)
+      }
+    }
+  ).then((response)=> response.json()).then((users)=>{
+      console.log('users collection has been retrieved:', users);
+      const userFound = users.find((u)=>u.username === parsedUser.username)
+      if(userFound) {
+          console.log('user object has been found in collection', userFound);
+          setUserLoggedIn(userFound)
+      } else {
+          console.log('user not found in the collection')
+      }
+  }).catch((err)=> {
+      console.error('fetching data failed!!', err)
+  })
+}, [token]) 
+
+
+
+useEffect(()=> {
+    const responseFromApi = async () => {
+        await fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/:username'),
+            {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                // body: JSON.stringify(  ) add the piece of state updated by the form 
                 
-        }else{
-            console.log('user not found')
-        }
+            }
+    }
 
-        if(userLoggedIn) {
-            console.log('userLoggedIn is not null!', userLoggedIn);
-        }
-          
-    }).catch((err)=> {
-        console.error('fetching data failed!!', err)
     })
 
-}, [])
 
 
-/*this entire rendering is being held by the pasing of the {user} prop- which is a piece of state 
-that is always being re-rendered. this can cause unexpected behaviour in the browser. instead, let's
-recieve the entire info of the user directly using an api.
-useParams() to  access the url parameter of the route's path. use that value in the useEffect to cross
-reference the array of objects.  */
-
-/*the ProfileView component tried to render itself before the data could be fetched by the api. 
-therefore although the userLoggedIn was null, we still tried to access its value. this caused a break
-down on the entire application. 
-always render conditionally.  */
   return (
-          <>
+        <>
           { userLoggedIn && (
             <>
-            <p>username: {userLoggedIn.firstName}</p>
-            <p> First Name: {userLoggedIn.firstName}</p>
-            <p> Last Name: {userLoggedIn.lastName}</p>
-            <p> Age: {userLoggedIn.age}</p>
-            <p> username: {userLoggedIn.username}</p>
-            <p> password: {userLoggedIn.password}</p>
-            <p> birthday: {userLoggedIn.birthday}</p>
-            <p> Email: {userLoggedIn.email}</p>
+                <p>username: {userLoggedIn.firstName}</p>
+                <p> First Name: {userLoggedIn.firstName}</p>
+                <p> Last Name: {userLoggedIn.lastName}</p>
+                <p> Age: {userLoggedIn.age}</p>
+                <p> username: {userLoggedIn.username}</p>
+                <p> password: {userLoggedIn.password}</p>
+                <p> birthday: {userLoggedIn.birthday}</p>
+                <p> Email: {userLoggedIn.email}</p>
+                <p> favourite movies: {userLoggedIn.favouriteMovies}</p>
+
+                <h2>profile infomation</h2>
+
+                {userLoggedIn.favouriteMovies && userLoggedIn.favouriteMovies.length > 0 
+                    &&
+                    <>
+                        <h3>favourite movies</h3>
+
+                        <div>{ userLoggedIn.favouriteMovies.map((movie)=> {
+                        const found= moviesFromApi.find((m)=> m.id === movie) 
+                        
+                        return (
+                            <p key={found.id} >{found.title}</p>
+                        )
+                        })}
+                        </div>
+                    </> 
+                    }
             </>
-          )}
-              {/* {userLoggedIn ? (
+            )}
+        </>
+      )}
+
+
+ {/* {userLoggedIn ? (
                   <Container>
                     
                       <h2>profile Infomation</h2>
@@ -98,11 +120,6 @@ always render conditionally.  */
                   <p>user not found</p>
               )
               } */}
-          </>
-      )
-
-
-
     // const {user} = useParams()
     // const parsedUser= JSON.parse(user)
 //     const username = parsedUser.username
@@ -206,7 +223,7 @@ always render conditionally.  */
     //             }
     //         </>
     //     )
-    } 
+    
 
 
 
