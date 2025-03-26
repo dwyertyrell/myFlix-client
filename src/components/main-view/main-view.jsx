@@ -59,13 +59,12 @@ export const MainView = () => {
       localStorage.clear();
     }
 
+    
     return (
         <BrowserRouter>
-        {!users ? (
-                    <Navigate to='/login' replace />
-                  
-                    ) : (
-        <NavigationBar user={users} onLoggedOut={handleLogOut}> </NavigationBar> )}
+        { users && (
+        <NavigationBar user={users} 
+        onLoggedOut={handleLogOut}/> )}
 
             <Row className='justify-content-md-center'>
               <Routes>
@@ -84,7 +83,7 @@ export const MainView = () => {
                   </>
 
                 } />
-
+                {/* Login */}
                 <Route
                   path='/login'
 
@@ -101,6 +100,18 @@ export const MainView = () => {
                     </>
                   }
                 ></Route>
+
+                {/* SignUp */}
+              <Route path= '/signup' element= {
+                <>
+                  { users ? (
+                    <Navigate to='/'/>
+                  ): (
+                    <SignupView/>
+                  )}
+                </>
+              }></Route>
+
 
               <Route
                 path='/users/:usernameOfUser'
@@ -136,7 +147,7 @@ export const MainView = () => {
                 </>
               }
               />
-
+              {/* Home */}
               <Route
               path='/'
               element= {
