@@ -47,18 +47,25 @@ export const MainView = () => {
 
   }, [token]);
 
+  // login
     const handleLogIn = (user, token) => {
       setUsers(user);
       setToken(token);      
     }
+    // logout
     const handleLogOut = () => {
       setUsers(null);
       setToken(null);
       localStorage.clear();
     }
+
     return (
         <BrowserRouter>
-        <NavigationBar user={users} onLoggedOut={handleLogOut}> </NavigationBar>
+        {!users ? (
+                    <Navigate to='/login' replace />
+                  
+                    ) : (
+        <NavigationBar user={users} onLoggedOut={handleLogOut}> </NavigationBar> )}
 
             <Row className='justify-content-md-center'>
               <Routes>
@@ -99,8 +106,15 @@ export const MainView = () => {
                 path='/users/:usernameOfUser'
                 element= {
                 <>
-                <ProfileView user={users} token={token}/>
-                </>}
+                {!users ? (
+                    <Navigate to='/login' replace />
+                  
+                    ) : (
+                <ProfileView user={users} token={token} moviesFromApi={movies}/>
+                    )
+                  }
+                </>
+                }
               >
                 </Route>
                 
