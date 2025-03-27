@@ -2,17 +2,19 @@ import {Navbar, Container, Nav} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 
 export const NavigationBar = ({user, onLoggedOut}) => {
-    /*changed the prop into a json object so the username property can be accessed, then converted
-    by into a string so we can use it as a url parameter */
 
-    const parsedUser = JSON.parse(user);
-    const usernameOfUser = parsedUser.username;
-    // const username = JSON.stringify(parsedUsername);
+// user prop is filled by the fetch request in 'loginView'- the response is already parsed using 
+// json() in fetch request. 
+// but the localStorage is holding a string user object...parse? YES!
+    const usernameOfUser = JSON.parse(user).username
+
     
 
 
     return (
-            <Navbar bg= 'light' expand='large'>
+        
+             
+                <Navbar bg= 'light' expand='large'>
                 <Container>
                         <Navbar.Brand as = {Link} to= '/'>
                             Myflix
@@ -47,6 +49,8 @@ export const NavigationBar = ({user, onLoggedOut}) => {
 
                             </Navbar.Collapse>
                  </Container>
-            </Navbar>
+            </Navbar> 
+        
+                            
     )
 }

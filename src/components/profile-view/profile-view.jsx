@@ -1,15 +1,15 @@
 import {useEffect, useState} from 'react';
 import {Container} from 'react-bootstrap';
 import { useParams } from 'react-router';
-/*if i try to use url params in the MainView and NavigationView, accessing the object in this file
-will not work*/
-export const ProfileView = ({user, token, moviesFromApi}) => {
+
+export const ProfileView = ({ user, token, moviesFromApi}) => {
+
+const {usernameOfUser} = useParams();
 
 const [userLoggedIn, setUserLoggedIn] = useState(null)
-// const {usernameOfUser} = useParams;
-// const username = JSON.parse(usernameOfUser);
 
-const parsedUser= JSON.parse(user)
+// the useEffect keep re rendering- could this be the problem with the null properties? 
+// i removed the dependencies
 
 useEffect(()=> {
 fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users',
@@ -20,7 +20,7 @@ fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users',
     }
   ).then((response)=> response.json()).then((users)=>{
       console.log('users collection has been retrieved:', users);
-      const userFound = users.find((u)=>u.username === parsedUser.username)
+      const userFound = users.find((u)=>u.username === usernameOfUser)
       if(userFound) {
           console.log('user object has been found in collection', userFound);
           setUserLoggedIn(userFound)
@@ -30,25 +30,25 @@ fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users',
   }).catch((err)=> {
       console.error('fetching data failed!!', err)
   })
-}, [token]) 
+}, [token, usernameOfUser]) 
 
 
 
-useEffect(()=> {
-    const responseFromApi = async () => {
-        await fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/:username'),
-            {
-                method: 'PUT',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                // body: JSON.stringify(  ) add the piece of state updated by the form 
+// useEffect(()=> {
+//     const responseFromApi = async () => {
+//         await fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/:username'),
+//             {
+//                 method: 'PUT',
+//                 headers: {
+//                     Authorization: `Bearer ${token}`,
+//                     'Content-Type': 'application/json'
+//                 },
+//                 // body: JSON.stringify(  ) add the piece of state updated by the form 
                 
-            }
-    }
+//             }
+//     }
 
-    })
+//     })
 
 
 
@@ -84,7 +84,11 @@ useEffect(()=> {
                     </> 
                     }
             </>
-            )}
+            ) 
+            // : (
+            //     <p>please wait while fetching data</p>
+            // )
+            }
         </>
       )}
 
