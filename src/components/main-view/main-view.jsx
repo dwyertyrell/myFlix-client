@@ -67,6 +67,11 @@ useEffect(() => {
       localStorage.clear();
     }
 
+  const handleProfileUpdate = (updatedUser) => {
+    console.log('user has been updated');
+    setUsers(updatedUser);
+    localStorage('user', JSON.parse(updatedUser));
+  }
     
     return (
         <BrowserRouter>
@@ -129,9 +134,12 @@ useEffect(() => {
                     <Navigate to='/login' replace />
                   
                     ) : (
-                <ProfileView user={users} token={token} moviesFromApi={movies}/>
-                    )
-                  }
+                <ProfileView user={users} 
+                token={token} 
+                moviesFromApi={movies}
+                onProfileUpdate={handleProfileUpdate}
+                />
+                )}
                 </>
                 }
               >
