@@ -3,13 +3,7 @@ import {Link} from 'react-router-dom';
 
 export const NavigationBar = ({user, onLoggedOut}) => {
 
-// user prop is filled by the fetch request in 'loginView'- the response is already parsed using 
-// json() in fetch request. 
-// but the localStorage is holding a string user object...parse? YES!
-    const usernameOfUser = JSON.parse(user).username
-
-    
-
+// user prop was parsed while adding {user} as a piece of state in MainView
 
     return (
         
@@ -36,7 +30,7 @@ export const NavigationBar = ({user, onLoggedOut}) => {
                                     <Nav.Link as={Link} to='/login' onClick={onLoggedOut}>
                                     logout 
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to={`/users/${encodeURIComponent(usernameOfUser)}`}>Profile</Nav.Link>
+                                    <Nav.Link as={Link} to={`/users/${encodeURIComponent(user.username)}`}>Profile</Nav.Link>
                                     {/* <Nav.Link as={Link} to={'/users/profile'}>Profile</Nav.Link> */}
 
 
