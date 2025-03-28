@@ -1,232 +1,221 @@
 import {useEffect, useState} from 'react';
 import {Container} from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router';
 
 export const ProfileView = ({ user, token, moviesFromApi}) => {
+/*the functionality of updating profile is not working. 
+how is localStorage affected? is the mongoose atlas updated afterwards?
 
-const {usernameOfUser} = useParams();
+i commented the birthday logic in case it is the problem.*/
+const [username, setUsername] = useState('');
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+// const [birthday, setBirthday] = useState('');
 
-const [userLoggedIn, setUserLoggedIn] = useState(null)
+const [isEditing, setIsEditing] = useState(false);
+// const navigate = useNavigate();
 
-// the useEffect keep re rendering- could this be the problem with the null properties? 
-// i removed the dependencies
+const formDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB', 
+        {
+            year: 'numeric', month: 'long', day: 'numeric'
+        });
+}
 
-useEffect(()=> {
-fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users',
-    {
-        headers: {
-            Authorization: `Bearer ${token}`,
-      }
+useEffect(()=>{
+    if (user) {
+        setUsername(user.username || '');
+        setEmail(user.email || '');
+        setPassword(user.username || '');
+        // setBirthday(user.birthday || '');
     }
-  ).then((response)=> response.json()).then((users)=>{
-      console.log('users collection has been retrieved:', users);
-      const userFound = users.find((u)=>u.username === usernameOfUser)
-      if(userFound) {
-          console.log('user object has been found in collection', userFound);
-          setUserLoggedIn(userFound)
-      } else {
-          console.log('user not found in the collection')
-      }
-  }).catch((err)=> {
-      console.error('fetching data failed!!', err)
-  })
-}, [token, usernameOfUser]) 
+}, [user]);
 
+// flip the boolean value for the conditional rendering 
+const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+};
+// an onChange event can only happen in one input field at any given time
+const handleInputChange = (e) => {
+    const {name, value} = e.target;
+    switch (name) {
+        case 'username':
+            setUsername(value);
+            break;
+        case 'email':
+            setEmail(value);
+            break;
+        // case 'birthday':
+        //     setBirthday(value);
+        //     break;
+        case 'password':
+            setPassword(value);
+            break;
+        default:
+            break;
+    }
+};
 
+const handleUpdateProfile = async (e) =>{
+    e.preventDefault();
 
-// useEffect(()=> {
-//     const responseFromApi = async () => {
-//         await fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/:username'),
-//             {
-//                 method: 'PUT',
-//                 headers: {
-//                     Authorization: `Bearer ${token}`,
-//                     'Content-Type': 'application/json'
-//                 },
-//                 // body: JSON.stringify(  ) add the piece of state updated by the form 
-                
-//             }
-//     }
+    if (!token || !user) {
+        console.log('not authenticated or user data is missing ');
+        // the empty return statement is used to exit the entire function 
+        return; 
+    }
+    
+const updatedUserData = {
+    username: username,
+    email: email,
+    // birthday: birthday,
+    password: password
+};
 
-//     })
+// the entire try statement is in an async function- part of handleUpdateProfile  
+try {
+        const response = await fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${username}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(updatedUserData)
+            }
+        );
+
+        if (response.ok) {
+            const updatedUser = await response.json();
+            alert('profile updated successfully');
+            // add setEditing to false here...
+            console.log('updated user:', updatedUser);
+            window.location.reload();
+            // setIsEditing(false);
+
+        } else{
+    // this will render only when !response.ok 
+
+            const errorData = await response.json();
+            alert(`Failed to update profile: ${errorData.message || response.statusText}`);    
+        } 
+        }catch (error) {
+            console.error('error updating profile:', error)
+        };
+};
+    
+
+    
 
 
 
   return (
-        <>
-          { userLoggedIn && (
-            <>
-                <p>username: {userLoggedIn.firstName}</p>
-                <p> First Name: {userLoggedIn.firstName}</p>
-                <p> Last Name: {userLoggedIn.lastName}</p>
-                <p> Age: {userLoggedIn.age}</p>
-                <p> username: {userLoggedIn.username}</p>
-                <p> password: {userLoggedIn.password}</p>
-                <p> birthday: {userLoggedIn.birthday}</p>
-                <p> Email: {userLoggedIn.email}</p>
-                <p> favourite movies: {userLoggedIn.favouriteMovies}</p>
+    <>
+        <h2>User's Profile</h2>
+        {isEditing ? (
+            <Form onSubmit={handleUpdateProfile}>
+                <Form.Group controlId='formUsername'>
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                        type= 'text'
+                        name='username'
+                        value={username}
+                        onChange={handleInputChange}
+                        placeholder='enter new username'
+                        />
 
-                <h2>profile infomation</h2>
+                </Form.Group>
+                <Form.Group controlId='formEmail'>
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                        type= 'email'
+                        name='email'
+                        value={email}
+                        onChange={handleInputChange}
+                        placeholder='enter new email'
+                        />
 
-                {userLoggedIn.favouriteMovies && userLoggedIn.favouriteMovies.length > 0 
-                    &&
-                    <>
-                        <h3>favourite movies</h3>
+                </Form.Group>
+                <Form.Group controlId='formPassword'>
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        type= 'text'
+                        name='password'
+                        value={password}
+                        onChange={handleInputChange}
+                        placeholder='enter new password'
+                        />
+                </Form.Group>
 
-                        <div>{ userLoggedIn.favouriteMovies.map((movie)=> {
-                        const found= moviesFromApi.find((m)=> m.id === movie) 
-                        
-                        return (
-                            <p key={found.id} >{found.title}</p>
-                        )
-                        })}
-                        </div>
-                    </> 
-                    }
-            </>
-            ) 
-            // : (
-            //     <p>please wait while fetching data</p>
-            // )
-            }
-        </>
-      )}
+                {/* <Form.Group controlId='formBirthday'>
+                    <Form.Label>Birthday</Form.Label>
+                    <Form.Control
+                        type= 'date'
+                        name='birthday'
+                        value={birthday}
+                        onChange={handleInputChange}
+                        />
+                </Form.Group> */}
+                <Button type='submit'>save changes</Button>
+                <Button onClick={handleEditToggle}>Cancel</Button>
+                <Button onClick={handleEditToggle}>back to User's Profile</Button>
 
+            </Form>
+        ) :(
+            <div>
+        
+            { user && (
+                <>
+                    <p>username: {user.username}</p>
+                    <p> First Name: {user.firstName}</p>
+                    <p> Last Name: {user.lastName}</p>
+                    <p> Age: {user.age}</p>
+                    <p> password: {user.password}</p>
+                    <p> birthday: {user.birthday ? formDate(user.birthday) : 'not provided'}</p>
+                    <p> Email: {user.email}</p>
+                    <p> favourite movies: {user.favouriteMovies}</p>
+                    <Button onClick={handleEditToggle} variant='primary'>Edit profile</Button>
 
- {/* {userLoggedIn ? (
-                  <Container>
-                    
-                      <h2>profile Infomation</h2>
-  
-                      <p> First Name: {userLoggedIn.firstName}</p>
-                      <p> Last Name: {userLoggedIn.lastName}</p>
-                      <p> Age: {userLoggedIn.age}</p>
-                      <p> username: {userLoggedIn.username}</p>
-                      <p> password: {userLoggedIn.password}</p>
-                      <p> birthday: {userLoggedIn.birthday}</p>
-                      <p> Email: {userLoggedIn.email}</p>
-                      <ul>
-                          {userLoggedIn.favouriteMovies && userLoggedIn.favouriteMovies.length > 0
-                              && (
-                                  <>
-                                      <h3> Favourite Movies: </h3>
-                                      <p>{userLoggedIn.favouriteMovies.map((movies) => {
-                                        
-                                          <li key={movies._id}>{movies.title}</li>
-                                      })
-                                      }
-                                      </p>
-                                  </>
-                              )}
-                      </ul>
-                  </Container>
-              ) : (
-                  <p>user not found</p>
-              )
-              } */}
-    // const {user} = useParams()
-    // const parsedUser= JSON.parse(user)
-//     const username = parsedUser.username
-// /*testing the useEffect- the return() of component will work but fetch not working  
-// the url parameter is passing into url  */
-//     useEffect(()=> {
-//       fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${username}`,
-//               {
-//                   headers: {
-//                       Authorization: `Bearer ${token}`,
-//                 }
-//               }
-//             ).then((response)=> response.json()).then((data)=> {
-//               console.log('data retrevied')
-//             }).catch((err)=> {
-//               console.error(err, 'fetch failed!')
-//             })
-//     }, [token])
+                    <h2>profile infomation</h2>
 
-  // return (
-  //   <>
-  //   {user ? (
-          
-  //    <div >hello profile view! {parsedUser.username}  </div>
-  //   ) : (
-  //     <p>there is no username!</p>
-  //   )
-  
-  // }
-  // </>
+                    {user.favouriteMovies && user.favouriteMovies.length > 0 
+                        &&
+                        <>
+                            <h3>favourite movies</h3>
 
-  // )
+                            <div>{ user.favouriteMovies.map((movie)=> {
+                            const found= moviesFromApi.find((m)=> m.id === movie) 
+                            if (found){
+                            return (
+                                <p key={found.id} >{found.title}</p>
+                            )
+                            }
+                            // this error handling is important- as it take a while to fetch movie data, after the page is being rendered or reloaded.
+                            return <p key={movie}>cannot find movies in user's favourite</p>;
+                            })}
+                            </div>
+                        </> 
+                        }
+                </> 
+                )}       
+            </div>
+            )}
+            
+         
+    
+    </>
+    )
+}
 
 
 
 
 
-    // const [loggedInUser, setLoggedInUser] = useState(null)
 
-    // /*by using the parameter inside the url, just for its information- hence why we use the 
-    // hook useParams(). since the information is stringed, i need to parse the data before using. */
-
-    // const {username} = useParams()
-    // // let parsedUsername = JSON.parse(username)
-  
-    // useEffect(() => {
-    // fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${username}`,
-
-    //     {
-    //         headers: {
-    //             Authorization: `Bearer ${token}`,
-    //       }
-    //     }).then((response) => response.json()).then((data) => {
-    //             setLoggedInUser(data)
-
-    //           // const theUser = data.find((u) => u.username === parsedUser.username);
-    //           // if(theUser) {
-    //           //   setLoggedInUser(theUser);
-    //           // }
-    //           // else {
-    //           //   setLoggedInUser(null);
-    //           // };
-
-    //         }) .catch((err) => {
-    //         console.error(err, 'fetching failed')
-
-    //     })
-    //   }, [token, loggedInUser])
-
-
-    //     return (
-    //         <>
-    //             {loggedInUser ? (
-    //             <Container>
-    //                 <h2>profile Infomation</h2>
-
-    //                     <p> First Name: {loggedInUser.firstName}</p>
-    //                     <p> Last Name: {loggedInUser.lastName}</p>
-    //                     <p> Age: {loggedInUser.age}</p>
-    //                     <p> username: {loggedInUser.username}</p>
-    //                     <p> password: {loggedInUser.password}</p>
-    //                     <p> birthday: {loggedInUser.birthday}</p>
-    //                     <p> Email: {loggedInUser.email}</p>
-    //                     <ul>
-    //                         { loggedInUser.favouriteMovies && loggedInUser.favouriteMovies.length > 0
-    //                         && (
-    //                             <>
-    //                                 <h3> Favourite Movies: </h3>
-    //                                 <p>{loggedInUser.favouriteMovies.map((movies) => {
-    //                                     <li key={movies._id}>{movies.title}</li>
-    //                                     })
-    //                                     }
-    //                                 </p>
-    //                             </>
-    //                         )}
-    //                     </ul>       
-    //             </Container>
-    //             ) : (
-    //                 <p>user not found</p>
-    //                 )
-    //             }
-    //         </>
-    //     )
     
 
 
