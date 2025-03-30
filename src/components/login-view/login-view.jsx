@@ -31,7 +31,7 @@ export const LoginView = ({onLoggedIn}) => {
                 if(data.user) {
                     // stringified the 'user' data
                     localStorage.setItem('user', JSON.stringify(data.user));
-                    console.log('has the local storage been updated?:', localStorage.getItem('user'));
+                    console.log('the local storage been updated:', localStorage.getItem('user'));
                     localStorage.setItem('token', data.token);
                     onLoggedIn(data.user, data.token);
                     alert('SUCCESS!')
@@ -66,7 +66,7 @@ export const LoginView = ({onLoggedIn}) => {
                 <Form.Group controlId='formPassword'>
                     <Form.Label>password:</Form.Label>
                     <Form.Control
-                    type='password'
+                    type='text'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     >

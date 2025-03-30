@@ -16,9 +16,20 @@ export const MainView = () => {
   // const [selectedMovie, setSelectedMovie] = useState(null);
   const storedUser = localStorage.getItem('user');
   const storedToken = localStorage.getItem('token');
-  const [users, setUsers] = useState(storedUser ? storedUser : null);
+  const [users, setUsers] = useState(storedUser ? JSON.parse(storedUser) : null);
   const [token, setToken] = useState(storedToken ? storedToken : null );
+
   
+// useEffect(() => {
+//   const storedUser = localStorage.getItem('user');
+//   const storedToken = localStorage.getItem('token');
+
+//   if(storedUser && storedToken) {
+//     setUsers(JSON.parse(storedUser));
+//     setToken(storedToken);
+//   }
+// }, [users, token]);
+
 
   useEffect(() => {
     if(!token) {
@@ -59,6 +70,11 @@ export const MainView = () => {
       localStorage.clear();
     }
 
+  const handleProfileUpdate = (updatedUser) => {
+    console.log('user has been updated');
+    setUsers(updatedUser);
+    localStorage('user', JSON.parse(updatedUser));
+  }
     
     return (
         <BrowserRouter>
@@ -121,9 +137,13 @@ export const MainView = () => {
                     <Navigate to='/login' replace />
                   
                     ) : (
-                <ProfileView user={users} token={token} moviesFromApi={movies}/>
-                    )
-                  }
+                <ProfileView user={users} 
+                token={token} 
+                moviesFromApi={movies}
+                onProfileUpdate={handleProfileUpdate}
+                onLogout={handleLogOut}
+                />
+                )}
                 </>
                 }
               >
