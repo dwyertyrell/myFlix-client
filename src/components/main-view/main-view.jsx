@@ -14,18 +14,21 @@ export const MainView = () => {
   
   const [movies, setMovies] = useState([]);
   // const [selectedMovie, setSelectedMovie] = useState(null);
-  const [users, setUsers] = useState(storedUser ? : null);
-  const [token, setToken] = useState(storedToken ? storedToken : null );
-  
-useEffect(() => {
   const storedUser = localStorage.getItem('user');
   const storedToken = localStorage.getItem('token');
+  const [users, setUsers] = useState(storedUser ? JSON.parse(storedUser) : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null );
 
-  if(storedUser && storedToken) {
-    setUsers(JSON.parse(storedUser));
-    setToken(storedToken);
-  }
-}, []);
+  
+// useEffect(() => {
+//   const storedUser = localStorage.getItem('user');
+//   const storedToken = localStorage.getItem('token');
+
+//   if(storedUser && storedToken) {
+//     setUsers(JSON.parse(storedUser));
+//     setToken(storedToken);
+//   }
+// }, [users, token]);
 
 
   useEffect(() => {
@@ -138,6 +141,7 @@ useEffect(() => {
                 token={token} 
                 moviesFromApi={movies}
                 onProfileUpdate={handleProfileUpdate}
+                onLogout={handleLogOut}
                 />
                 )}
                 </>
