@@ -2,6 +2,9 @@ import {useState} from 'react';
 // import {SignupView} from '../signup-view/signup-view'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router';
+
+
 export const LoginView = ({onLoggedIn}) => {
 
     const [username, setUsername]= useState('');
@@ -26,7 +29,9 @@ export const LoginView = ({onLoggedIn}) => {
             .then((data) => {
                 console.log("login response: ", data.user, data.token);
                 if(data.user) {
+                    // stringified the 'user' data
                     localStorage.setItem('user', JSON.stringify(data.user));
+                    console.log('the local storage been updated:', localStorage.getItem('user'));
                     localStorage.setItem('token', data.token);
                     onLoggedIn(data.user, data.token);
                     alert('SUCCESS!')
@@ -36,38 +41,48 @@ export const LoginView = ({onLoggedIn}) => {
             }).catch((e) => {
                 alert("something went wrong here");
             })      
+           
 
     }
-    
-    // const handleSignup = () => {
-    //     return <SignupView/>
-    // }
-    
-    return (
-        <Form onSubmit= {handleSubmit}>
 
-            <Form.Group controlId='formUsername'>
-                <Form.Label>username:</Form.Label>
-                <Form.Control
-                type='text'
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                >  
-                </Form.Control>
-            </Form.Group>
-                        
-            <Form.Group controlId='formPassword'>
-                <Form.Label>password:</Form.Label>
-                <Form.Control
-                type='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                >
-                </Form.Control>
-            </Form.Group>
+    const navigate = useNavigate();
 
-            <Button variant= 'primary' onClick={handleSubmit}>submit</Button>
-        </Form>
+
+
+    return ( 
+        <>
+            <Form onSubmit= {handleSubmit}>
+
+                <Form.Group controlId='formUsername'>
+                    <Form.Label>username:</Form.Label>
+                    <Form.Control
+                    type='text'
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    >  
+                    </Form.Control>
+                </Form.Group>
+                            
+                <Form.Group controlId='formPassword'>
+                    <Form.Label>password:</Form.Label>
+                    <Form.Control
+                    type='text'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    >
+                    </Form.Control>
+                </Form.Group>
+
+                <Button variant= 'primary' onClick={handleSubmit}>submit</Button>
+            </Form>
+
+            <Button onClick={()=> {navigate('/signup')}}>sign up here</Button>
+
+
+
+        </>
+
+        
     )
 }
 

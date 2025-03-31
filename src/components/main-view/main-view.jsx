@@ -3,21 +3,33 @@ import {MovieCard} from "../movie-card/movie-card";
 import {MovieView} from "../movie-view/movie-view";
 import {LoginView} from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
-import Container from 'react-bootstrap/Container';
 import Row from "react-bootstrap/Row"; 
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+import {NavigationBar} from '../navigation-bar/navigation-bar';
+import { ProfileView } from "../profile-view/profile-view";
 
 export const MainView = () => {
   
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  // const [selectedMovie, setSelectedMovie] = useState(null);
   const storedUser = localStorage.getItem('user');
-  const storedToken = localStorage.getItem('token')
-  const [users, setUsers] = useState(storedUser ? storedUser : null);
+  const storedToken = localStorage.getItem('token');
+  const [users, setUsers] = useState(storedUser ? JSON.parse(storedUser) : null);
   const [token, setToken] = useState(storedToken ? storedToken : null );
+
   
+// useEffect(() => {
+//   const storedUser = localStorage.getItem('user');
+//   const storedToken = localStorage.getItem('token');
+
+//   if(storedUser && storedToken) {
+//     setUsers(JSON.parse(storedUser));
+//     setToken(storedToken);
+//   }
+// }, [users, token]);
+
 
   useEffect(() => {
     if(!token) {
@@ -46,60 +58,165 @@ export const MainView = () => {
 
   }, [token]);
 
+  // login
     const handleLogIn = (user, token) => {
       setUsers(user);
       setToken(token);      
     }
-  
+    // logout
+    const handleLogOut = () => {
+      setUsers(null);
+      setToken(null);
+      localStorage.clear();
+    }
+
+  const handleProfileUpdate = (updatedUser) => {
+    console.log('user has been updated');
+    setUsers(updatedUser);
+    localStorage('user', JSON.parse(updatedUser));
+  }
+    
     return (
-        <Row className='justify-content-md-center'>
-          
-          {!users ? (
-            
-            <Col md={4} style={{border:' 2px solid green'}}>
-              <LoginView onLoggedIn={handleLogIn} /> 
-              <SignupView />
-            </Col>
-            
-          ) : selectedMovie ? (
-            <MovieView
-              movie={selectedMovie}
-              onBackClick={() => setSelectedMovie(null)}
-            />
-          ) : movies.length === 0 ? (
-            <div>the list is empty</div>
-          ) : (
-            <>
-            <Button
-                variant='secondary'
-                className=' w-100 '
-                onClick={() => {
-                  setUsers(null);
-                  setToken(null);
-                  localStorage.clear();
-                }}
-              >
-                log out
-              </Button>
-              {movies.map((movie) => (
-                <Col md={3}  key={movie.id} className='mb-5'>
-                {/*key attribute need to be added to the grid system's container 
-                element of the component being rendered */}
-                <MovieCard 
-                 
-                  movie={movie}
-                  onMovieClick={(newSelectedMovie) => {
-                    setSelectedMovie(newSelectedMovie);
-                  }}
+        <BrowserRouter>
+        { users && (
+        <NavigationBar user={users} 
+        onLoggedOut={handleLogOut}/> )}
+
+            <Row className='justify-content-md-center'>
+              <Routes>
+
+                <Route 
+                path='/signup'
+                element= {
+                  <>
+                    {users ? (
+                      <Navigate to='/' />
+                    ) : 
+                    <Col md={4} style={{border:' 2px solid green'}}>
+                         <SignupView />
+                    </Col>
+                  }
+                  </>
+
+                } />
+                {/* Login */}
+                <Route
+                  path='/login'
+
+                  element={
+                      <>
+                      { users ? (
+                        <Navigate to='/'/>
+                      ) : (
+                        <Col md={4} style={{border:' 2px solid green'}}>
+                            <LoginView onLoggedIn={handleLogIn} /> 
+                        </Col>
+                    )}
+                        
+                    </>
+                  }
+                ></Route>
+
+                {/* SignUp */}
+              <Route path= '/signup' element= {
+                <>
+                  { users ? (
+                    <Navigate to='/'/>
+                  ): (
+                    <SignupView/>
+                  )}
+                </>
+              }></Route>
+
+
+              <Route
+                path='/users/:usernameOfUser'
+                element= {
+                <>
+                {!users ? (
+                    <Navigate to='/login' replace />
+                  
+                    ) : (
+                <ProfileView user={users} 
+                token={token} 
+                moviesFromApi={movies}
+                onProfileUpdate={handleProfileUpdate}
+                onLogout={handleLogOut}
                 />
-                </Col>
-              ))}
+                )}
+                </>
+                }
+              >
+                </Route>
+                
+                
+              <Route
+              path='/movies/:movieId'
+              element = { 
+                <>
+                {!users ? (
+                  <Navigate to='/login'/>
+                ) : movies.length === 0 ? (
+                  <Col>the list is empty</Col>
+
+                ) : (
+                  <MovieView
+                    movies={movies}
+                  />
+                  )}
+                </>
+              }
+              />
+              {/* Home */}
+              <Route
+              path='/'
+              element= {
+                <>
+                  { !users ? (
+                    <Navigate to='/login' replace />
+                  
+                    ): movies.length === 0 ? (
+                      <div>the list is empty</div>
+                    ) : (
+                      <>
+                        <Button
+                            variant='secondary'
+                            className=' w-100 '
+                            onClick={handleLogOut}
+                          >
+                            log out
+                          </Button>
+
+                          {movies.map((movie) => (
+                            <Col md={3}  key={movie.id} className='mb-5'>
+                            {/*key attribute need to be added to the grid system's container 
+                            element of the component being rendered */}
+                            <MovieCard 
+                            
+                              movie={movie}
+                              // onMovieClick={(newSelectedMovie) => {
+                              //   setSelectedMovie(newSelectedMovie);
+                              // }}
+                            />
+                            {/* {console.log('mapping done')} */}
+                            </Col>
+                          ))}
+                        
+                      </> 
+                      )
+                  }
+                     
+                </>
+
+              }></Route>
+ 
               
-            </>
-          )}
-        </Row>
+              </Routes>
+            </Row>
+        </BrowserRouter>
     );
   }
+
 
 /* React Bootstrap Grid System:
 this frid system on React Bootstrap uses flexbox. 
@@ -351,3 +468,8 @@ $body-bg: Honeydew;
 
 
 */
+
+
+/* react router: 
+change the movie prop to "movies" in MovieView since we are returning the entire movie array 
+into the other components and not a single movie anymore.*/

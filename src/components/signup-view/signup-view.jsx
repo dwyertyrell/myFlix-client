@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
+import {useNavigate} from 'react-router-dom';
 
 export const SignupView = () => {
   const [username, setUsername] = useState('');
@@ -11,9 +12,12 @@ export const SignupView = () => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
 
+  const navigate = useNavigate();
+
   const handleSubmit= (event) => {
     event.preventDefault();
 
+// the value of the input field is added the data object upon submit event
     const data = {
       username: username,
       password: password,
@@ -23,8 +27,8 @@ export const SignupView = () => {
       firstName: firstName,
       lastName: lastName
     }
-
-    fetch('signup_url', 
+// this fetch is called inside the onSubmit handler 
+    fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users', 
       {
         method: 'POST',
         body: JSON.stringify(data),
@@ -150,12 +154,10 @@ export const SignupView = () => {
         </Form.Group>
 
         <Button type="submit" variant='primary'>sign up!</Button>
+        <Button  onClick={()=> navigate('/login')} variant='primary'>Log in over here</Button>
 
     </Form>
       </>
     )
 }
 
-/*the handleSubmit needs to make an API call to the signup URL passing the 
-f orm data. there isn't an endpoint for '/signup' in the API, therefore this 
-functionality will not work now.  */
