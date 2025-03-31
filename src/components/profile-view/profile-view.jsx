@@ -23,15 +23,52 @@ const [error, setError] = useState(null);
 const [loading, setLoading] = useState(false);
 const navigate = useNavigate();
 
+// const formatDate = (dateString) => {
+//     if(!dateString) return 'not provided';
+//     return dateString.toLocaleDateString('en-GB', {
+//         year: 'numeric',
+//         month: 'long',
+//         day: 'numeric',
+//     });
+// }
+
 const formatDate = (dateString) => {
     if(!dateString) return 'not provided';
-    return dateString.tolocalDateString('en-GB', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
+    return (new Date(dateString)).toLocaleDateString('en-GB', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     });
-}
+  }
     
+//fetching user profile from the parent's state, not from api anymore- due to bad 503 request
+// useEffect(()=> {
+//     if (!user || !token) {
+//         setError('user or token is missing, log in and try again');
+//         console.log('no user or token, please log in again');
+//         return;
+//     }
+//     setProfile(user);
+//     setNewInfo({
+//         username: user.username,
+//         email: user.email,
+//         birthday: user.birthday || '',
+//         password: ''
+//     });
+
+//     if(!newInfo) {
+//         console.log('fetched data has not been added to newInfo state')
+//     };
+
+//     if (moviesFromApi && user.favouriteMovies) {
+//         const favouriteMoviesList = moviesFromApi.filter((movie) => {
+//             return user.favouriteMovies.includes(movie.id);
+//         });
+//         setFavouriteMovies(favouriteMoviesList);
+//     }
+
+// }, [user, moviesFromApi])
+
 
     //fetch user profile and favourites
 
@@ -92,9 +129,7 @@ useEffect(()=> {
                 setFavouriteMovies(favouriteMoviesList);
                 }
 
-                if(!favouriteMoviesList) {
-                    console.log('fetched data had not been added to favouriteMoviesList');
-                }
+                
         } catch(error) {
             setError(error.message);
         } finally{
@@ -162,6 +197,10 @@ const handleProfileUpdate = async (e) => {
 };
 
 const deleteAccount = () => {
+    // if (!token) {
+    //     alert('token is not found');
+    //     return;
+    // }
     if (window.confirm('Are you sure you want to delete your account? this action cannot be undone')) {
         setLoading(true);
         setError(null);
@@ -178,6 +217,10 @@ const deleteAccount = () => {
                         // what is this Error() function? 
                         throw new Error(errData.message || 'failed to delete account');
                     });
+                };
+
+                if (response.status === 202 ) {
+                    return null; 
                 }
                 return response.json();
             }).then(() => {
@@ -202,9 +245,9 @@ return (
     <>
     <h1>user's profile</h1>
     
-    {error && <p>{error}</p>}
+    {error && <Alert variant='danger'>{error}</Alert>}
 
-    {loading && <p> loading...</p>}
+    {loading && <Spinner animation='border' variant='primary'></Spinner>}
 
     {!editing ? (
         //user profile
@@ -300,13 +343,14 @@ return (
                         <div key={movie.id}> 
                             <div>
                                 <div>
-                                    <img
-                                        src={movie.image?.imageUrl} //the chaining operator is important because it returns undefined rather than error- this prevents the application from crashing.
+                                    <img 
+                                        src={movie.image} //the chaining operator is important because it returns undefined rather than error- this prevents the application from crashing.
                                         alt={movie.title}
                                         loading='lazy'
+                                        style={{ width: '200px', height: 'auto' }}
                                     />
                                 </div>
-                                 <a href={`/movies/${movie.id}`}>{movie.title}</a> 
+                                    <a href={`/movies/${movie.id}`}>{movie.title}</a> 
                             </div>
                         </div>
                     ))
