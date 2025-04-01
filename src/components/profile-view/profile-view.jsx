@@ -197,10 +197,10 @@ const handleProfileUpdate = async (e) => {
 };
 
 const deleteAccount = () => {
-    // if (!token) {
-    //     alert('token is not found');
-    //     return;
-    // }
+    if (!token) {
+        alert('token is not found');
+        return;
+    }
     if (window.confirm('Are you sure you want to delete your account? this action cannot be undone')) {
         setLoading(true);
         setError(null);
