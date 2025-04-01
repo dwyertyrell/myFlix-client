@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useCallback} from "react";
 import {MovieCard} from "../movie-card/movie-card";
 import {MovieView} from "../movie-view/movie-view";
 import {LoginView} from "../login-view/login-view";
@@ -18,18 +18,6 @@ export const MainView = () => {
   const storedToken = localStorage.getItem('token');
   const [users, setUsers] = useState(storedUser ? JSON.parse(storedUser) : null);
   const [token, setToken] = useState(storedToken ? storedToken : null );
-
-  
-// useEffect(() => {
-//   const storedUser = localStorage.getItem('user');
-//   const storedToken = localStorage.getItem('token');
-
-//   if(storedUser && storedToken) {
-//     setUsers(JSON.parse(storedUser));
-//     setToken(storedToken);
-//   }
-// }, [users, token]);
-
 
   useEffect(() => {
     if(!token) {
@@ -69,12 +57,111 @@ export const MainView = () => {
       setToken(null);
       localStorage.clear();
     }
-
+//a prop passed into ProfileView used to keep the state centralised on the parent component
   const handleProfileUpdate = (updatedUser) => {
     console.log('user has been updated');
     setUsers(updatedUser);
     localStorage('user', JSON.parse(updatedUser));
   }
+
+  // study useCallback hook on react? 
+  const handleAddFavourite = useCallback(async (movieId) => {
+    if (!user || !token) {
+      alert('please log in to add to favourites');
+    
+    return;
+    }
+
+    const prevUser = {...user};
+
+    try {
+      //optimistically updates the UI
+      const updatedUser = {
+        ...user,
+        favouriteMovies: user.favouriteMovies ? [...user.favouriteMovies, movieId] : [movieId]
+      };
+    setUsers(updatedUser);
+
+      const response = await fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${users.username}/${movieId}`, 
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          }
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'failed to add movie to favourite');
+        }
+
+        if (response.ok) {
+          return null;
+        }
+    } catch (error){ 
+      console.error('error adding to favourite', error);
+      alert(`failed to add to favourites: ${error.message}`);
+      // reverting the user state back to its value before the handleAddFavourite
+      setUsers(prevUser);
+      localStorage.setItem('user', JSON.stringify(prevUser));
+     }
+    }, [users, token]);
+
+    
+
+
+  
+
+
+/*
+The phrase "Optimistically update the UI" means that the application updates 
+the user interface to reflect the expected outcome of an operation before the 
+application receives confirmation from the server that the operation was 
+successful. 
+e.g. would be setting the users state as updatedUser, before the fetch request 
+is complete in the favourite handles
+*/
+
+  const handleRemoveFavourite = useCallback(async (movieId) => {
+    if (!users || !token) {
+      alert('log in to removed favourite')
+      return;
+    };
+    const prevUser = {...users};
+
+    try{
+      //optimistically updates the UI
+      const updatedUser = {
+        ...users,
+        favouriteMovies: users.favouriteMovies ? [...users.favouriteMovies, movieId] : [movieId]
+      }; 
+      setUsers(updatedUser);
+
+      const response = await fetch (`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${users.username}/${movieId}`, 
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(error.Data.message || 'failed to remove the movie from favourites');
+        }
+
+        if (response.ok) {
+          return null
+        }
+      
+    } catch (error) {
+      console.error(`error removing movie from favourites ${error}`);
+      alert(`movie from favourite list failed to be removed: ${error.message}`);
+      setUsers(prevUsers);
+    };
+  }, [users, token])
     
     return (
         <BrowserRouter>
@@ -192,13 +279,8 @@ export const MainView = () => {
                             {/*key attribute need to be added to the grid system's container 
                             element of the component being rendered */}
                             <MovieCard 
-                            
                               movie={movie}
-                              // onMovieClick={(newSelectedMovie) => {
-                              //   setSelectedMovie(newSelectedMovie);
-                              // }}
                             />
-                            {/* {console.log('mapping done')} */}
                             </Col>
                           ))}
                         
