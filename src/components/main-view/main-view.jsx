@@ -66,19 +66,19 @@ export const MainView = () => {
 
   // study useCallback hook on react? 
   const handleAddFavourite = useCallback(async (movieId) => {
-    if (!user || !token) {
+    if (!users || !token) {
       alert('please log in to add to favourites');
     
     return;
     }
 
-    const prevUser = {...user};
+    const prevUser = {...users};
 
     try {
       //optimistically updates the UI
       const updatedUser = {
-        ...user,
-        favouriteMovies: user.favouriteMovies ? [...user.favouriteMovies, movieId] : [movieId]
+        ...users,
+        favouriteMovies: users.favouriteMovies ? [...users.favouriteMovies, movieId] : [movieId]
       };
     setUsers(updatedUser);
 
@@ -96,15 +96,16 @@ export const MainView = () => {
           throw new Error(errorData.message || 'failed to add movie to favourite');
         }
 
-        if (response.ok) {
+        if (response.status === 202) {
+          console.log('response.ok for adding to favourite');
           return null;
         }
     } catch (error){ 
       console.error('error adding to favourite', error);
       alert(`failed to add to favourites: ${error.message}`);
       // reverting the user state back to its value before the handleAddFavourite
+
       setUsers(prevUser);
-      localStorage.setItem('user', JSON.stringify(prevUser));
      }
     }, [users, token]);
 
@@ -148,18 +149,20 @@ is complete in the favourite handles
         });
 
         if (!response.ok) {
+          console.log('error while removing from fav')
           const errorData = await response.json();
-          throw new Error(error.Data.message || 'failed to remove the movie from favourites');
+          throw new Error(errorData.message || 'failed to remove the movie from favourites');
         }
 
-        if (response.ok) {
+        if (response.status === 202) {
+          console.log('response.ok for removing favourite')
           return null
         }
       
     } catch (error) {
       console.error(`error removing movie from favourites ${error}`);
       alert(`movie from favourite list failed to be removed: ${error.message}`);
-      setUsers(prevUsers);
+      setUsers(prevUser);
     };
   }, [users, token])
     
@@ -224,7 +227,8 @@ is complete in the favourite handles
                     <Navigate to='/login' replace />
                   
                     ) : (
-                <ProfileView user={users} 
+                <ProfileView 
+                user={users} 
                 token={token} 
                 moviesFromApi={movies}
                 onProfileUpdate={handleProfileUpdate}
@@ -249,6 +253,10 @@ is complete in the favourite handles
                 ) : (
                   <MovieView
                     movies={movies}
+                    onAddFavourite={handleAddFavourite}
+                    removeFavourite={handleRemoveFavourite}
+                    token={token}
+                    user={users}
                   />
                   )}
                 </>
@@ -280,6 +288,10 @@ is complete in the favourite handles
                             element of the component being rendered */}
                             <MovieCard 
                               movie={movie}
+                              onAddFavourite={handleAddFavourite}
+                              onRemoveFavourite={handleRemoveFavourite}
+                              user={users}
+                              token={token}
                             />
                             </Col>
                           ))}
