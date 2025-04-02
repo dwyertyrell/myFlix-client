@@ -40,34 +40,13 @@ const formatDate = (dateString) => {
       day: 'numeric',
     });
   }
-    
-//fetching user profile from the parent's state, not from api anymore- due to bad 503 request
-// useEffect(()=> {
-//     if (!user || !token) {
-//         setError('user or token is missing, log in and try again');
-//         console.log('no user or token, please log in again');
-//         return;
+
+  // i want the favouriteMovies state to be updated continuously. don't need this code...
+// useEffect(() => {
+//     if (user) {
+//         setFavouriteMovies(user.favouriteMovies);
 //     }
-//     setProfile(user);
-//     setNewInfo({
-//         username: user.username,
-//         email: user.email,
-//         birthday: user.birthday || '',
-//         password: ''
-//     });
-
-//     if(!newInfo) {
-//         console.log('fetched data has not been added to newInfo state')
-//     };
-
-//     if (moviesFromApi && user.favouriteMovies) {
-//         const favouriteMoviesList = moviesFromApi.filter((movie) => {
-//             return user.favouriteMovies.includes(movie.id);
-//         });
-//         setFavouriteMovies(favouriteMoviesList);
-//     }
-
-// }, [user, moviesFromApi])
+// },[user, favouriteMovies])
 
 
     //fetch user profile and favourites
@@ -196,11 +175,13 @@ const handleProfileUpdate = async (e) => {
     }
 };
 
+
+// delete is not working
 const deleteAccount = () => {
-    // if (!token) {
-    //     alert('token is not found');
-    //     return;
-    // }
+    if (!token) {
+        alert('token is not found');
+        return;
+    }
     if (window.confirm('Are you sure you want to delete your account? this action cannot be undone')) {
         setLoading(true);
         setError(null);
@@ -339,21 +320,23 @@ return (
                 <Spinner animation='border' variant='primary'></Spinner> //bootstrap spinner
             ) : (
                 favouriteMovies.length > 0 ? (
+                    
                     favouriteMovies.map((movie) => (
                         <div key={movie.id}> 
-                            <div>
-                                <div>
+                           
+                                
                                     <img 
                                         src={movie.image} //the chaining operator is important because it returns undefined rather than error- this prevents the application from crashing.
                                         alt={movie.title}
                                         loading='lazy'
                                         style={{ width: '200px', height: 'auto' }}
                                     />
-                                </div>
+                              
                                     <a href={`/movies/${movie.id}`}>{movie.title}</a> 
-                            </div>
+                          
                         </div>
                     ))
+                    
                 ) : (
                     <p>You have no favourite movies yet. Add some from the movie list!</p>
                 )
