@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import {Alert, Spinner} from 'react-bootstrap';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router';
+import PropTypes from 'prop-types';
 
 export const ProfileView = ({ user, token, moviesFromApi, onProfileUpdate, onLogout}) => {
 
@@ -23,15 +24,6 @@ const [error, setError] = useState(null);
 const [loading, setLoading] = useState(false);
 const navigate = useNavigate();
 
-// const formatDate = (dateString) => {
-//     if(!dateString) return 'not provided';
-//     return dateString.toLocaleDateString('en-GB', {
-//         year: 'numeric',
-//         month: 'long',
-//         day: 'numeric',
-//     });
-// }
-
 const formatDate = (dateString) => {
     if(!dateString) return 'not provided';
     return (new Date(dateString)).toLocaleDateString('en-GB', {
@@ -40,14 +32,6 @@ const formatDate = (dateString) => {
       day: 'numeric',
     });
   }
-
-  // i want the favouriteMovies state to be updated continuously. don't need this code...
-// useEffect(() => {
-//     if (user) {
-//         setFavouriteMovies(user.favouriteMovies);
-//     }
-// },[user, favouriteMovies])
-
 
     //fetch user profile and favourites
 
@@ -349,14 +333,15 @@ return (
 
 
 ); 
-
-
-
-
-
-
-
 }
+
+ProfileView.propTypes = {
+    user: PropTypes.object.isRequired, // Define a more specific shape
+    token: PropTypes.string.isRequired,
+    moviesFromApi: PropTypes.arrayOf(PropTypes.object).isRequired,  // Array of movie objects
+    onProfileUpdate: PropTypes.func.isRequired,
+    onLogout: PropTypes.func.isRequired
+  };
 
 
 

@@ -74,12 +74,24 @@ export const MovieCard = ({movie, user, token, onAddFavourite, onRemoveFavourite
     )
 } 
 
-MovieCard.PropTypes = {
+MovieCard.propTypes = {
     movie: PropTypes.shape({
-        title: PropTypes.string
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      genre: PropTypes.string.isRequired,
     }).isRequired,
-    onMovieClick: PropTypes.func.isRequired
-};
+    user: PropTypes.shape({
+        firstName: PropTypes.string.isRequired,
+        lastName: PropTypes.string.isRequired,
+        age: PropTypes.number.isRequired,
+        username: PropTypes.string.isRequired,
+        password: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+    }), 
+    onAddFavorite: PropTypes.func.isRequired,
+    onRemoveFavorite: PropTypes.func.isRequired,
+  };
 
 /*let's make this react element more stylish by replacing the jsx element with 
 Card- related bootstrap component.

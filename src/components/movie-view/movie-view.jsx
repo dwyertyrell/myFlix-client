@@ -78,13 +78,22 @@ export const MovieView = ({movies, onAddFavourite, onRemoveFavourite, token, use
     )
 }
 
-MovieView.PropTypes = {
-    movies: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        genre: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        director: PropTypes.string,
-        image: PropTypes.string
+MovieView.propTypes = {
+    movie: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      director: PropTypes.string.isRequired
     }).isRequired,
-    onBackClick: PropTypes.func.isRequired
-}
+    user: PropTypes.shape({
+        firstName: PropTypes.string.isRequired,
+        lastName: PropTypes.string.isRequired,
+        age: PropTypes.number.isRequired,
+        username: PropTypes.string.isRequired,
+        password: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+    }),
+    token: PropTypes.string.isRequired,
+    onAddFavorite: PropTypes.func.isRequired,
+    onRemoveFavorite: PropTypes.func.isRequired
+  };

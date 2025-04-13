@@ -1,5 +1,5 @@
 import {useState} from 'react';
-// import {SignupView} from '../signup-view/signup-view'
+import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router';
@@ -86,6 +86,10 @@ export const LoginView = ({onLoggedIn}) => {
     )
 }
 
+
+LoginView.propTypes = {
+    onLoggedIn: PropTypes.func.isRequired,
+  };
 
 /* refactor the login-view to use React Bootstrap form 
 components instead of the react JSX elements. 
