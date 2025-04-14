@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
+import { Row, Col } from 'react-bootstrap';
 import { MovieCard } from "../movie-card/movie-card";
 
 export const MovieSearch = ({movies, setFiltered, user, token, onAddFavourite, onRemoveFavourite}) => {
@@ -13,7 +14,7 @@ export const MovieSearch = ({movies, setFiltered, user, token, onAddFavourite, o
   useEffect(()=> {
     if(!searchTerm) {
       setFiltered(movies);
-      setLocalSearchResults(movies);
+      setLocalSearchResults([]);
       setSearchError('')
       return;
     }
@@ -43,7 +44,8 @@ export const MovieSearch = ({movies, setFiltered, user, token, onAddFavourite, o
   }, [searchTerm, setFiltered, movies, setLocalSearchResults, setSearchError])
 
   return (
-    <>      
+    <> 
+    <Row>  
       <Form>
         <Form.Control
           type='text'
@@ -60,18 +62,25 @@ export const MovieSearch = ({movies, setFiltered, user, token, onAddFavourite, o
 
         localSearchResults.map(movie => {
           return (
-          <MovieCard 
+            <Col 
             key= {movie.id}
+            xs={12}
+						sm={6}
+						md={4}
+						lg={3}>
+          <MovieCard
             //the movie prop is holding the argument of the map() as its value.
             movie= {movie}
             user={user}
             token={token}
             onAddFavourite= {onAddFavourite}
             onRemoveFavourite={onRemoveFavourite}
-          /> )
+          /> 
+          </Col>)
         })
       
       )}
+      </Row>
     </>
 
     )
