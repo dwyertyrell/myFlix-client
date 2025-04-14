@@ -15,7 +15,6 @@ import { ProfileView } from "../profile-view/profile-view";
 export const MainView = () => {
   
   const [movies, setMovies] = useState([]);
-  // const [selectedMovie, setSelectedMovie] = useState(null);
   const storedUser = localStorage.getItem('user');
   const storedToken = localStorage.getItem('token');
   const [users, setUsers] = useState(storedUser ? JSON.parse(storedUser) : null);
@@ -101,7 +100,7 @@ export const MainView = () => {
         }
 
         if (response.status === 202) {
-          console.log('response.ok for adding to favourite');
+          // console.log('response.ok for adding to favourite');
           return null;
         }
     } catch (error){ 
@@ -113,20 +112,7 @@ export const MainView = () => {
      }
     }, [users, token]);
 
-    
 
-
-  
-
-
-/*
-The phrase "Optimistically update the UI" means that the application updates 
-the user interface to reflect the expected outcome of an operation before the 
-application receives confirmation from the server that the operation was 
-successful. 
-e.g. would be setting the users state as updatedUser, before the fetch request 
-is complete in the favourite handles
-*/
 
   const handleRemoveFavourite = useCallback(async (movieId) => {
     if (!users || !token) {
@@ -222,7 +208,7 @@ is complete in the favourite handles
                 </>
               }></Route>
 
-
+              {/* profile */}
               <Route
                 path='/users/:usernameOfUser'
                 element= {
@@ -244,7 +230,7 @@ is complete in the favourite handles
               >
                 </Route>
                 
-                
+                {/* movie-view */}
               <Route
               path='/movies/:movieId'
               element = { 
