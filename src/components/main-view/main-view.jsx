@@ -10,16 +10,20 @@ import Button from 'react-bootstrap/Button';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import {NavigationBar} from '../navigation-bar/navigation-bar';
 import { ProfileView } from "../profile-view/profile-view";
-
+import { useDispatch, useSelector} from 'react-redux';
+import { setMovies } from "../../redux/reducers/movieSlice";
 
 export const MainView = () => {
-  
-  const [movies, setMovies] = useState([]);
+
+  const movies= useSelector((state) => state.movies.movies);
+  // const [movies, setMovies] = useState([]);
   const storedUser = localStorage.getItem('user');
   const storedToken = localStorage.getItem('token');
   const [users, setUsers] = useState(storedUser ? JSON.parse(storedUser) : null);
   const [token, setToken] = useState(storedToken ? storedToken : null );
   const [filtered, setFiltered] = useState(movies);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if(!token) {
@@ -41,7 +45,7 @@ export const MainView = () => {
             description: movie.description
           };
         });
-          setMovies(moviesFromApi)
+          dispatch(setMovies(moviesFromApi))
           setFiltered(moviesFromApi);
       }).catch((e) => {
             console.error('something wrong happened while fetching movie data')
