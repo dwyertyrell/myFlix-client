@@ -3,14 +3,17 @@ import {MainView} from "./components/main-view/main-view";
 import Container from 'react-bootstrap/Container'
 import './index.scss';
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 const MyFlixApplication = () => {
     return (
-
-    <Container >
-        <MainView/>;
-    </Container>
-    
+    <Provider store ={store}>
+        <Container >
+            <MainView/>;
+        </Container>
+    </Provider>
+        
 )
 };
 
