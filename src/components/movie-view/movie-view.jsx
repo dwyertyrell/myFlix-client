@@ -39,7 +39,9 @@ export const MovieView = ({movies, onAddFavourite, onRemoveFavourite, token, use
             // set the favourite state to false
             setIsFavourite(false);
         }
-    }, [user, user.favouriteMovies, movie]);
+        //added the handlers for favourite state to the dependency array to reload the component after click event- 
+        // this fixed the state synchronicity with the central state in MainView
+    }, [user, user.favouriteMovies, movie, onAddFavourite, onRemoveFavourite]);
 
     return (
         <Card className='w-50 h-50'>

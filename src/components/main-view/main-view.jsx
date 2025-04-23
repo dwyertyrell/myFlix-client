@@ -248,7 +248,7 @@ export const MainView = () => {
                   <MovieView
                     movies={movies}
                     onAddFavourite={handleAddFavourite}
-                    removeFavourite={handleRemoveFavourite}
+                    onRemoveFavourite={handleRemoveFavourite}
                     token={token}
                     user={users}
                   />
