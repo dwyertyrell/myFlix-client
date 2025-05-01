@@ -12,6 +12,7 @@ import {NavigationBar} from '../navigation-bar/navigation-bar';
 import { ProfileView } from "../profile-view/profile-view";
 import { useDispatch, useSelector} from 'react-redux';
 import { setMovies } from "../../redux/reducers/movieSlice";
+import { setFavourites, addFavourite as addFavAction, removeFavourite as removeFavAction } from "../../redux/reducers/favouriteSlice";
 
 export const MainView = () => {
 
@@ -51,7 +52,25 @@ export const MainView = () => {
             console.error('something wrong happened while fetching movie data')
           });
 
-  }, [token]);
+          //fetch user's favourite movies upon login.
+          
+          fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${users.username}`,
+            {
+              headers: { Authorization: `Bearer ${token}` }
+            }).then((response) => response.json())
+            .then((data) => {
+              // console.log('user data', data);
+              if(data.favouriteMovies) {
+                dispatch(setFavourites(data.favouriteMovies));
+              } else {
+                dispatch(setFavourites([]))
+              };
+            }).catch((error) => {
+              console.error('Error fetching user favourites:', error);
+            });
+        
+
+  }, [token, dispatch]);
 
   // login
     const handleLogIn = (user, token) => {
@@ -63,6 +82,8 @@ export const MainView = () => {
       setUsers(null);
       setToken(null);
       localStorage.clear();
+      //clear favourites on logout 
+      dispatch(setFavourites([]));
     }
 //a prop passed into ProfileView used to keep the state centralised on the parent component
   const handleProfileUpdate = (updatedUser) => {
@@ -73,22 +94,19 @@ export const MainView = () => {
 
   // study useCallback hook on react? 
   const handleAddFavourite = useCallback(async (movieId) => {
+    console.log('handleAddFav in MainView clicked ');
     if (!users || !token) {
       alert('please log in to add to favourites');
     
     return;
     }
 
-    const prevUser = {...users};
+    // const prevUser = {...users};
 
     try {
-      //optimistically updates the UI
-      const updatedUser = {
-        ...users,
-        favouriteMovies: users.favouriteMovies ? [...users.favouriteMovies, movieId] : [movieId]
-      };
-    setUsers(updatedUser);
 
+    dispatch(addFavAction(movieId)); //update redux store immediately
+      
       const response = await fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${users.username}/${movieId}`, 
         {
           method: 'PUT',
@@ -99,22 +117,24 @@ export const MainView = () => {
         });
 
         if (!response.ok) {
+          console.log('PUT request unsuccessful');
           const errorData = await response.json();
+          dispatch(removeFavAction(movieId)); //revert redux state on failure
           throw new Error(errorData.message || 'failed to add movie to favourite');
+          
         }
 
         if (response.status === 202) {
-          // console.log('response.ok for adding to favourite');
-          return null;
+          return console.log('PUT repsonse to api for adding to fav is success, in MainView');
         }
+        // if (response.status === 202) {
+        //   return null
+        // }
     } catch (error){ 
       console.error('error adding to favourite', error);
       alert(`failed to add to favourites: ${error.message}`);
-      // reverting the user state back to its value before the handleAddFavourite
-
-      setUsers(prevUser);
      }
-    }, [users, token]);
+    }, [users, token, dispatch]);
 
 
 
@@ -126,12 +146,7 @@ export const MainView = () => {
     const prevUser = {...users};
 
     try{
-      //optimistically updates the UI
-      const updatedUser = {
-        ...users,
-        favouriteMovies: users.favouriteMovies ? [...users.favouriteMovies, movieId] : [movieId]
-      }; 
-      setUsers(updatedUser);
+      dispatch(removeFavAction(movieId));
 
       const response = await fetch (`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${users.username}/${movieId}`, 
         {
@@ -145,20 +160,20 @@ export const MainView = () => {
         if (!response.ok) {
           console.log('error while removing from fav')
           const errorData = await response.json();
+          dispatch(addFavAction(movieId)); // revert redux state on failure. 
           throw new Error(errorData.message || 'failed to remove the movie from favourites');
         }
 
         if (response.status === 202) {
-          console.log('response.ok for removing favourite')
-          return null
+          return console.log('DELETE request to api for removing from favourites is success, in MainView');
         }
       
     } catch (error) {
       console.error(`error removing movie from favourites ${error}`);
       alert(`movie from favourite list failed to be removed: ${error.message}`);
-      setUsers(prevUser);
+      // setUsers(prevUser); // no need to revert user state here due to redux
     };
-  }, [users, token])
+  }, [users, token, dispatch])
     
     return (
         <BrowserRouter>

@@ -3,43 +3,39 @@ import PropTypes from 'prop-types';
 import {Button, Card} from 'react-bootstrap';
 import {Link} from 'react-router-dom'
 import { useCallback, useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { isMovieFavourite, addFavourite, removeFavourite } from "../../redux/reducers/favouriteSlice";
 
-
-//the helper function returns a boolean value- some.method used to check if at 
-// least one element in an user.favouriteMovies array has passed the conditon 
-const isMovieInFavourites = (movieId, favouriteMovies) => {
-    return favouriteMovies.some((favMovieId) => favMovieId === movieId);
-}
 
 export const MovieCard = ({movie, user, token, onAddFavourite, onRemoveFavourite}) => {
-    const [isFavourite, setIsFavourite] = useState(false);
-
+    const dispatch = useDispatch();
+    //to determine the favourite status, for the conditional rendering of <button> 
+    const favourite = useSelector((state) => isMovieFavourite(state, movie.id));
+    
     const handleAdd = useCallback(() => {
-        if(onAddFavourite && user && token ) {
-            onAddFavourite(movie.id);
-            setIsFavourite(true);
-        }
-    }, [onAddFavourite, user, token, movie])
+        console.log('user clicked add favourtie button in MovieCard');
+
+     if(user && token) {
+        /*to directly use redux here, i would need to learn async action creators?  otherwise, i would
+        be making the same mistake as prior*/ 
+        // dispatch(addFavourite(movie.id));
+        onAddFavourite(movie.id)
+    } else {
+        alert('please login to add to favourites.')
+    }
+    }, [ user, token, movie, dispatch, onAddFavourite ])
     
 
     const handleRemove = useCallback(() => {
-        if (onRemoveFavourite && user && token) {
+        console.log('user clicked remove favourtie button');
+
+        if(user && token) {
+            // dispatch(removeFavourite(movie.id));
             onRemoveFavourite(movie.id);
-            setIsFavourite(false);
+        } else {
+            alert('please log in to remove from favourite')
         }
     }, [user, token, movie, onRemoveFavourite])
-
-    useEffect(() => {
-        if (user && user.favouriteMovies) {
-            // update the favourite state using the helper function
-            setIsFavourite(isMovieInFavourites(movie.id, user.favouriteMovies)); 
-        } else {
-            // set the favourite state to false
-            setIsFavourite(false);
-        }
-    }, [user, movie, user.favouriteMovies, handleRemove, handleAdd]);
-
-
 
     return (
 
@@ -55,7 +51,7 @@ export const MovieCard = ({movie, user, token, onAddFavourite, onRemoveFavourite
                     <Button variant="link">Open</Button>
                 </Link>
                 {user && token && (
-                    isFavourite ? (
+                    favourite ? (
                         <Button 
                         variant='danger' 
                         onClick={handleRemove}
@@ -88,7 +84,6 @@ MovieCard.propTypes = {
         username: PropTypes.string.isRequired,
         password: PropTypes.string.isRequired,
         email: PropTypes.string.isRequired,
-    }), 
-    onAddFavorite: PropTypes.func.isRequired,
-    onRemoveFavorite: PropTypes.func.isRequired,
+    })
+    
   };
