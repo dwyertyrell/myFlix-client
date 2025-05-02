@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 import { Row, Col } from 'react-bootstrap';
 import { MovieCard } from "../movie-card/movie-card";
 
-export const MovieSearch = ({movies, setFiltered, user, token, onAddFavourite, onRemoveFavourite}) => {
+export const MovieSearch = ({movies, setFiltered, user, token}) => {
   const [searchTerm, setSearchTerm] = useState('');
   //this will hold the movie that match the current searchTerm (the user's input)
   //so, it will be an intermediary between the searchTerm and filtered state? 
@@ -73,8 +73,6 @@ export const MovieSearch = ({movies, setFiltered, user, token, onAddFavourite, o
             movie= {movie}
             user={user}
             token={token}
-            onAddFavourite= {onAddFavourite}
-            onRemoveFavourite={onRemoveFavourite}
           /> 
           </Col>)
         })

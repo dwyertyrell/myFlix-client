@@ -12,12 +12,12 @@ import {NavigationBar} from '../navigation-bar/navigation-bar';
 import { ProfileView } from "../profile-view/profile-view";
 import { useDispatch, useSelector} from 'react-redux';
 import { setMovies } from "../../redux/reducers/movieSlice";
-import { setFavourites, addFavourite as addFavAction, removeFavourite as removeFavAction } from "../../redux/reducers/favouriteSlice";
+import { setFavourites, selectFavouriteMovieIds } from "../../redux/reducers/favouriteSlice";
 
 export const MainView = () => {
 
   const movies= useSelector((state) => state.movies.movies);
-  // const [movies, setMovies] = useState([]);
+  const favouriteMoviesIds = useSelector(selectFavouriteMovieIds) // get favourite ID's from redux store
   const storedUser = localStorage.getItem('user');
   const storedToken = localStorage.getItem('token');
   const [users, setUsers] = useState(storedUser ? JSON.parse(storedUser) : null);
@@ -52,25 +52,26 @@ export const MainView = () => {
             console.error('something wrong happened while fetching movie data')
           });
 
-          //fetch user's favourite movies upon login.
-          
+          //fetch user's favourite movies upon login- to initialise the redux store upon the login event
+          if(users?.username){
           fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${users.username}`,
             {
               headers: { Authorization: `Bearer ${token}` }
             }).then((response) => response.json())
             .then((data) => {
-              // console.log('user data', data);
-              if(data.favouriteMovies) {
-                dispatch(setFavourites(data.favouriteMovies));
-              } else {
-                dispatch(setFavourites([]))
-              };
+             const initialFavourites = data?.favouriteMovies || [];
+             dispatch(setFavourites(initialFavourites));
+             //the setFavourites action is not updating the state with initialFavourites
+             console.log('initialFavourites', initialFavourites)
+             console.log('favourite movies from redux store', favouriteMoviesIds)
             }).catch((error) => {
               console.error('Error fetching user favourites:', error);
+              dispatch(setFavourites([]));
             });
+          }
         
 
-  }, [token, dispatch]);
+  }, [token, users?.username, dispatch]);
 
   // login
     const handleLogIn = (user, token) => {
@@ -92,88 +93,6 @@ export const MainView = () => {
     localStorage('user', JSON.parse(updatedUser));
   }
 
-  // study useCallback hook on react? 
-  const handleAddFavourite = useCallback(async (movieId) => {
-    console.log('handleAddFav in MainView clicked ');
-    if (!users || !token) {
-      alert('please log in to add to favourites');
-    
-    return;
-    }
-
-    // const prevUser = {...users};
-
-    try {
-
-    dispatch(addFavAction(movieId)); //update redux store immediately
-      
-      const response = await fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${users.username}/${movieId}`, 
-        {
-          method: 'PUT',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          }
-        });
-
-        if (!response.ok) {
-          console.log('PUT request unsuccessful');
-          const errorData = await response.json();
-          dispatch(removeFavAction(movieId)); //revert redux state on failure
-          throw new Error(errorData.message || 'failed to add movie to favourite');
-          
-        }
-
-        if (response.status === 202) {
-          return console.log('PUT repsonse to api for adding to fav is success, in MainView');
-        }
-        // if (response.status === 202) {
-        //   return null
-        // }
-    } catch (error){ 
-      console.error('error adding to favourite', error);
-      alert(`failed to add to favourites: ${error.message}`);
-     }
-    }, [users, token, dispatch]);
-
-
-
-  const handleRemoveFavourite = useCallback(async (movieId) => {
-    if (!users || !token) {
-      alert('log in to removed favourite')
-      return;
-    };
-    const prevUser = {...users};
-
-    try{
-      dispatch(removeFavAction(movieId));
-
-      const response = await fetch (`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${users.username}/${movieId}`, 
-        {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          console.log('error while removing from fav')
-          const errorData = await response.json();
-          dispatch(addFavAction(movieId)); // revert redux state on failure. 
-          throw new Error(errorData.message || 'failed to remove the movie from favourites');
-        }
-
-        if (response.status === 202) {
-          return console.log('DELETE request to api for removing from favourites is success, in MainView');
-        }
-      
-    } catch (error) {
-      console.error(`error removing movie from favourites ${error}`);
-      alert(`movie from favourite list failed to be removed: ${error.message}`);
-      // setUsers(prevUser); // no need to revert user state here due to redux
-    };
-  }, [users, token, dispatch])
     
     return (
         <BrowserRouter>
@@ -262,8 +181,6 @@ export const MainView = () => {
                 ) : (
                   <MovieView
                     movies={movies}
-                    onAddFavourite={handleAddFavourite}
-                    onRemoveFavourite={handleRemoveFavourite}
                     token={token}
                     user={users}
                   />
@@ -297,8 +214,6 @@ export const MainView = () => {
                           setFiltered={setFiltered}
                           user= {users}
                           token = {token}
-                          onAddFavourite={handleAddFavourite}
-                          onRemoveFavourite={handleRemoveFavourite}
                           />
                           
                           {movies.map((movie) => (
@@ -307,8 +222,6 @@ export const MainView = () => {
                             element of the component being rendered */}
                             <MovieCard 
                               movie={movie}
-                              onAddFavourite={handleAddFavourite}
-                              onRemoveFavourite={handleRemoveFavourite}
                               user={users}
                               token={token}
                             />

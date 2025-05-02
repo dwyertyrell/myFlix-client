@@ -4,38 +4,37 @@ import {Button, Card} from 'react-bootstrap';
 import {Link} from 'react-router-dom'
 import { useCallback, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { isMovieFavourite, addFavourite, removeFavourite } from "../../redux/reducers/favouriteSlice";
+import { isMovieFavourite, addFavourite, removeFavourite, addFavouriteMovies, removeFavouriteMovies } from "../../redux/reducers/favouriteSlice";
 
 
-export const MovieCard = ({movie, user, token, onAddFavourite, onRemoveFavourite}) => {
+export const MovieCard = ({movie, user, token}) => {
+
     const dispatch = useDispatch();
     //to determine the favourite status, for the conditional rendering of <button> 
     const favourite = useSelector((state) => isMovieFavourite(state, movie.id));
     
     const handleAdd = useCallback(() => {
-        console.log('user clicked add favourtie button in MovieCard');
 
      if(user && token) {
-        /*to directly use redux here, i would need to learn async action creators?  otherwise, i would
-        be making the same mistake as prior*/ 
-        // dispatch(addFavourite(movie.id));
-        onAddFavourite(movie.id)
+        dispatch(addFavouriteMovies({movieId: movie.id, username: user.username, token}))
     } else {
         alert('please login to add to favourites.')
     }
-    }, [ user, token, movie, dispatch, onAddFavourite ])
+    }, [ user?.username, token, movie.id, dispatch, ])
     
 
+
+
+
+
     const handleRemove = useCallback(() => {
-        console.log('user clicked remove favourtie button');
 
         if(user && token) {
-            // dispatch(removeFavourite(movie.id));
-            onRemoveFavourite(movie.id);
+            dispatch(removeFavouriteMovies({movieId: movie.id, username: user.username, token}))
         } else {
             alert('please log in to remove from favourite')
         }
-    }, [user, token, movie, onRemoveFavourite])
+    }, [user, token, movie, dispatch])
 
     return (
 

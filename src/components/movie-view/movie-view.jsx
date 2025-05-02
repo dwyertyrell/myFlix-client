@@ -5,9 +5,9 @@ import {useParams} from 'react-router';
 import {Link} from 'react-router-dom';
 import { useCallback } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import { addFavourite, removeFavourite, isMovieFavourite } from '../../redux/reducers/favouriteSlice';
+import { isMovieFavourite, removeFavouriteMovies, addFavouriteMovies } from '../../redux/reducers/favouriteSlice';
 
-export const MovieView = ({movies, token, user, onAddFavourite, onRemoveFavourite}) => {
+export const MovieView = ({movies, token, user}) => {
     
    
     const {movieId} = useParams(); //use to find the movie data of the URL params in movie array 
@@ -17,21 +17,26 @@ export const MovieView = ({movies, token, user, onAddFavourite, onRemoveFavourit
     const favourite = useSelector((state) => isMovieFavourite(state, movie.id))
 
     const handleAdd = useCallback(() => {
-        if( user && token) {
-            // dispatch(addFavourite(movie.id));
-            onAddFavourite(movie.id);
-        } else {
-            alert('please login to add to favourites' )
-        }
-    }, [ user, token, dispatch]);
 
-    const handleRemove = useCallback(() => {
         if(user && token) {
-            // dispatch(removeFavourite(movie.id));
-            onRemoveFavourite(movie.id)
+           dispatch(addFavouriteMovies({movieId: movie.id, username: user.username, token}))
+       } else {
+           alert('please login to add to favourites.')
+       }
+       }, [ user?.username, token, movie.id, dispatch, ])
 
+       const handleRemove = useCallback(() => {
+
+        if(user && token) {
+            dispatch(removeFavouriteMovies({movieId: movie.id, username: user.username, token}))
+        } else {
+            alert('please log in to remove from favourite')
         }
-    }, [user, token, dispatch]);
+    }, [user, token, movie, dispatch])
+
+    if(!movie) {
+        return <div>movie not found</div>
+    }
 
 
     return (
