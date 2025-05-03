@@ -23,10 +23,6 @@ export const MovieCard = ({movie, user, token}) => {
     }, [ user?.username, token, movie.id, dispatch, ])
     
 
-
-
-
-
     const handleRemove = useCallback(() => {
 
         if(user && token) {
@@ -61,8 +57,7 @@ export const MovieCard = ({movie, user, token}) => {
                         variant='primary'
                         onClick={handleAdd}
                         >
-                        Add favourite</Button>
-                    )
+                        Add favourite</Button>) 
                 )}
             </Card.Body>
         </Card>
