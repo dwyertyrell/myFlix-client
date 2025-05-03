@@ -11,7 +11,7 @@ export const addFavouriteMovies = createAsyncThunk(
   'favourites/addFavouriteMovie', 
   async({movieId, username, token}, {dispatch, getState}) => {
     try {
-      const response = await fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${users.username}/${movieId}`, 
+      const response = await fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${username}/${movieId}`, 
         {
           method: 'PUT',
           headers: {
@@ -119,7 +119,7 @@ export const favouriteReducer = favouriteSlice.reducer;
 //the if statement in the reducer could be used as a piece of state, in the child components
 export const selectFavouriteMovieIds = (state) => state.favourites.favouriteMoviesIds
 export const isMovieFavourite = (state, movieId) => {
-  Array.isArray(state.favourites.favouriteMoviesIds) && state.favourites.favouriteMoviesIds.includes(movieId)
+  return (Array.isArray(state.favourites.favouriteMoviesIds) && state.favourites.favouriteMoviesIds.includes(movieId))
 }
 export const selectFavouriteLoading = (state) => state.favourite.loading;
 export const selectFavouriteError = (state) => state.favourite.error
