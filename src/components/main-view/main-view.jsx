@@ -62,9 +62,6 @@ export const MainView = () => {
               
              const initialFavourites = data?.favouriteMovies || [];
              dispatch(setFavourites(initialFavourites));
-             //the setFavourites action is not updating the state with initialFavourites
-            //  console.log('initialFavourites', initialFavourites)
-            //  console.log('favourite movies from redux store', favouriteMoviesIds)
             }).catch((error) => {
               console.error('Error fetching user favourites:', error);
               dispatch(setFavourites([]));
@@ -76,7 +73,7 @@ export const MainView = () => {
 
   useEffect(()=>{
     console.log('updated redux favourite state', favouriteMoviesIds )
-  })
+  }, [favouriteMoviesIds])
 
   // login
     const handleLogIn = (user, token) => { 

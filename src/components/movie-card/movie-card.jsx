@@ -2,9 +2,9 @@
 import PropTypes from 'prop-types';
 import {Button, Card} from 'react-bootstrap';
 import {Link} from 'react-router-dom'
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { isMovieFavourite, addFavourite, removeFavourite, addFavouriteMovies, removeFavouriteMovies } from "../../redux/reducers/favouriteSlice";
+import { isMovieFavourite, addFavouriteMovies, removeFavouriteMovies, selectMovieLoading } from "../../redux/reducers/favouriteSlice";
 
 
 export const MovieCard = ({movie, user, token}) => {
@@ -12,6 +12,7 @@ export const MovieCard = ({movie, user, token}) => {
     const dispatch = useDispatch();
     //to determine the favourite status, for the conditional rendering of <button> 
     const favourite = useSelector((state) => isMovieFavourite(state, movie.id));
+    const loading = useSelector((state)=>selectMovieLoading(state, movie.id))
     
     const handleAdd = useCallback(() => {
 
@@ -50,14 +51,18 @@ export const MovieCard = ({movie, user, token}) => {
                         <Button 
                         variant='danger' 
                         onClick={handleRemove}
-                        >
-                        Remove favourite</Button>
+                        disabled={loading === 'pending'}
+                        > {loading ? 'removing...' : 'remove favourite'}
+                        </Button>
                     ) : (
                         <Button 
                         variant='primary'
                         onClick={handleAdd}
+                        disabled ={loading === 'pending'}
                         >
-                        Add favourite</Button>) 
+                        {loading ? 'adding...' : 'add to favourite'}
+                        </Button>
+                    ) 
                 )}
             </Card.Body>
         </Card>

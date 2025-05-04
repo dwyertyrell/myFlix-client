@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   favouriteMoviesIds: [],
-  loading: '',
+  loading: {},
   error: null
 };
 
@@ -78,9 +78,7 @@ const favouriteSlice = createSlice({
       };
     },
     removeFavourite: (state, action) => {
-      state.favouriteMoviesIds = state.favouriteMoviesIds.filter((id)=> {
-        id !== action.payload
-      });
+      state.favouriteMoviesIds = state.favouriteMoviesIds.filter((id)=> id !== action.payload);
       },
       setFavourites: (state, action) => {
         
@@ -89,26 +87,32 @@ const favouriteSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(addFavouriteMovies.pending, (state) => {
-      state.loading = 'pending';
+    .addCase(addFavouriteMovies.pending, (state, action) => {
+      state.loading[action.meta.arg.movieId] = 'pending';
       state.error = null; 
     })
     .addCase(addFavouriteMovies.fulfilled, (state, action) => {
-      state.loading = 'succeeded';
+      state.loading[action.meta.arg.movieId] = 'succeeded';
+      const {movieId} = action.payload;
+      if(!state.favouriteMoviesIds.includes(movieId)) {
+        state.favouriteMoviesIds.push(movieId);
+      }
     })
     .addCase(addFavouriteMovies.rejected, (state, action) => {
-      state.loading = 'failed';
+      state.loading[action.meta.arg.movieId] = 'failed';
       state.error = action.message
     })
-    .addCase(removeFavouriteMovies.pending, (state) => {
-      state.loading = 'pending';
+    .addCase(removeFavouriteMovies.pending, (state, action) => {
+      state.loading[action.meta.arg.movieId] = 'pending';
       state.error = null; 
     })
     .addCase(removeFavouriteMovies.fulfilled, (state, action) => {
-      state.loading = 'succeeded';
+      state.loading[action.meta.arg.movieId] = 'succeeded';
+      const {movieId} = action.payload;
+      state.favouriteMoviesIds.filter((id) => id !== movieId);
     })
     .addCase(removeFavouriteMovies.rejected, (state, action) => {
-      state.loading = 'failed';
+      state.loading[action.meta.arg.movieId] = 'failed';
       state.error = action.message
     });
   }
@@ -121,9 +125,5 @@ export const selectFavouriteMovieIds = (state) => state.favourites.favouriteMovi
 export const isMovieFavourite = (state, movieId) => {
   return (Array.isArray(state.favourites.favouriteMoviesIds) && state.favourites.favouriteMoviesIds.includes(movieId))
 }
-export const selectFavouriteLoading = (state) => state.favourite.loading;
-export const selectFavouriteError = (state) => state.favourite.error
-/*
-the component and the API is not communicating. the PUT request is not being processed. even its error
-message isn't being processed. what is happening 
- */  
+export const selectMovieLoading = (state) => state.favourites.loading.movieId;
+export const selectFavouriteError = (state) => state.favourites.error

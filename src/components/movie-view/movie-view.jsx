@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types'
+import { Spinner } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import {useParams} from 'react-router';
 import {Link} from 'react-router-dom';
 import { useCallback } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import { isMovieFavourite, removeFavouriteMovies, addFavouriteMovies } from '../../redux/reducers/favouriteSlice';
+import { isMovieFavourite, removeFavouriteMovies, addFavouriteMovies, selectMovieLoading } from '../../redux/reducers/favouriteSlice';
 
 export const MovieView = ({movies, token, user}) => {
     
@@ -13,8 +14,9 @@ export const MovieView = ({movies, token, user}) => {
     const {movieId} = useParams(); //use to find the movie data of the URL params in movie array 
     const movie = movies.find((m) => m.id === movieId);
     let image =  <Card.Img className='h-25' src={movie.image} />
-     const dispatch = useDispatch();
-    const favourite = useSelector((state) => isMovieFavourite(state, movie.id))
+    const dispatch = useDispatch();
+    const favourite = useSelector((state) => isMovieFavourite(state, movie.id));
+    const loading = useSelector((state)=>selectMovieLoading(state, movie.id));
 
     const handleAdd = useCallback(() => {
 
@@ -65,9 +67,17 @@ export const MovieView = ({movies, token, user}) => {
             </Link>
             {
                 favourite ? (
-                    <Button onClick={handleRemove} variant='danger'>remove from favourite</Button>
+                    <Button onClick={handleRemove} 
+                    variant='danger'
+                    disabled={loading === 'pending'}
+                    > {loading ? <Spinner animation='border' variant='primary'></Spinner>: 'remove from favourite'  }
+                        </Button>
                 ) : (
-                    <Button onClick={handleAdd} variant='primary'>add to favourite</Button>
+                    <Button onClick={handleAdd} 
+                    variant='primary'
+                    disabled={loading === 'pending'}
+                    > 
+                    {loading ? <Spinner animation='border' variant='primary'></Spinner> : 'add to favourite'}</Button>
 
                 )
             }
