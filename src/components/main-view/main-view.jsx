@@ -12,11 +12,12 @@ import {NavigationBar} from '../navigation-bar/navigation-bar';
 import { ProfileView } from "../profile-view/profile-view";
 import { useDispatch, useSelector} from 'react-redux';
 import { setMovies } from "../../redux/reducers/movieSlice";
+import { setFavourites, selectFavouriteMovieIds } from "../../redux/reducers/favouriteSlice";
 
 export const MainView = () => {
 
   const movies= useSelector((state) => state.movies.movies);
-  // const [movies, setMovies] = useState([]);
+  const favouriteMoviesIds = useSelector(selectFavouriteMovieIds) // get favourite ID's from redux store
   const storedUser = localStorage.getItem('user');
   const storedToken = localStorage.getItem('token');
   const [users, setUsers] = useState(storedUser ? JSON.parse(storedUser) : null);
@@ -51,10 +52,31 @@ export const MainView = () => {
             console.error('something wrong happened while fetching movie data')
           });
 
-  }, [token]);
+          //fetch user's favourite movies upon login- to initialise the redux store upon the login event
+          if(users?.username){
+          fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${users.username}`,
+            {
+              headers: { Authorization: `Bearer ${token}` }
+            }).then((response) => response.json())
+            .then((data) => {
+              
+             const initialFavourites = data?.favouriteMovies || [];
+             dispatch(setFavourites(initialFavourites));
+            }).catch((error) => {
+              console.error('Error fetching user favourites:', error);
+              dispatch(setFavourites([]));
+            });
+          }
+        
+
+  }, [token, users, dispatch]);
+
+  useEffect(()=>{
+    console.log('updated redux favourite state', favouriteMoviesIds )
+  }, [favouriteMoviesIds])
 
   // login
-    const handleLogIn = (user, token) => {
+    const handleLogIn = (user, token) => { 
       setUsers(user);
       setToken(token);      
     }
@@ -63,6 +85,8 @@ export const MainView = () => {
       setUsers(null);
       setToken(null);
       localStorage.clear();
+      //clear favourites on logout 
+      dispatch(setFavourites([]));
     }
 //a prop passed into ProfileView used to keep the state centralised on the parent component
   const handleProfileUpdate = (updatedUser) => {
@@ -71,94 +95,6 @@ export const MainView = () => {
     localStorage('user', JSON.parse(updatedUser));
   }
 
-  // study useCallback hook on react? 
-  const handleAddFavourite = useCallback(async (movieId) => {
-    if (!users || !token) {
-      alert('please log in to add to favourites');
-    
-    return;
-    }
-
-    const prevUser = {...users};
-
-    try {
-      //optimistically updates the UI
-      const updatedUser = {
-        ...users,
-        favouriteMovies: users.favouriteMovies ? [...users.favouriteMovies, movieId] : [movieId]
-      };
-    setUsers(updatedUser);
-
-      const response = await fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${users.username}/${movieId}`, 
-        {
-          method: 'PUT',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          }
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'failed to add movie to favourite');
-        }
-
-        if (response.status === 202) {
-          // console.log('response.ok for adding to favourite');
-          return null;
-        }
-    } catch (error){ 
-      console.error('error adding to favourite', error);
-      alert(`failed to add to favourites: ${error.message}`);
-      // reverting the user state back to its value before the handleAddFavourite
-
-      setUsers(prevUser);
-     }
-    }, [users, token]);
-
-
-
-  const handleRemoveFavourite = useCallback(async (movieId) => {
-    if (!users || !token) {
-      alert('log in to removed favourite')
-      return;
-    };
-    const prevUser = {...users};
-
-    try{
-      //optimistically updates the UI
-      const updatedUser = {
-        ...users,
-        favouriteMovies: users.favouriteMovies ? [...users.favouriteMovies, movieId] : [movieId]
-      }; 
-      setUsers(updatedUser);
-
-      const response = await fetch (`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${users.username}/${movieId}`, 
-        {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          console.log('error while removing from fav')
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'failed to remove the movie from favourites');
-        }
-
-        if (response.status === 202) {
-          console.log('response.ok for removing favourite')
-          return null
-        }
-      
-    } catch (error) {
-      console.error(`error removing movie from favourites ${error}`);
-      alert(`movie from favourite list failed to be removed: ${error.message}`);
-      setUsers(prevUser);
-    };
-  }, [users, token])
     
     return (
         <BrowserRouter>
@@ -247,8 +183,6 @@ export const MainView = () => {
                 ) : (
                   <MovieView
                     movies={movies}
-                    onAddFavourite={handleAddFavourite}
-                    onRemoveFavourite={handleRemoveFavourite}
                     token={token}
                     user={users}
                   />
@@ -282,8 +216,6 @@ export const MainView = () => {
                           setFiltered={setFiltered}
                           user= {users}
                           token = {token}
-                          onAddFavourite={handleAddFavourite}
-                          onRemoveFavourite={handleRemoveFavourite}
                           />
                           
                           {movies.map((movie) => (
@@ -292,8 +224,6 @@ export const MainView = () => {
                             element of the component being rendered */}
                             <MovieCard 
                               movie={movie}
-                              onAddFavourite={handleAddFavourite}
-                              onRemoveFavourite={handleRemoveFavourite}
                               user={users}
                               token={token}
                             />

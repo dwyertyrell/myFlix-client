@@ -1,47 +1,45 @@
 import PropTypes from 'prop-types'
+import { Spinner } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import {useParams} from 'react-router';
 import {Link} from 'react-router-dom';
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback } from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import { isMovieFavourite, removeFavouriteMovies, addFavouriteMovies, selectMovieLoading } from '../../redux/reducers/favouriteSlice';
 
-//helper function 
-const isMovieInFavourites = (movieId, favouriteMovies) => {
-    return favouriteMovies.some((favMovieId) => favMovieId === movieId);
-}
-
-export const MovieView = ({movies, onAddFavourite, onRemoveFavourite, token, user}) => {
-    const [isFavourite, setIsFavourite] = useState(false);
-
-    const {movieId} = useParams()
+export const MovieView = ({movies, token, user}) => {
+    
+   
+    const {movieId} = useParams(); //use to find the movie data of the URL params in movie array 
     const movie = movies.find((m) => m.id === movieId);
     let image =  <Card.Img className='h-25' src={movie.image} />
-    
+    const dispatch = useDispatch();
+    const favourite = useSelector((state) => isMovieFavourite(state, movie.id));
+    const loading = useSelector((state)=>selectMovieLoading(state, movie.id));
+
     const handleAdd = useCallback(() => {
-        if(onAddFavourite && user && token ) {
-            onAddFavourite(movie.id);
-            setIsFavourite(true);
-        }
-    }, [onAddFavourite, user, token, movie]);
 
-    const handleRemove = useCallback(() => {
-        if (onRemoveFavourite && user && token) {
-            onRemoveFavourite(movie.id);
-            setIsFavourite(false);
-        }
-    }, [user, token, movie, onRemoveFavourite]);
+        if(user && token) {
+           dispatch(addFavouriteMovies({movieId: movie.id, username: user.username, token}))
+       } else {
+           alert('please login to add to favourites.')
+       }
+       }, [ user?.username, token, movie.id, dispatch, ])
 
-    useEffect(() => {
-        if (user && user.favouriteMovies) {
-            // update the favourite state using the helper function
-            setIsFavourite(isMovieInFavourites(movie.id, user.favouriteMovies)); 
+       const handleRemove = useCallback(() => {
+
+        if(user && token) {
+            dispatch(removeFavouriteMovies({movieId: movie.id, username: user.username, token}))
         } else {
-            // set the favourite state to false
-            setIsFavourite(false);
+            alert('please log in to remove from favourite')
         }
-        //added the handlers for favourite state to the dependency array to reload the component after click event- 
-        // this fixed the state synchronicity with the central state in MainView
-    }, [user, user.favouriteMovies, movie, onAddFavourite, onRemoveFavourite]);
+    }, [user, token, movie, dispatch])
+
+    if(!movie) {
+        return <div>movie not found</div>
+    }
+
 
     return (
         <Card className='w-50 h-50'>
@@ -68,10 +66,18 @@ export const MovieView = ({movies, onAddFavourite, onRemoveFavourite, token, use
                 
             </Link>
             {
-                isFavourite ? (
-                    <Button onClick={handleRemove} variant='danger'>remove from favourite</Button>
+                favourite ? (
+                    <Button onClick={handleRemove} 
+                    variant='danger'
+                    disabled={loading === 'pending'}
+                    > {loading ? <Spinner animation='border' variant='primary'></Spinner>: 'remove from favourite'  }
+                        </Button>
                 ) : (
-                    <Button onClick={handleAdd} variant='primary'>add to favourite</Button>
+                    <Button onClick={handleAdd} 
+                    variant='primary'
+                    disabled={loading === 'pending'}
+                    > 
+                    {loading ? <Spinner animation='border' variant='primary'></Spinner> : 'add to favourite'}</Button>
 
                 )
             }
@@ -95,7 +101,5 @@ MovieView.propTypes = {
         password: PropTypes.string.isRequired,
         email: PropTypes.string.isRequired,
     }),
-    token: PropTypes.string.isRequired,
-    onAddFavorite: PropTypes.func.isRequired,
-    onRemoveFavorite: PropTypes.func.isRequired
+    token: PropTypes.string.isRequired
   };
