@@ -4,6 +4,7 @@ import {MovieView} from "../movie-view/movie-view";
 import {LoginView} from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import { MovieSearch } from "../movie-search/movie-search";
+import {Spinner} from 'react-bootstrap';
 import Row from "react-bootstrap/Row"; 
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -23,6 +24,7 @@ export const MainView = () => {
   const [users, setUsers] = useState(storedUser ? JSON.parse(storedUser) : null);
   const [token, setToken] = useState(storedToken ? storedToken : null );
   const [filtered, setFiltered] = useState(movies);
+  const [loading, setLoading] = useState(false)
 
   const dispatch = useDispatch();
 
@@ -30,6 +32,7 @@ export const MainView = () => {
     if(!token) {
       return; 
     }
+    setLoading(true)
 
     fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/movies',
       {
@@ -51,6 +54,7 @@ export const MainView = () => {
       }).catch((e) => {
             console.error('something wrong happened while fetching movie data')
           });
+          {setLoading(false)}
 
           //fetch user's favourite movies upon login- to initialise the redux store upon the login event
           if(users?.username){
@@ -68,7 +72,7 @@ export const MainView = () => {
             });
           }
         
-
+          
   }, [token, users, dispatch]);
 
   useEffect(()=>{
@@ -198,9 +202,12 @@ export const MainView = () => {
                   { !users ? (
                     <Navigate to='/login' replace />
                   
-                    ): movies.length === 0 ? (
-                      <div>the list is empty</div>
-                    ) : (
+                    ): loading === true ? (
+                      <Spinner animation='border' variant='primary'></Spinner>
+                    ) :
+                    // movies.length === 0 ? (
+                    //   <div>the list is empty</div> ) : 
+                      (
                       <>
                         <Button
                             variant='secondary'
