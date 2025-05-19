@@ -106,8 +106,12 @@ fetchProfile();
 const handleProfileUpdate = async (e) => {
     e.preventDefault();
 
-    // add validation logic here
-
+// validation logic for the new password 
+if(newInfo.password !== confirmPassword) {
+    setError('password do not match');
+    alert('password does not match')
+    return;
+}
     setError(null);
     setLoading(true);
 
@@ -120,6 +124,31 @@ const handleProfileUpdate = async (e) => {
 
     // PUT request to upload the user's profile.
     try {
+
+        let existingPassword = '';
+        if(!newInfo.password){ // only fetch if new password is empty
+            const profileResponse = await fetch(
+                `https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${profile.username}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
+
+            )    
+        
+
+        if(!profileResponse.ok){
+            throw new Error('failed to fetch current profile to get password');
+        }
+        const currentProfileData = await profileResponse.json();
+        existingPassword = currentProfileData.password;
+        } //this entire fetch is simply for retreving a value for existingPassword 
+
+
+
         const response = await fetch(
             `https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${profile.username}`,
             {
@@ -128,21 +157,21 @@ const handleProfileUpdate = async (e) => {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                // why create a new object called updatedData instead of using 
-                // newInfo object?
-                body: JSON.stringify(updatedData)
+                
+                body: JSON.stringify({
+                    ...updatedData,
+                    password: newInfo.password || existingPassword, 
+                })
             }
         );
 
         if (!response.ok) {
             const errorData = await response.json();
-            // why create a new Error function, and what does it mean?
             throw new Error(errorData.message || 'failed to update profile')
         }
 
         const updatedUser = await response.json();
         setProfile(updatedUser);
-        // again, why are we updating newInfo like this?
         setNewInfo({
             username: updatedUser.username,
             email: updatedUser.email,
