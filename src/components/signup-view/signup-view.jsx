@@ -13,6 +13,7 @@ export const SignupView = () => {
   const [lastName, setLastName] = useState('')
 
   const navigate = useNavigate();
+  
 
   const handleSubmit= (event) => {
     event.preventDefault();
@@ -48,7 +49,9 @@ export const SignupView = () => {
       console.error('posting sign up request failed');
     })
 
-
+    // redirect to login component
+    const handleLogin = () => navigate('/login');
+    handleLogin();
   }
 
 
@@ -154,7 +157,7 @@ export const SignupView = () => {
         </Form.Group>
 
         <Button type="submit" variant='primary'>sign up!</Button>
-        <Button  onClick={()=> navigate('/login')} variant='primary'>Log in over here</Button>
+        <Button  onClick={() => navigate('/login')} variant='primary'>Log in over here</Button>
 
     </Form>
       </>
