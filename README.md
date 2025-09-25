@@ -1,16 +1,61 @@
 # MyFlix Client Application
 
-### Overview
+A React-based movie browsing application that allows users to explore movies, manage favorites, and maintain their profiles.
 
-This is the client-side application for MyFlix, a web application that allows users to browse movies, view movie details, manage their profiles, and maintain a list of their favorite movies. This React-based **single-page application** provides a responsive, user-friendly interface (styled with **Bootstrap**) and interacts with a separate backend **RESTful API** (Node.js/Express) to manage data and user authentication.
-
----
-
-#### Click here to view the application, hosted by Netifly: [MyFlix](https://voluble-elf-1a3488.netlify.app/)
+##  [Live Demo](https://voluble-elf-1a3488.netlify.app/)
 
 ---
 
-### Features
+##  Table of Contents
+
+- [Overview](#overview)
+- [Screenshots](#screenshots)
+- [Features](#features)
+- [Technical Stack](#technical-stack)
+- [Redux Architecture](#redux-architecture)
+- [Component Structure](#component-structure)
+- [API Integration](#api-integration)
+- [Setup Instructions](#setup-instructions)
+- [API Access](#api-access)
+- [Prerequisites](#prerequisites)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Overview
+
+MyFlix is a client-side application for browsing movies, built with React and styled with Bootstrap. This **single-page application** provides a responsive, user-friendly interface that interacts with a separate backend **RESTful API** (Node.js/Express) to manage data and user authentication.
+
+The application demonstrates modern web development practices including Redux state management, React Router navigation, and JWT-based authentication.
+
+---
+
+## Screenshots
+
+### Home Page
+![Home Page](./screenshots/home-page.png)
+*Main movie browsing interface showing the movie collection*
+
+### Login Page
+![Login Page](./screenshots/login-page.png)
+*User authentication interface*
+
+### Sign Up Page
+![Sign Up Page](./screenshots/signup-page.png)
+*New user registration form*
+
+### Profile Page
+![Profile Page](./screenshots/profile-page.png)
+*User profile management and favorite movies*
+
+### Movie Details
+![Movie View](./screenshots/movie-view.png)
+*Detailed movie information page*
+
+---
+
+## Features
 
 **Movie Browsing:**
 
@@ -47,7 +92,19 @@ This is the client-side application for MyFlix, a web application that allows us
 
 ---
 
-### Redux Architecture
+## Technical Stack
+
+- **Frontend Framework:** React.js
+- **State Management:** Redux Toolkit
+- **Routing:** React Router
+- **UI Framework:** React Bootstrap
+- **Build Tool:** Parcel
+- **Authentication:** JWT tokens
+- **HTTP Client:** Fetch API
+
+---
+
+## Redux Architecture
 
 The application uses Redux for state management. Here's a breakdown:
 
@@ -59,18 +116,7 @@ This architecture ensures a centralized and predictable way to manage the applic
 
 ---
 
-### Technical Details
-
-* **React:** The application is built using **React.js**.
-* **React Router:** Uses React Router for navigation between different views.
-* **React Bootstrap:** Uses React Bootstrap for styling and layout.
-* **Asynchronous Data Fetching:** Uses `fetch` to make API requests to the backend.
-* **Local Storage:** Stores the user's JWT token for maintaining authenticated sessions.
-* **Redux:** Uses Redux Toolkit for global state management.
-
----
-
-### Component Structure
+## Component Structure
 
 * **MainView:** The main component that orchestrates the application, handling routing, state management, and rendering of different views.
 * **MovieCard:** Displays a single movie's information in a card format.
@@ -83,7 +129,7 @@ This architecture ensures a centralized and predictable way to manage the applic
 
 ---
 
-### Interaction with Backend API
+## API Integration
 
 This client-side application relies on a separate backend API to provide the following functionalities:
 
@@ -98,36 +144,74 @@ This client-side application relies on a separate backend API to provide the fol
 
 ---
 
-### Installation
+## Setup Instructions
 
-1.  **Clone the Repository**
+### 1. Clone the Repository
+```bash
+git clone https://github.com/dwyertyrell/myFlix-client.git
+cd myFlix-client
+```
 
-    `git clone https://github.com/dwyertyrell/myFlix-client.git`
-2.  **Navigate to Project Folder**
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-    `cd myFlix-client`
-3.  **Install Dependencies**
+### 3. Start Development Server
+```bash
+npm start
+```
 
-    With npm: `npm install`
-
-    With yarn: `yarn install`
-4.  **Start the development server**
-
-    `npm start` or `yarn start` (If you have a `start` script) or `parcel src/index.html`
-
-Open the application in your browser: The application will be accessible at http://localhost:3000 (or the port specified in your environment).
+The application will be accessible at `http://localhost:1234` (or the port specified by Parcel).
 
 ---
 
-### Prerequisites
+## API Access
+
+This project uses a shared API endpoint for demonstration purposes and to allow other developers to work on this open-source project. In a production environment, each deployment would use separate database instances and environment-specific configurations.
+Therefore, `.env` file is tracked onto to git, and holds the API URL for all endpoint in the codebase.  
+
+### For Contributors
+- The API URL is configured via environment variable
+- You can use the shared demo API or set up your own local backend instance
+
+---
+
+## Prerequisites
 
 * **Backend API:** This application requires a running instance of the MyFlix backend API. Ensure that the API is set up and accessible before running the client.
 * **Node.js and npm:** Node.js and npm (Node Package Manager) are required to install dependencies and run the application.
 
 ---
 
-### Important Considerations
+## Contributing
 
-* **API Endpoint:** The application is configured to communicate with the backend API at https://secret-eyrie-53650-99dc45662f12.herokuapp.com/. Ensure that this endpoint is correct and that the API is running at that location.
-* **Error Handling:** The application includes basic error handling for API requests (e.g., displaying error messages).
-* **Security:** This application stores the JWT token in local storage.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. make sure `.env` file is configured with the default (or your desired) API endpoint
+4. Install dependencies (`npm install`)
+5. Make your changes
+6. Commit your changes (`git commit -m 'Add some amazing feature'`)
+7. Push to the branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request
+
+---
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+## Author
+
+**Tyrell Dwyer** - [GitHub Profile](https://github.com/dwyertyrell)
+
+---
+
+### Important Notes
+
+- **Authentication:** JWT tokens are stored in local storage for session management
+- **Error Handling:** The application includes comprehensive error handling for API requests
+- **Responsive Design:** Built with Bootstrap for mobile-friendly responsive layout
+- **Security:** Environment variables are used for sensitive configuration data

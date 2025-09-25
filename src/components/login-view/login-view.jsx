@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router';
 
+const apiUrl = process.env.REACT_APP_API_URL
 
 export const LoginView = ({onLoggedIn}) => {
 
@@ -17,7 +18,7 @@ export const LoginView = ({onLoggedIn}) => {
             username: username,
             password: password
         };
-        fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/login',
+        fetch(`${apiUrl}/login`,
             {
                 method: "POST", 
                 headers: {

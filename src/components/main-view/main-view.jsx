@@ -28,13 +28,15 @@ export const MainView = () => {
 
   const dispatch = useDispatch();
 
+  const apiUrl = process.env.REACT_APP_API_URL
+
   useEffect(() => {
     if(!token) {
       return; 
     }
     setLoading(true)
 
-    fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/movies',
+    fetch(`${apiUrl}/movies`,
       {
         headers: {Authorization: `Bearer ${token}`}
       }).then((response) => response.json())
@@ -58,11 +60,11 @@ export const MainView = () => {
 
           //fetch user's favourite movies upon login- to initialise the redux store upon the login event
           if(users?.username){
-          fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${users.username}`,
-            {
-              headers: { Authorization: `Bearer ${token}` }
-            }).then((response) => response.json())
-            .then((data) => {
+            fetch(`${apiUrl}/users/${users.username}`,
+              {
+                headers: { Authorization: `Bearer ${token}` }
+              }).then((response) => response.json())
+              .then((data) => {
               
              const initialFavourites = data?.favouriteMovies || [];
              dispatch(setFavourites(initialFavourites));

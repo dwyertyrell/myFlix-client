@@ -8,6 +8,8 @@ import { useParams } from 'react-router';
 import { useNavigate } from 'react-router';
 import PropTypes from 'prop-types';
 
+const apiUrl = process.env.REACT_APP_API_URL
+
 export const ProfileView = ({ user, token, moviesFromApi, onProfileUpdate, onLogout}) => {
 
 const [profile, setProfile] = useState({});
@@ -48,7 +50,7 @@ useEffect(()=> {
 
         try {
             const response = await fetch(
-                `https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${user.username}`,
+                `${apiUrl}/users/${user.username}`,
                 {
                     method: 'GET',
                     headers: {
@@ -128,7 +130,7 @@ if(newInfo.password !== confirmPassword) {
         let existingPassword = '';
         if(!newInfo.password){ // only fetch if new password is empty
             const profileResponse = await fetch(
-                `https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${profile.username}`,
+                `${apiUrl}/users/${profile.username}`,
                 {
                     method: 'GET',
                     headers: {
@@ -150,7 +152,7 @@ if(newInfo.password !== confirmPassword) {
 
 
         const response = await fetch(
-            `https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${profile.username}`,
+            `${apiUrl}/users/${profile.username}`,
             {
                 method: 'PUT',
                 headers: {
@@ -198,7 +200,7 @@ const deleteAccount = () => {
     if (window.confirm('Are you sure you want to delete your account? this action cannot be undone')) {
         setLoading(true);
         setError(null);
-        fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${profile.username}`, 
+        fetch(`${apiUrl}/users/${profile.username}`, 
             {
                 method: 'DELETE',
                 headers: {

@@ -3,6 +3,8 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import {useNavigate} from 'react-router-dom';
 
+const apiUrl = process.env.REACT_APP_API_URL
+
 export const SignupView = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -29,7 +31,7 @@ export const SignupView = () => {
       lastName: lastName
     }
 // this fetch is called inside the onSubmit handler 
-    fetch('https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users', 
+    fetch(`${apiUrl}/users`, 
       {
         method: 'POST',
         body: JSON.stringify(data),

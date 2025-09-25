@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+const apiUrl = process.env.REACT_APP_API_URL
+
 const initialState = {
   favouriteMoviesIds: [],
   loading: {},
@@ -11,7 +13,7 @@ export const addFavouriteMovies = createAsyncThunk(
   'favourites/addFavouriteMovie', 
   async({movieId, username, token}, {dispatch, getState}) => {
     try {
-      const response = await fetch(`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${username}/${movieId}`, 
+      const response = await fetch(`${apiUrl}/users/${username}/${movieId}`, 
         {
           method: 'PUT',
           headers: {
@@ -43,7 +45,7 @@ export const removeFavouriteMovies = createAsyncThunk(
   'favourites/removeFavouriteMovie', 
   async({movieId, username, token}, {dispatch, getState}) => {
     try {
-      const response = await fetch (`https://secret-eyrie-53650-99dc45662f12.herokuapp.com/users/${username}/${movieId}`, 
+      const response = await fetch (`${apiUrl}/users/${username}/${movieId}`, 
         {
           method: 'DELETE',
           headers: {
