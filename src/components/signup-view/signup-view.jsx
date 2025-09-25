@@ -157,8 +157,8 @@ export const SignupView = () => {
               </Form.Control>    
         </Form.Group>
 
-        <Button type="submit" variant='primary'>sign up!</Button>
-        <Button  onClick={() => navigate('/login')} variant='primary'>Log in over here</Button>
+        <Button className='signUp-button' type="submit" variant='primary'>Sign Up!</Button>
+        <Button className='login-button' onClick={() => navigate('/login')} variant='primary'>Log In Over Here</Button>
     </Form>
       </>
     )

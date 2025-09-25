@@ -1,13 +1,14 @@
-// $color: steelblue;
+.app-logo { 
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+}
 
-// .my-flix {
-//   color: $color;
-// }
+.signUp-button {
+  margin: 10px;
+  text-align: center
+}
 
-
-
-// $primary: SeaGreen;
-// $body-bg: Honeydew;
-// $secondary: pink;
-
-// @import '~bootstrap/scss/bootstrap.scss';
+.login-button {
+  margin: 10px;  
+}

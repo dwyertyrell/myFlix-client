@@ -10,12 +10,13 @@ const MyFlixApplication = () => {
     return (
     <Provider store ={store}>
         <Container >
-            <MainView/>;
+            <MainView/>
         </Container>
     </Provider>
         
 )
 };
+
 
 const container =document.querySelector('#root');
 const root = createRoot(container);

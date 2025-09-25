@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import './login-view.scss'
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
