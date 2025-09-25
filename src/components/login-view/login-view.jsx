@@ -24,7 +24,7 @@ export const LoginView = ({onLoggedIn}) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(data)
-            })
+                })
             .then((response) => response.json())
             .then((data) => {
                 console.log("login response: ", data.user, data.token);
@@ -38,7 +38,7 @@ export const LoginView = ({onLoggedIn}) => {
                 } else {
                     alert("No Such User");
                 }
-            }).catch((e) => {
+                }).catch((e) => {
                 alert("something went wrong here");
             })      
            

@@ -59,6 +59,10 @@ export const SignupView = () => {
 
     return (
       <>
+      <div>
+            <h1 className='app-logo'>myFlix</h1>
+      </div>
+
       <Form onSubmit={handleSubmit}>
 
         <Form.Group>
