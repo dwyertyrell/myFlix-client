@@ -1,9 +1,9 @@
 import {useState} from 'react';
+import './login-view.scss'
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router';
-
 const apiUrl = process.env.REACT_APP_API_URL
 
 export const LoginView = ({onLoggedIn}) => {
@@ -52,6 +52,9 @@ export const LoginView = ({onLoggedIn}) => {
 
     return ( 
         <>
+        <div>
+            <h1 className='app-logo'>myFlix</h1>
+        </div>
             <Form onSubmit= {handleSubmit}>
 
                 <Form.Group controlId='formUsername'>
@@ -74,10 +77,10 @@ export const LoginView = ({onLoggedIn}) => {
                     </Form.Control>
                 </Form.Group>
 
-                <Button variant= 'primary' onClick={handleSubmit}>submit</Button>
+                <Button className='login-button' variant= 'primary' onClick={handleSubmit}>Login</Button>
             </Form>
 
-            <Button onClick={()=> {navigate('/signup')}}>sign up here</Button>
+            <Button className='signUp-button' onClick={()=> {navigate('/signup')}}>sign up here</Button>
 
 
 

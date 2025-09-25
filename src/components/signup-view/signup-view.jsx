@@ -59,7 +59,6 @@ export const SignupView = () => {
 
     return (
       <>
-    
       <Form onSubmit={handleSubmit}>
 
         <Form.Group>
@@ -160,7 +159,6 @@ export const SignupView = () => {
 
         <Button type="submit" variant='primary'>sign up!</Button>
         <Button  onClick={() => navigate('/login')} variant='primary'>Log in over here</Button>
-
     </Form>
       </>
     )
