@@ -6,7 +6,7 @@ This is the client-side application for MyFlix, a web application that allows us
 
 ---
 
-#### Click here to view the application: [MyFlix](https://voluble-elf-1a3488.netlify.app/)
+#### Click here to view the application, hosted by Netifly: [MyFlix](https://voluble-elf-1a3488.netlify.app/)
 
 ---
 
