@@ -34,24 +34,20 @@ The application demonstrates modern web development practices including Redux st
 ## Screenshots
 
 ### Home Page
-![Home Page](./screenshots/home-page.png)
+![Main Page](./assets/main-view.png)
 *Main movie browsing interface showing the movie collection*
 
 ### Login Page
-![Login Page](./screenshots/login-page.png)
+![Login Page](./assets/login-view.png)
 *User authentication interface*
 
 ### Sign Up Page
-![Sign Up Page](./screenshots/signup-page.png)
+![Sign Up Page](./assets/signup-view.png)
 *New user registration form*
 
 ### Profile Page
-![Profile Page](./screenshots/profile-page.png)
+![Profile Page](./assets/profile-view.png)
 *User profile management and favorite movies*
-
-### Movie Details
-![Movie View](./screenshots/movie-view.png)
-*Detailed movie information page*
 
 ---
 
