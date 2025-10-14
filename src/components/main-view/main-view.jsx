@@ -14,7 +14,7 @@ import { ProfileView } from "../profile-view/profile-view";
 import { useDispatch, useSelector} from 'react-redux';
 import { setMovies } from "../../redux/reducers/movieSlice";
 import { setFavourites, selectFavouriteMovieIds } from "../../redux/reducers/favouriteSlice";
-import {API_URL as apiUrl} from '../../../config/environment'
+import {API_URL } from '../../../config/environment'
 
 export const MainView = () => {
 
@@ -35,7 +35,7 @@ export const MainView = () => {
     }
     setLoading(true)
 
-    fetch(`${apiUrl}/movies`,
+    fetch(`${API_URL}/movies`,
       {
         headers: {Authorization: `Bearer ${token}`}
       }).then((response) => response.json())
@@ -59,7 +59,7 @@ export const MainView = () => {
 
           //fetch user's favourite movies upon login- to initialise the redux store upon the login event
           if(users?.username){
-            fetch(`${apiUrl}/users/${users.username}`,
+            fetch(`${API_URL}/users/${users.username}`,
               {
                 headers: { Authorization: `Bearer ${token}` }
               }).then((response) => response.json())

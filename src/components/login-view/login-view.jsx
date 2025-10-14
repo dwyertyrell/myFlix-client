@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router';
-import {API_URL as apiUrl} from '../../../config/environment'
+import {API_URL} from '../../../config/environment'
 
 export const LoginView = ({onLoggedIn}) => {
 
@@ -17,7 +17,7 @@ export const LoginView = ({onLoggedIn}) => {
             username: username,
             password: password
         };
-        fetch(`${apiUrl}/login`,
+        fetch(`${API_URL}/login`,
             {
                 method: "POST", 
                 headers: {

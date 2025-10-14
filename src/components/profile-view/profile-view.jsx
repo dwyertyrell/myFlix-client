@@ -7,7 +7,7 @@ import {Alert, Spinner} from 'react-bootstrap';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router';
 import PropTypes from 'prop-types';
-import {API_URL as apiUrl} from '../../../config/environment'
+import {API_URL } from '../../../config/environment'
 
 export const ProfileView = ({ user, token, moviesFromApi, onProfileUpdate, onLogout}) => {
 
@@ -49,7 +49,7 @@ useEffect(()=> {
 
         try {
             const response = await fetch(
-                `${apiUrl}/users/${user.username}`,
+                `${API_URL}/users/${user.username}`,
                 {
                     method: 'GET',
                     headers: {
@@ -129,7 +129,7 @@ if(newInfo.password !== confirmPassword) {
         let existingPassword = '';
         if(!newInfo.password){ // only fetch if new password is empty
             const profileResponse = await fetch(
-                `${apiUrl}/users/${profile.username}`,
+                `${API_URL}/users/${profile.username}`,
                 {
                     method: 'GET',
                     headers: {
@@ -151,7 +151,7 @@ if(newInfo.password !== confirmPassword) {
 
 
         const response = await fetch(
-            `${apiUrl}/users/${profile.username}`,
+            `${API_URL}/users/${profile.username}`,
             {
                 method: 'PUT',
                 headers: {
@@ -199,7 +199,7 @@ const deleteAccount = () => {
     if (window.confirm('Are you sure you want to delete your account? this action cannot be undone')) {
         setLoading(true);
         setError(null);
-        fetch(`${apiUrl}/users/${profile.username}`, 
+        fetch(`${API_URL}/users/${profile.username}`, 
             {
                 method: 'DELETE',
                 headers: {

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {API_URL as apiUrl} from '../../../config/environment'
+import {API_URL} from '../../../config/environment'
 
 const initialState = {
   favouriteMoviesIds: [],
@@ -12,7 +12,7 @@ export const addFavouriteMovies = createAsyncThunk(
   'favourites/addFavouriteMovie', 
   async({movieId, username, token}, {dispatch, getState}) => {
     try {
-      const response = await fetch(`${apiUrl}/users/${username}/${movieId}`, 
+      const response = await fetch(`${API_URL}/users/${username}/${movieId}`, 
         {
           method: 'PUT',
           headers: {
@@ -44,7 +44,7 @@ export const removeFavouriteMovies = createAsyncThunk(
   'favourites/removeFavouriteMovie', 
   async({movieId, username, token}, {dispatch, getState}) => {
     try {
-      const response = await fetch (`${apiUrl}/users/${username}/${movieId}`, 
+      const response = await fetch (`${API_URL}/users/${username}/${movieId}`, 
         {
           method: 'DELETE',
           headers: {

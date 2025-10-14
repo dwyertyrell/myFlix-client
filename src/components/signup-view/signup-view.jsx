@@ -2,7 +2,7 @@ import {useState} from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import {useNavigate} from 'react-router-dom';
-import {API_URL as apiUrl} from '../../../config/environment'
+import {API_URL } from '../../../config/environment'
 
 
 export const SignupView = () => {
@@ -31,7 +31,7 @@ export const SignupView = () => {
       lastName: lastName
     }
 // this fetch is called inside the onSubmit handler 
-    fetch(`${apiUrl}/users`, 
+    fetch(`${API_URL}/users`, 
       {
         method: 'POST',
         body: JSON.stringify(data),

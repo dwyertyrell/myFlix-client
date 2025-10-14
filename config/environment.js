@@ -1,15 +1,27 @@
+let API_URL = "https://secret-eyrie-53650-99dc45662f12.herokuapp.com"
 
+const initializeApiUrl = async () => {
+  const EC2_API_URL = "http://35.179.161.79:3000"
+  const HEROKU_API_URL = "https://secret-eyrie-53650-99dc45662f12.herokuapp.com"
 
- const getApiUrl = () => {
-    
-  if(window.location.hostname.includes('netlify.app')) {
+  try {
+    // ping the index endpoint
+    const response = await fetch(`${EC2_API_URL}`, {
+      method: 'GET',
+      signal: AbortSignal.timeout(3000)
+    }) 
 
-    return "https://secret-eyrie-53650-99dc45662f12.herokuapp.com"
+    if(response.ok) {
+      API_URL = EC2_API_URL
+      console.log('EC2 API running- using ec2 instance')
+    }else{
+      console.log('Response from EC2 instance is not ok - using Herkou API endpoint')
+    }
+  }catch(error) {
+      console.log('EC2 is not reachable, using Heroku as API endpoint')
+    }
   }
 
-  return 'https://secret-eyrie-53650-99dc45662f12.herokuapp.com'
+  initializeApiUrl()
 
-}
-
-export const API_URL = getApiUrl()
-
+  export { API_URL }
