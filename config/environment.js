@@ -2,7 +2,7 @@
 
  const getApiUrl = () => {
     
-  if(windows.location.hostname.includes('netlify.app')) {
+  if(window.location.hostname.includes('netlify.app')) {
 
     return "https://secret-eyrie-53650-99dc45662f12.herokuapp.com"
   }

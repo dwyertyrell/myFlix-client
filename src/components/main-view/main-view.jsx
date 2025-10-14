@@ -14,6 +14,7 @@ import { ProfileView } from "../profile-view/profile-view";
 import { useDispatch, useSelector} from 'react-redux';
 import { setMovies } from "../../redux/reducers/movieSlice";
 import { setFavourites, selectFavouriteMovieIds } from "../../redux/reducers/favouriteSlice";
+import {API_URL as apiUrl} from '../../../config/environment'
 
 export const MainView = () => {
 
@@ -27,8 +28,6 @@ export const MainView = () => {
   const [loading, setLoading] = useState(false)
 
   const dispatch = useDispatch();
-
-  const apiUrl = process.env.REACT_APP_API_URL
 
   useEffect(() => {
     if(!token) {

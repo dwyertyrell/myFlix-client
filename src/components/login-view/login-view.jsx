@@ -5,8 +5,6 @@ import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router';
 import {API_URL as apiUrl} from '../../../config/environment'
 
-// const apiUrl =  process.env.REACT_APP_EC2_URL ? process.env.REACT_APP_EC2_URL : process.env.REACT_APP_API_URL
-
 export const LoginView = ({onLoggedIn}) => {
 
     const [username, setUsername]= useState('');
