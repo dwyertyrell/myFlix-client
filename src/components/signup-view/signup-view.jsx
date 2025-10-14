@@ -2,8 +2,8 @@ import {useState} from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import {useNavigate} from 'react-router-dom';
+import {API_URL as apiUrl} from '../../../config/environment'
 
-const apiUrl = process.env.REACT_APP_API_URL
 
 export const SignupView = () => {
   const [username, setUsername] = useState('');

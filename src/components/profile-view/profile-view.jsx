@@ -7,8 +7,7 @@ import {Alert, Spinner} from 'react-bootstrap';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router';
 import PropTypes from 'prop-types';
-
-const apiUrl = process.env.REACT_APP_API_URL
+import {API_URL as apiUrl} from '../../../config/environment'
 
 export const ProfileView = ({ user, token, moviesFromApi, onProfileUpdate, onLogout}) => {
 

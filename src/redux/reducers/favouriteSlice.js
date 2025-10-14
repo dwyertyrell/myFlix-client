@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
-const apiUrl = process.env.REACT_APP_API_URL
+import {API_URL as apiUrl} from '../../../config/environment'
 
 const initialState = {
   favouriteMoviesIds: [],
