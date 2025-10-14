@@ -163,13 +163,10 @@ The application will be accessible at `http://localhost:1234` (or the port speci
 ---
 
 ## API Access
-
-This project uses a shared API endpoint for demonstration purposes and to allow other developers to work on this open-source project. In a production environment, each deployment would use separate database instances and environment-specific configurations.
-Therefore, `.env` file is tracked onto to git, and holds the API URL for all endpoint in the codebase.  
+This project uses environement variables stored on the Vercel hosting server, to access the API, for security purposes.  
 
 ### For Contributors
-- The API URL is configured via environment variable
-- You can use the shared demo API or set up your own local backend instance
+- The API URL is configured via environment variables in Vercel
 
 ---
 
