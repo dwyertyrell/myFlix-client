@@ -4,6 +4,8 @@ const initializeApiUrl = async () => {
   const EC2_API_URL = "http://35.179.161.79:3000"
   const HEROKU_API_URL = "https://secret-eyrie-53650-99dc45662f12.herokuapp.com"
 
+  /* the hosted Netlify server does not allow requests over HTTP- therefore 
+  EC2 HTTP request will not work in production mode  */
   try {
     // ping the index endpoint
     const response = await fetch(`${EC2_API_URL}`, {
